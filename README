@@ -1,0 +1,19 @@
+
+An alternative to the ShiftRegister74HC595 library is the builtin
+shiftOut() function that is part of the Arduino IDE/libraries.
+
+``` 
+byte leds = 0;
+bitSet(leds, i);
+
+/*
+ * updateShiftRegister() - This function sets the latchPin to low,
+ * then calls the Arduino function 'shiftOut' to shift out contents
+ * of variable 'leds' in the shift register before putting the 'latchPin' high again.
+ */
+void updateShiftRegister() {
+    digitalWrite(latchPin, LOW);
+    shiftOut(dataPin, clockPin, LSBFIRST, leds);
+    digitalWrite(latchPin, HIGH);
+}
+```

@@ -1,0 +1,8 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "nixie-tube-clock-2.1")(type "KiCad")(uri "/Users/jimg/src/nixie-2/PCB/nixie-tube-clock-2.1.kicad_sym")(options "")(descr ""))
+  (lib (name "nixie-3-symbols")(type "KiCad")(uri "${KIPRJMOD}/nixie-3-symbols.kicad_sym")(options "")(descr ""))
+  (lib (name "mynixies")(type "KiCad")(uri "/Users/jimg/src/Eagle-and-KiCAD-Nixie-Libs/mynixies.kicad_sym")(options "")(descr ""))
+  (lib (name "nixie-misc")(type "KiCad")(uri "/Users/jimg/src/Eagle-and-KiCAD-Nixie-Libs/nixiemisc.kicad_sym")(options "")(descr ""))
+  (lib (name "nizies-us")(type "KiCad")(uri "/Users/jimg/src/Eagle-and-KiCAD-Nixie-Libs/nixies-us.kicad_sym")(options "")(descr ""))
+)
