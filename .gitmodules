@@ -1,0 +1,3 @@
+[submodule "lib/ShiftRegister74HC595"]
+	path = lib/ShiftRegister74HC595
+	url = https://github.com/Simsso/ShiftRegister74HC595.git
