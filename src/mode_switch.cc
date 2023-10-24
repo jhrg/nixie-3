@@ -16,7 +16,7 @@ volatile enum switch_press_duration input_switch_press = none;
 // Set using an interrupt; see mode_switch.cc/h
 volatile int brightness = 0;
 
-const int brightness_count[] = {255, 179, 128, 76, 24, 10};
+const int brightness_count[] = {255, 128, 76, 24, 10};
 
 extern int HV_Control;  // define in main.cpp
 
@@ -58,7 +58,7 @@ void reset_input_button() {
 }
 
 void input_switch_quick_press() {
-    brightness = (brightness == 5) ? 0 : brightness + 1;
+    brightness = (brightness == sizeof(brightness_count)/sizeof(brightness_count[0]) - 1) ? 0 : brightness + 1;
     DPRINTV("brightness: %d\n", brightness);
     analogWrite(HV_Control, brightness_count[brightness]);
 }
