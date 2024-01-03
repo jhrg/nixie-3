@@ -3,6 +3,9 @@
 #include <ShiftRegister74HC595.h>
 
 #include "mode_switch.h"
+#include "print.h"
+
+#define BAUD_RATE 9600 // 115200
 
 // Choose pins that cannot be used for hardware PWM
 int serialDataPin = 2;  // DS aka SER (serial data) input
@@ -22,12 +25,12 @@ ShiftRegister74HC595<1> sr(serialDataPin, clockPin, latchPin);
 uint8_t LSD[10] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09};
 uint8_t MSD[10] = {0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80, 0x90};
 
-// Set using an interrupt; see mode_switch.cc/h
-volatile int brightness = 0;
-
-const int brightness_count[] = {255, 179, 128, 76, 24, 10};
 
 void setup() {
+    Serial.begin(BAUD_RATE);
+    DPRINT("boot\n");
+    flush();
+
     pinMode(LED_BUILTIN, OUTPUT);
     pinMode(HV_Control, OUTPUT);
     pinMode(INPUT_SWITCH, INPUT);
@@ -35,12 +38,15 @@ void setup() {
     attachInterrupt(digitalPinToInterrupt(INPUT_SWITCH), input_switch_push, RISING);
 
     digitalWrite(LED_BUILTIN, HIGH);
+    digitalWrite(HV_Control, HIGH); // Start out bright
 
     for (int i = 0; i < 10; ++i) {
         uint8_t bits = MSD[i] | LSD[i];
         sr.setAll(&bits);
         delay(1000);
     }
+
+    digitalWrite(LED_BUILTIN, LOW);
 }
 
 void loop() {
@@ -48,11 +54,7 @@ void loop() {
         for (int lsd = 0; lsd < 10; ++lsd) {
             uint8_t bits = MSD[msd] | LSD[lsd];
             sr.setAll(&bits);
-
-            analogWrite(HV_Control, brightness_count[brightness]);
-
             delay(1000);
-            digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
         }
     }
 }

@@ -10,11 +10,17 @@
 #define SWITCH_PRESS_5S 5000    // 5 S
 #define SWITCH_PRESS_10S 10000  // 10 S
 
-extern int brightness;
-
 volatile unsigned long input_switch_down_time = 0;
 volatile enum switch_press_duration input_switch_press = none;
 
+// Set using an interrupt; see mode_switch.cc/h
+volatile int brightness = 0;
+
+const int brightness_count[] = {255, 128, 76, 24, 0};
+
+extern int HV_Control;  // define in main.cpp
+
+#if 0
 /**
  * Return true if the input switch was pressed and released.
  *
@@ -31,7 +37,6 @@ bool poll_input_button() {
     return input_switch_press != none;
 }
 
-#if 0
 // Faster reads than digitalRead(INPUT_SWITCH)
 inline bool input_switch_held_down() {
     return PIND & _BV(INPUT_SWITCH_PORT);  // INPUT_SWITCH_PORT --> 3
@@ -53,7 +58,9 @@ void reset_input_button() {
 }
 
 void input_switch_quick_press() {
-    brightness = (brightness == 5) ? 0 : brightness + 1;
+    brightness = (brightness == sizeof(brightness_count)/sizeof(brightness_count[0]) - 1) ? 0 : brightness + 1;
+    DPRINTV("brightness: %d\n", brightness);
+    analogWrite(HV_Control, brightness_count[brightness]);
 }
 
 /**
@@ -89,6 +96,7 @@ void input_switch_push() {
     unsigned long now = millis();
 
     if (now - last_interrupt_time > SWITCH_INTERVAL) {
+        digitalWrite(LED_BUILTIN, HIGH);
         input_switch_down_time = now;  // Use this to tell how long it has been held down
         input_switch_press = none;     // This is set when the switch is released
         attachInterrupt(digitalPinToInterrupt(INPUT_SWITCH), input_switch_release, FALLING);
@@ -102,6 +110,7 @@ void input_switch_release() {
     unsigned long now = millis();
 
     if (now - last_interrupt_time > SWITCH_INTERVAL) {
+        digitalWrite(LED_BUILTIN, LOW);
         unsigned long input_switch_duration = now - input_switch_down_time;
         input_switch_down_time = now;  // TODO Needed?
         attachInterrupt(digitalPinToInterrupt(INPUT_SWITCH), input_switch_push, RISING);
@@ -113,6 +122,8 @@ void input_switch_release() {
         } else {
             input_switch_press = quick;
         }
+
+        process_input_switch_press();
     }
 
     last_interrupt_time = now;
