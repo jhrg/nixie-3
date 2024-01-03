@@ -1,0 +1,11 @@
+
+Scope images showing the affect of adding a resistor from the anode to
+ground (marked 'w-gnd') so that anode current can drain off when using
+PWM to control brightness of a nixe tube. Measured using the 'nixe-3'
+board where each tube has its own BCD to dec driver 74151 which
+are each connected to a 74HC595 serial to 8-bit parallel chip.
+
+This shows that adding the resistor does not make much difference in the
+turn off time and no difference in the turn on time. The images were taken
+at the brightest and dimest PWN settings.
+

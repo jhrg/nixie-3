@@ -5,4 +5,5 @@
   (lib (name "mynixies")(type "KiCad")(uri "/Users/jimg/src/Eagle-and-KiCAD-Nixie-Libs/mynixies.kicad_sym")(options "")(descr ""))
   (lib (name "nixie-misc")(type "KiCad")(uri "/Users/jimg/src/Eagle-and-KiCAD-Nixie-Libs/nixiemisc.kicad_sym")(options "")(descr ""))
   (lib (name "nizies-us")(type "KiCad")(uri "/Users/jimg/src/Eagle-and-KiCAD-Nixie-Libs/nixies-us.kicad_sym")(options "")(descr ""))
+  (lib (name "B13B-board-symbols")(type "KiCad")(uri "${B13B_PROECT}/B13B-symbols.kicad_sym")(options "")(descr ""))
 )
