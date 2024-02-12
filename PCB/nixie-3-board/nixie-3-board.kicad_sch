@@ -2850,7 +2850,7 @@
     (property "Reference" "C4" (at 86.36 159.385 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "100µF" (at 86.36 161.925 0)
+    (property "Value" "10µF" (at 86.36 161.925 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "nixie-3-footprints:U1-E_NCH" (at 82.55 161.29 0)
