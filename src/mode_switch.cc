@@ -18,7 +18,7 @@ volatile int brightness = 0;
 
 const int brightness_count[] = {255, 128, 76, 24, 0};
 
-extern int HV_Control;  // define in main.cpp
+extern int HV_Control;  // defined in main.cpp
 
 #if 0
 /**

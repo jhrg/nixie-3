@@ -8,7 +8,7 @@
 #define BAUD_RATE 9600 // 115200
 
 #ifndef VERSION_1_BOARD
-#define VERSION_1_BOARD 1
+#define VERSION_1_BOARD 0
 #endif
 
 // Choose pins that cannot be used for hardware PWM
@@ -18,7 +18,7 @@ int latchPin = 7;       // STCP aka RCLK (register clock/latch) input
 
 int HV_Control = 5;  // PWM brightness 980Hz on pins 5 and 6, otherwise 480Hz
 
-// OE (Output Enable)and SRCLR (Shift Register Clear)
+// OE (Output Enable) and SRCLR (Shift Register Clear)
 // OE is pulled low all the time for this code.
 // SRCLR is pulled high all the time for this code.
 
