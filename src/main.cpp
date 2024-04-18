@@ -30,10 +30,8 @@ ShiftRegister74HC595<2> sr(serialDataPin, clockPin, latchPin);
 uint8_t MSD[10] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09};
 uint8_t LSD[10] = {0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80, 0x90};
 #else
-uint8_t LSD_1[10] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09};
-uint8_t MSD_1[10] = {0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80, 0x90};
-uint8_t LSD_2[10] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09};
-uint8_t MSD_2[10] = {0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80, 0x90};
+uint8_t LSD[10] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09};
+uint8_t MSD[10] = {0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80, 0x90};
 #endif
 
 void setup() {
@@ -51,10 +49,10 @@ void setup() {
     digitalWrite(HV_Control, HIGH); // Start out bright
 
     for (int i = 0; i < 10; ++i) {
-        uint16_t bits = MSD_2[i] | LSD_2[i];
-        bits = bits << 8;
-        bits &= MSD_1[i] | LSD_1[i];
-        sr.setAll(&bits);
+        uint8_t bits[2];
+        bits[0] = MSD[i] | LSD[i];
+        bits[1] = MSD[i] | LSD[i];
+        sr.setAll(bits);
         delay(1000);
     }
 
@@ -62,6 +60,20 @@ void setup() {
 }
 
 void loop() {
+    uint8_t bits[2];    // 1 is the LSD pair, 0 the MSD pair
+    for (int d3 = 0; d3 < 10; ++d3) {
+        for (int d2 = 0; d2 < 10; ++d2) {
+            bits[0] = MSD[d3] | LSD[d2];
+            for (int d1 = 0; d1 < 10; ++d1) {
+                for (int d0 = 0; d0 < 10; ++d0) {
+                    bits[1] = MSD[d1] | LSD[d0];
+                    sr.setAll(bits);
+                    delay(10);
+                }
+            }
+        }
+    }
+#if 0
     for (int msd = 0; msd < 10; ++msd) {
         for (int lsd = 0; lsd < 10; ++lsd) {
             uint8_t bits = MSD[msd] | LSD[lsd];
@@ -69,4 +81,5 @@ void loop() {
             delay(1000);
         }
     }
+#endif
 }
