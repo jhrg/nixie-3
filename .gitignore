@@ -5,6 +5,8 @@
 .vscode/launch.json
 .vscode/ipch
 
+PCB/nixie-3-board/gerber
+
 PCB/nixie-3-board/_autosave-Untitled.kicad_sch
 PCB/nixie-3-board/nixie-3-board-backups/
 PCB/nixie-3-board/nixie-3-symbols.bak
