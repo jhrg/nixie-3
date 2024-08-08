@@ -1,22 +1,24 @@
 
 #include <Arduino.h>
+#include <PinChangeInterrupt.h>
 #include <ShiftRegister74HC595.h>
 
+#include "RTC.h"
 #include "mode_switch.h"
 #include "print.h"
 
-#define BAUD_RATE 9600 // 115200
+#define BAUD_RATE 115200
 
 #ifndef VERSION_1_BOARD
 #define VERSION_1_BOARD 0
 #endif
 
 // Choose pins that cannot be used for hardware PWM
-int serialDataPin = 2;  // DS aka SER (serial data) input
-int clockPin = 4;       // SHCP aka SRCLK (shift register clock) input
-int latchPin = 7;       // STCP aka RCLK (register clock/latch) input
+int serialDataPin = 8; // DS aka SER (serial data) input
+int clockPin = 4;      // SHCP aka SRCLK (shift register clock) input
+int latchPin = 7;      // STCP aka RCLK (register clock/latch) input
 
-int HV_Control = 5;  // PWM brightness 980Hz on pins 5 and 6, otherwise 480Hz
+int HV_Control = 5; // PWM brightness 980Hz on pins 5 and 6, otherwise 480Hz
 
 // OE (Output Enable) and SRCLR (Shift Register Clear)
 // OE is pulled low all the time for this code.
@@ -39,6 +41,8 @@ void setup() {
     DPRINT("boot\n");
     flush();
 
+    RTC_setup();
+
     pinMode(LED_BUILTIN, OUTPUT);
     pinMode(HV_Control, OUTPUT);
     pinMode(INPUT_SWITCH, INPUT);
@@ -48,19 +52,44 @@ void setup() {
     digitalWrite(LED_BUILTIN, HIGH);
     digitalWrite(HV_Control, HIGH); // Start out bright
 
+    int digit_time_ms = 50;
+    int random_time_ms = 1000;
+    do {
+        uint8_t bits[2];
+        bits[0] = MSD[random(10)] | LSD[random(10)];
+        bits[1] = MSD[random(10)] | LSD[random(10)];
+        sr.setAll(bits);
+        delay(digit_time_ms);
+        random_time_ms -= digit_time_ms;
+    } while (random_time_ms > 0);
+#if 0
     for (int i = 0; i < 10; ++i) {
         uint8_t bits[2];
         bits[0] = MSD[i] | LSD[i];
         bits[1] = MSD[i] | LSD[i];
         sr.setAll(bits);
-        delay(1000);
+        delay(100);
     }
+#endif
 
     digitalWrite(LED_BUILTIN, LOW);
 }
 
 void loop() {
-    uint8_t bits[2];    // 1 is the LSD pair, 0 the MSD pair
+#if 1
+
+    uint8_t bits[2]; // 1 is the LSD pair, 0 the MSD pair
+
+    while (!time_update_handler())
+        ;
+
+    bits[0] = MSD[digit_3] | LSD[digit_2];
+    bits[1] = MSD[digit_1] | LSD[digit_0];
+    sr.setAll(bits);
+
+#else
+
+    uint8_t bits[2]; // 1 is the LSD pair, 0 the MSD pair
     for (int d3 = 0; d3 < 10; ++d3) {
         for (int d2 = 0; d2 < 10; ++d2) {
             bits[0] = MSD[d3] | LSD[d2];
@@ -73,13 +102,6 @@ void loop() {
             }
         }
     }
-#if 0
-    for (int msd = 0; msd < 10; ++msd) {
-        for (int lsd = 0; lsd < 10; ++lsd) {
-            uint8_t bits = MSD[msd] | LSD[lsd];
-            sr.setAll(&bits);
-            delay(1000);
-        }
-    }
+
 #endif
 }
