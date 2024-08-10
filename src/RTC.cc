@@ -2,15 +2,15 @@
 /**
  * @brief RTC interface
  * James Gallagher 8/5/24
+ * 
  */
 
 #include <Arduino.h>
-#include <PinChangeInterrupt.h>
 #include <RTClib.h> // https://github.com/adafruit/RTClib
 
 #include "print.h"
 
-#define CLOCK_QUERY_INTERVAL 12 // seconds
+#define CLOCK_QUERY_INTERVAL 10 // seconds
 
 #define CLOCK_1HZ 2
 
@@ -98,11 +98,11 @@ void timer_1HZ_tick_ISR() {
         // update time using I2C access to the clock
         tick_count = 0;
         get_time = true;
+    } else {
+        // when get_time is false, main_mode_handler() adds one second to the global
+        // time (dt) when update_display is true.
+        update_display = true;
     }
-
-    // when get_time is false, main_mode_handler() adds one second to the global
-    // time (dt) when update_display is true.
-    update_display = true;
 }
 
 void RTC_setup() {
@@ -160,8 +160,6 @@ void RTC_setup() {
 
 // Call at least 1/s
 bool time_update_handler() {
-    static TimeSpan ts(1); // a one-second time span
-
     if (get_time) {
         DPRINT("Get time\n");
         get_time = false;
@@ -170,13 +168,14 @@ bool time_update_handler() {
         update_display_with_time();
         return true;
     } else if (update_display) {
+        static TimeSpan ts(1); // a one-second time span
+
         update_display = false;
         dt = dt + ts; // Advance 'dt' by one second
         print_time(dt, true);
         update_display_with_time();
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
