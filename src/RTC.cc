@@ -69,7 +69,7 @@ void print_digits(bool newline) {
 /**
  * Print the current time, formatted
  */
-void print_time(DateTime dt, bool print_newline = false) {
+void print_time(const DateTime &dt, bool print_newline = false) {
 #if DEBUG
     // or Serial.println(now.toString(buffer));, buffer == YY/MM/DD hh:mm:ss
     print("%02d/%02d/%02d %02d:%02d:%02d", dt.year(), dt.month(), dt.day(), dt.hour(), dt.minute(), dt.second());
