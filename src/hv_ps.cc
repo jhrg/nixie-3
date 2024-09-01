@@ -9,10 +9,11 @@
  * period.
  */
 
-#include "hv_ps.h"
-
 #include <Arduino.h>
 #include <PID_v1.h>
+
+#include "hv_ps.h"
+#include "print.h"
 
 #ifndef PID_DIAGNOSTIC
 #define PID_DIAGNOSTIC 0  // PID timing on Pin 6 if 1. See below.
@@ -21,7 +22,8 @@
 #define SAMPLE_PERIOD 10  // ms, also defined in hv_ps.h
 #endif
 
-#define HV_PS_INPUT A7
+#define HV_PS_INPUT A0
+#define HV_PS_CNTRL_OUTPUT 10
 
 #define SET_POINT 455  // 0-1023 from the ADC; 455 ~ 200v
 // The timer/counter uses 9-bit resolution --> 0x0000 - 0x01FF (0 - 511)
@@ -43,6 +45,7 @@ PID myPID(&input, &output, &setpoint, kp, ki, kd, DIRECT);
  */
 void hv_ps_setup() {
     pinMode(HV_PS_INPUT, INPUT);
+    pinMode(HV_PS_CNTRL_OUTPUT, OUTPUT);
 
     cli();
 
@@ -80,9 +83,12 @@ void hv_ps_setup() {
 
     // Configure the PID controller.
     input = analogRead(HV_PS_INPUT);
-    myPID.SetOutputLimits(10, 200);
+    myPID.SetOutputLimits(10, 250);
     myPID.SetSampleTime(SAMPLE_PERIOD);
     myPID.SetMode(AUTOMATIC); // This turns on the PID; MANUAL mode turns it off
+
+    DPRINT("HV PS up.\n");
+    flush();
 }
 
 /**
