@@ -28,13 +28,6 @@ void setup() {
 }
 
 void loop() {
-    delay(1);
+    delay(5);
     hv_ps_adjust();
-
-    static int count = 0;
-    count++;
-    if (count == 1000) {
-        count = 0;
-        DPRINTF("output: ", output);
-    }
 }

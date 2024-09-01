@@ -16,18 +16,18 @@
 #include "print.h"
 
 #ifndef PID_DIAGNOSTIC
-#define PID_DIAGNOSTIC 0  // PID timing on Pin 6 if 1. See below.
+#define PID_DIAGNOSTIC 0 // PID timing on Pin 6 if 1. See below.
 #endif
 #ifndef SAMPLE_PERIOD
-#define SAMPLE_PERIOD 10  // ms, also defined in hv_ps.h
+#define SAMPLE_PERIOD 10 // ms, also defined in hv_ps.h
 #endif
 
 #define HV_PS_INPUT A0
 #define HV_PS_CNTRL_OUTPUT 10
 
-#define SET_POINT 455  // 0-1023 from the ADC; 455 ~ 200v
+#define SET_POINT 455 // 0-1023 from the ADC; 455 ~ 200v
 // The timer/counter uses 9-bit resolution --> 0x0000 - 0x01FF (0 - 511)
-#define INITIAL_VALUE 0x8F  // 143, base 10, ~28% duty cycle PWM
+#define INITIAL_VALUE 0x8F // 143, base 10, ~28% duty cycle PWM
 
 // PID controller initial values
 double input = 80, output = 50, setpoint = SET_POINT;
@@ -49,9 +49,9 @@ void hv_ps_setup() {
 
     cli();
 
-    TCCR1A = 0;  // initialize TCCR1A (Timer/Counter1 Control Register A) to 0
-    TCCR1B = 0;  // same for TCCR1B
-    TCNT1 = 0;   // initialize counter value to 0 (Timer Counter 1)
+    TCCR1A = 0; // initialize TCCR1A (Timer/Counter1 Control Register A) to 0
+    TCCR1B = 0; // same for TCCR1B
+    TCNT1 = 0;  // initialize counter value to 0 (Timer Counter 1)
 
     // Use Timer1 for the HV PS control signal. This is PWM output that
     // controls the voltage of the power supply (See P.140-3).
@@ -83,7 +83,7 @@ void hv_ps_setup() {
 
     // Configure the PID controller.
     input = analogRead(HV_PS_INPUT);
-    myPID.SetOutputLimits(10, 250);
+    myPID.SetOutputLimits(10, 400);
     myPID.SetSampleTime(SAMPLE_PERIOD);
     myPID.SetMode(AUTOMATIC); // This turns on the PID; MANUAL mode turns it off
 
@@ -118,18 +118,29 @@ bool read_input(double *in) {
  * computing.
  */
 void hv_ps_adjust() {
-
 #if PID_DIAGNOSTIC
     PORTD |= _BV(PORTD6);
 #endif
 
-    myPID.Compute(read_input);
+    if (myPID.Compute(read_input)) {
+        // Set OCR1B (i.e., adjust the output duty cycle) using the output of
+        // the PID controller. When using C/C++, the compiler handles writing
+        // the high and low bytes to OCR1B. See p.122.
+        uint16_t output_int = output;
+#if DEBUG
+        static int count = 0;
+        count++;
+        if (count == 1000 / SAMPLE_PERIOD) {
+            count = 0;
+
+            DPRINTV("PID control output: %d,", output_int);
+            DPRINTF(" ", output);
+        }
+#endif
+        OCR1B = output_int;
+    }
 
 #if PID_DIAGNOSTIC
     PORTD &= ~_BV(PORTD6);
 #endif
-
-    // Set OCR1B (i.e., adjust the output duty cycle) using the output of
-    // the PID controller.
-    OCR1B = (unsigned char)output;
 }
