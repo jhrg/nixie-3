@@ -4,6 +4,7 @@
 #include <ShiftRegister74HC595.h>
 
 #include "RTC.h"
+#include "hv_ps.h"
 #include "mode_switch.h"
 #include "print.h"
 
@@ -62,46 +63,19 @@ void setup() {
         delay(digit_time_ms);
         random_time_ms -= digit_time_ms;
     } while (random_time_ms > 0);
-#if 0
-    for (int i = 0; i < 10; ++i) {
-        uint8_t bits[2];
-        bits[0] = MSD[i] | LSD[i];
-        bits[1] = MSD[i] | LSD[i];
-        sr.setAll(bits);
-        delay(100);
-    }
-#endif
 
     digitalWrite(LED_BUILTIN, LOW);
 }
 
 void loop() {
-#if 1
+    uint8_t bits[2];  // 1 is the LSD pair, 0 the MSD pair
 
-    uint8_t bits[2]; // 1 is the LSD pair, 0 the MSD pair
-
-    while (!time_update_handler())
-        ;
+    while (!time_update_handler()) {
+        delay(5);
+        hv_ps_adjust();
+    }
 
     bits[0] = MSD[digit_3] | LSD[digit_2];
     bits[1] = MSD[digit_1] | LSD[digit_0];
     sr.setAll(bits);
-
-#else
-
-    uint8_t bits[2]; // 1 is the LSD pair, 0 the MSD pair
-    for (int d3 = 0; d3 < 10; ++d3) {
-        for (int d2 = 0; d2 < 10; ++d2) {
-            bits[0] = MSD[d3] | LSD[d2];
-            for (int d1 = 0; d1 < 10; ++d1) {
-                for (int d0 = 0; d0 < 10; ++d0) {
-                    bits[1] = MSD[d1] | LSD[d0];
-                    sr.setAll(bits);
-                    delay(10);
-                }
-            }
-        }
-    }
-
-#endif
 }
