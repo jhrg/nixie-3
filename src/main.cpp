@@ -53,6 +53,8 @@ void setup() {
     digitalWrite(LED_BUILTIN, HIGH);
     digitalWrite(HV_Control, HIGH); // Start out bright
 
+    hv_ps_setup();
+
     int digit_time_ms = 50;
     int random_time_ms = 1000;
     do {
@@ -68,14 +70,14 @@ void setup() {
 }
 
 void loop() {
-    uint8_t bits[2];  // 1 is the LSD pair, 0 the MSD pair
+    uint8_t bits[2]; // 1 is the LSD pair, 0 the MSD pair
 
-    while (!time_update_handler()) {
-        delay(5);
-        hv_ps_adjust();
+    delay(5);
+    hv_ps_adjust();
+
+    if (time_update_handler()) {
+        bits[0] = MSD[digit_3] | LSD[digit_2];
+        bits[1] = MSD[digit_1] | LSD[digit_0];
+        sr.setAll(bits);
     }
-
-    bits[0] = MSD[digit_3] | LSD[digit_2];
-    bits[1] = MSD[digit_1] | LSD[digit_0];
-    sr.setAll(bits);
 }
