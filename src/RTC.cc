@@ -10,7 +10,7 @@
 
 #include "print.h"
 
-#define CLOCK_QUERY_INTERVAL 10 // seconds
+#define CLOCK_QUERY_INTERVAL 1//10 // seconds
 
 #define CLOCK_1HZ 2
 
@@ -94,7 +94,7 @@ void timer_1HZ_tick_ISR() {
 
     tick_count++;
 
-    if (tick_count >= CLOCK_QUERY_INTERVAL) {
+    if (tick_count > CLOCK_QUERY_INTERVAL) {
         // update time using I2C access to the clock
         tick_count = 0;
         get_time = true;
