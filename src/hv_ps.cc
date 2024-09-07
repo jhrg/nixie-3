@@ -127,7 +127,7 @@ void hv_ps_adjust() {
         // the PID controller. When using C/C++, the compiler handles writing
         // the high and low bytes to OCR1B. See p.122.
         uint16_t output_int = output;
-#if 0 // DEBUG too chatty
+#if PID_DIAGNOSTIC
         static int count = 0;
         count++;
         if (count == 1000 / SAMPLE_PERIOD) {

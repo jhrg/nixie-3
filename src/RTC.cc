@@ -2,7 +2,7 @@
 /**
  * @brief RTC interface
  * James Gallagher 8/5/24
- * 
+ *
  */
 
 #include <Arduino.h>
@@ -10,7 +10,10 @@
 
 #include "print.h"
 
-#define CLOCK_QUERY_INTERVAL 1//10 // seconds
+// This is probably not needed. Reading the clock every second is
+// probably fine.
+
+#define CLOCK_QUERY_INTERVAL 10 // seconds
 
 #define CLOCK_1HZ 2
 
