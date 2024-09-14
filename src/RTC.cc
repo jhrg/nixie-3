@@ -10,12 +10,9 @@
 
 #include "print.h"
 
-// This is probably not needed. Reading the clock every second is
-// probably fine.
-
-#define CLOCK_QUERY_INTERVAL 10 // seconds
-
 #define CLOCK_1HZ 2
+
+#define SEPARATOR 9
 
 #if USE_DS3231
 RTC_DS3231 rtc;
@@ -81,34 +78,32 @@ void print_time(const DateTime &dt, bool print_newline = false) {
 #endif
 }
 
-// Set HIGH when the CLOCK_QUERY_INTERVAL seconds have elapsed and
-// the RTC should be accessed.
-volatile bool get_time = false;
-
-// Set HIGH when the 1 second interrupt been triggered by the clock,
-// Used in main_mode_handler()
+// should the clock be checked and the display updated?
 volatile bool update_display = false;
 
+volatile bool toggle = false;
+
 /**
- * @brief Record that one second has elapsed
+ * @brief Record that 1/2 second has elapsed
  */
-void timer_1HZ_tick_ISR() {
-    static volatile int tick_count = 0;
+void timer_2HZ_tick_ISR() {
+    toggle = true;
 
-    tick_count++;
+    static volatile bool tick_tok = true;
 
-    if (tick_count > CLOCK_QUERY_INTERVAL) {
-        // update time using I2C access to the clock
-        tick_count = 0;
-        get_time = true;
-    } else {
-        // when get_time is false, main_mode_handler() adds one second to the global
-        // time (dt) when update_display is true.
+    if (tick_tok) {
+        tick_tok = false;
         update_display = true;
+    } else {
+        tick_tok = true;
     }
 }
 
 void RTC_setup() {
+
+    pinMode(SEPARATOR, OUTPUT);
+    digitalWrite(SEPARATOR, LOW);
+
     if (rtc.begin()) {
         DPRINT("DS3131/DS1307 RTC Start\n");
     } else {
@@ -155,24 +150,36 @@ void RTC_setup() {
     // time updates.
     pinMode(CLOCK_1HZ, INPUT_PULLUP);
 
-    // time_1Hz_tick() sets a flag that is tested in loop()
-    attachInterrupt(digitalPinToInterrupt(CLOCK_1HZ), timer_1HZ_tick_ISR, RISING);
+    // time_2Hz_tick_ISR() sets a flag that is tested in loop()
+    attachInterrupt(digitalPinToInterrupt(CLOCK_1HZ), timer_2HZ_tick_ISR, CHANGE);
 
     sei(); // start interrupts
 }
 
+void toggle_separator() {
+    static bool tick_tok = true;
+    if (tick_tok) {
+        // turn on separator
+        digitalWrite(SEPARATOR, LOW); // use fast I/O
+        tick_tok = false;
+    } else {
+        // turn off separator
+        digitalWrite(SEPARATOR, HIGH);
+        tick_tok = true;
+    }
+}
+
 // Call at least 1/s
 bool time_update_handler() {
-    if (get_time) {
-        DPRINT("Get time\n");
-        get_time = false;
-        dt = rtc.now(); // This call takes about 1ms
-        print_time(dt, true);
-        update_display_with_time();
-        return true;
-    } else if (update_display) {
-        static TimeSpan ts(1); // a one-second time span
+    // every 1/2 second
+    if (toggle) {
+        toggle = false;
+        toggle_separator();
+    }
 
+    // every second
+    if (update_display) {
+        static TimeSpan ts(1); // a one-second time span
         update_display = false;
         dt = dt + ts; // Advance 'dt' by one second
         print_time(dt, true);

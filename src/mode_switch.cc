@@ -16,6 +16,7 @@ volatile enum switch_press_duration input_switch_press = none;
 // Set using an interrupt; see mode_switch.cc/h
 volatile int brightness = 0;
 
+// 100 provides about 1mA average to each tube
 const int brightness_count[] = {255, 128, 76, 24, 0};
 
 extern int HV_Control;  // defined in main.cpp
