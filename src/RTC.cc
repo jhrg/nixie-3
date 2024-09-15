@@ -11,6 +11,7 @@
 
 #define CLOCK_1HZ 2
 
+// SEPARATOR can be any pin between 8 and 13 inclusive (PORT B)
 #define SEPARATOR 9
 
 #if USE_DS3231
@@ -60,21 +61,17 @@ void update_display_with_date() {
  * Print the values of the current digits
  */
 void print_digits(bool newline) {
-#if DEBUG
     print("%01d-%01d-%01d-%01d-%01d-%01d\n", digit_5, digit_4, digit_3, digit_2, digit_1, digit_0);
-#endif
 }
 
 /**
  * Print the current time, formatted
  */
 void print_time(const DateTime &dt, bool print_newline = false) {
-#if DEBUG
     // or Serial.println(now.toString(buffer));, buffer == YY/MM/DD hh:mm:ss
     print("%02d/%02d/%02d %02d:%02d:%02d", dt.year(), dt.month(), dt.day(), dt.hour(), dt.minute(), dt.second());
     if (print_newline)
         print("\n");
-#endif
 }
 
 // should the clock be checked and the display updated?
@@ -169,11 +166,12 @@ void toggle_separator() {
     static bool tick_tok = true;
     if (tick_tok) {
         // turn on separator
-        digitalWrite(SEPARATOR, LOW); // use fast I/O
+        // faster than digitalWrite()
+        PORTB &= ~_BV(SEPARATOR - 8);  // i.e., digitalWrite(SEPARATOR, LOW);
         tick_tok = false;
     } else {
         // turn off separator
-        digitalWrite(SEPARATOR, HIGH);
+        PORTB |= _BV(SEPARATOR - 8);  // digitalWrite(SEPARATOR, HIGH);
         tick_tok = true;
     }
 }
@@ -189,9 +187,10 @@ bool time_update_handler() {
     // every second
     if (update_display) {
         update_display = false;
-        DPRINT("Get time\n");
         dt = rtc.now();  // This call takes about 1ms
+#if DEBUG
         print_time(dt, true);
+#endif
         update_display_with_time();
         return true;
     } else {
