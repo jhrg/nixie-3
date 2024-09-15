@@ -3,9 +3,6 @@
 #include <PinChangeInterrupt.h>
 
 #include "RTC.h"
-#if 0
-#include "hv_ps.h"
-#endif
 #include "mode_switch.h"
 #include "print.h"
 
@@ -78,9 +75,7 @@ void setup() {
 
     digitalWrite(LED_BUILTIN, HIGH);
     digitalWrite(HV_Control, HIGH); // Start out bright
-#if 0
-    hv_ps_setup();
-#endif
+
     // Flash random digits at start up.
     int digit_time_ms = 50;
     int random_time_ms = 1000;
@@ -109,9 +104,6 @@ void loop() {
     if (time_update_handler()) {
         bits[0] = MSD[digit_3] | LSD[digit_2];
         bits[1] = MSD[digit_1] | LSD[digit_0];
-
-        DPRINTV("%d%d:%d%d\n", 0xF0 & bits[0], 0x0F & bits[0], 0xF0 & bits[1], 0x0F & bits[1]);
-
         // I don't know for sure that these calls are needed. They seem to
         // do no harm.
         cli();
