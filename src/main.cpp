@@ -3,7 +3,9 @@
 #include <PinChangeInterrupt.h>
 
 #include "RTC.h"
+#if 0
 #include "hv_ps.h"
+#endif
 #include "mode_switch.h"
 #include "print.h"
 
@@ -36,30 +38,25 @@ uint8_t MSD[10] = {0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80, 0x90};
 /*
  * updateShiftRegister() - This function sets the latchPin to low,
  * then calls the Arduino function 'shiftOut' to shift out contents
- * of variable 'leds' in the shift register before putting the 'latchPin' high again.
- * 
- * I think this code needs to be protected from interrups, but calling 
- * cli() and sei() in here when several bytes are written to a set of 595
- * chips uses about 20uS more than wrapping the set of calls to this in
- * cli() ... sei().
- * 
- * On a scope, it appears that the seialDataPin is left high or low depending 
+ * of variable 'data' in the shift register before putting the 'latchPin' high again.
+ *
+ * On a scope, it appears that the serialDataPin is left high or low depending
  * on the last bit value written. I set it LOW so that every call has the
  * same initial condition, although I'm not sure that difference matters to
  * the 595 chips.
- * 
+ *
  * I switched to this code over the ShiftRegister74HC595 library because I was
  * getting an odd error where sometimes the values ouput were corrupted. The
  * problem might have been noise on the breadboard or it might have been an
- * issue with interrupts.
+ * issue with interrupts. NB: It was noise; the HV PS that used the PID controller
+ * was noisy and that was fixed by using a better HV PS. That also meant tha
+ * the PID controller could be dumped.
  */
 void updateShiftRegister(uint8_t data) {
-    //cli();
     digitalWrite(latchPin, LOW);
     shiftOut(serialDataPin, clockPin, MSBFIRST, data);
     digitalWrite(latchPin, HIGH);
     digitalWrite(serialDataPin, LOW);
-    //sei();
 }
 
 void setup() {
@@ -81,9 +78,10 @@ void setup() {
 
     digitalWrite(LED_BUILTIN, HIGH);
     digitalWrite(HV_Control, HIGH); // Start out bright
-
+#if 0
     hv_ps_setup();
-
+#endif
+    // Flash random digits at start up.
     int digit_time_ms = 50;
     int random_time_ms = 1000;
     do {
@@ -106,12 +104,16 @@ void setup() {
 void loop() {
     uint8_t bits[2]; // 1 is the LSD pair, 0 the MSD pair
 
-    hv_ps_adjust();
+    // hv_ps_adjust();
 
     if (time_update_handler()) {
         bits[0] = MSD[digit_3] | LSD[digit_2];
         bits[1] = MSD[digit_1] | LSD[digit_0];
+
         DPRINTV("%d%d:%d%d\n", 0xF0 & bits[0], 0x0F & bits[0], 0xF0 & bits[1], 0x0F & bits[1]);
+
+        // I don't know for sure that these calls are needed. They seem to
+        // do no harm.
         cli();
         updateShiftRegister(bits[1]);
         updateShiftRegister(bits[0]);

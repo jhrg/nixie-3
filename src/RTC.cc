@@ -2,7 +2,6 @@
 /**
  * @brief RTC interface
  * James Gallagher 8/5/24
- *
  */
 
 #include <Arduino.h>
@@ -85,6 +84,16 @@ volatile bool toggle = false;
 
 /**
  * @brief Record that 1/2 second has elapsed
+ *
+ * This ISR is triggered on either the rising or falling edge of the 1Hz
+ * clock signal (so at a 2Hz rate). This is used to toggle the flashing
+ * colon that is the clock digit separator so that it fashes on and off
+ * once per second.
+ *
+ * This ISR is also used to trigger the digit update once per second.
+ *
+ * The volatile bools toggle and update_display are used to signal other
+ * parts of the code that the colons or digits should be updated.
  */
 void timer_2HZ_tick_ISR() {
     toggle = true;
@@ -169,7 +178,7 @@ void toggle_separator() {
     }
 }
 
-// Call at least 1/s
+// Call at least twice a second
 bool time_update_handler() {
     // every 1/2 second
     if (toggle) {
@@ -179,9 +188,9 @@ bool time_update_handler() {
 
     // every second
     if (update_display) {
-        static TimeSpan ts(1); // a one-second time span
         update_display = false;
-        dt = dt + ts; // Advance 'dt' by one second
+        DPRINT("Get time\n");
+        dt = rtc.now();  // This call takes about 1ms
         print_time(dt, true);
         update_display_with_time();
         return true;

@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>/Users/jimg/src/nixie-3/PCB/nixie-3-board/nixie-3-board.kicad_sch</source>
+    <date>2024 February 03, Saturday 18:43:59</date>
+    <tool>Eeschema 7.0.7</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>nixie-3-board.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="H1">
+      <value>MountingHole</value>
+      <footprint>MountingHole:MountingHole_2.7mm_M2.5_DIN965</footprint>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="nixie-3-board.kicad_sch"/>
+      <property name="ki_description" value="Mounting Hole without connection"/>
+      <property name="ki_keywords" value="mounting hole"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2b497a52-b19f-4e1a-8e42-101bf6f1c70d</tstamps>
+    </comp>
+    <comp ref="H2">
+      <value>MountingHole</value>
+      <footprint>MountingHole:MountingHole_2.7mm_M2.5_DIN965</footprint>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="nixie-3-board.kicad_sch"/>
+      <property name="ki_description" value="Mounting Hole without connection"/>
+      <property name="ki_keywords" value="mounting hole"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>212b711a-13fb-4a25-be9f-073244249ffa</tstamps>
+    </comp>
+    <comp ref="H3">
+      <value>MountingHole</value>
+      <footprint>MountingHole:MountingHole_2.7mm_M2.5_DIN965</footprint>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="nixie-3-board.kicad_sch"/>
+      <property name="ki_description" value="Mounting Hole without connection"/>
+      <property name="ki_keywords" value="mounting hole"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8c52e203-d884-4f4d-bc3a-5d62c70019f3</tstamps>
+    </comp>
+    <comp ref="J1">
+      <value>Conn_01x07_Socket</value>
+      <footprint>Connector_PinSocket_2.54mm:PinSocket_1x07_P2.54mm_Horizontal</footprint>
+      <libsource lib="Connector" part="Conn_01x07_Socket" description="Generic connector, single row, 01x07, script generated"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="nixie-3-board.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x07, script generated"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3deb5497-a47e-44f2-9dc7-332f96e38d05</tstamps>
+    </comp>
+    <comp ref="J2">
+      <value>Conn_01x07_Pin</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x07_P2.54mm_Horizontal</footprint>
+      <libsource lib="Connector" part="Conn_01x07_Pin" description="Generic connector, single row, 01x07, script generated"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="nixie-3-board.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x07, script generated"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>528b8d04-b774-4bf5-8ed0-db820e5104a2</tstamps>
+    </comp>
+    <comp ref="J3">
+      <value>SFH11-PBPC-D07-ST-BK</value>
+      <footprint>nixie-3-footprints:SULLINS_SFH11-PBPC-D07-ST-BK</footprint>
+      <fields>
+        <field name="Availability">In Stock</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/SFH11-PBPC-D07-ST-BK/Sullins+Connector+Solutions/view-part/?ref=eda</field>
+        <field name="Description">
+14 Position Header Connector 0.100 (2.54mm) Through Hole Gold
+</field>
+        <field name="MANUFACTURER">Sullins Connector</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">8.5 mm</field>
+        <field name="MF">Sullins Connector</field>
+        <field name="MP">SFH11-PBPC-D07-ST-BK</field>
+        <field name="PARTREV">J</field>
+        <field name="Package">None</field>
+        <field name="Price">None</field>
+        <field name="Purchase-URL">https://www.snapeda.com/api/url_track_click_mouser/?unipart_id=851415&amp;manufacturer=Sullins Connector&amp;part_name=SFH11-PBPC-D07-ST-BK&amp;search_term=sullins sfh11-pbpc-d07-st-bk</field>
+        <field name="STANDARD">Manufacturer Recommendations</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/SFH11-PBPC-D07-ST-BK/Sullins+Connector+Solutions/view-part/?ref=snap</field>
+      </fields>
+      <libsource lib="B13B-board-symbols" part="SFH11-PBPC-D07-ST-BK" description=""/>
+      <property name="MF" value="Sullins Connector"/>
+      <property name="MAXIMUM_PACKAGE_HEIGHT" value="8.5 mm"/>
+      <property name="Package" value="None"/>
+      <property name="Price" value="None"/>
+      <property name="Check_prices" value="https://www.snapeda.com/parts/SFH11-PBPC-D07-ST-BK/Sullins+Connector+Solutions/view-part/?ref=eda"/>
+      <property name="STANDARD" value="Manufacturer Recommendations"/>
+      <property name="PARTREV" value="J"/>
+      <property name="SnapEDA_Link" value="https://www.snapeda.com/parts/SFH11-PBPC-D07-ST-BK/Sullins+Connector+Solutions/view-part/?ref=snap"/>
+      <property name="MP" value="SFH11-PBPC-D07-ST-BK"/>
+      <property name="Purchase-URL" value="https://www.snapeda.com/api/url_track_click_mouser/?unipart_id=851415&amp;manufacturer=Sullins Connector&amp;part_name=SFH11-PBPC-D07-ST-BK&amp;search_term=sullins sfh11-pbpc-d07-st-bk"/>
+      <property name="Description" value="&#xA;14 Position Header Connector 0.100 (2.54mm) Through Hole Gold&#xA;"/>
+      <property name="Availability" value="In Stock"/>
+      <property name="MANUFACTURER" value="Sullins Connector"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="nixie-3-board.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>21b2d859-cf6a-49fe-9052-618bee2e3de9</tstamps>
+    </comp>
+    <comp ref="J4">
+      <value>SFH11-PBPC-D07-ST-BK</value>
+      <footprint>nixie-3-footprints:SULLINS_SFH11-PBPC-D07-ST-BK</footprint>
+      <fields>
+        <field name="Availability">In Stock</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/SFH11-PBPC-D07-ST-BK/Sullins+Connector+Solutions/view-part/?ref=eda</field>
+        <field name="Description">
+14 Position Header Connector 0.100 (2.54mm) Through Hole Gold
+</field>
+        <field name="MANUFACTURER">Sullins Connector</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">8.5 mm</field>
+        <field name="MF">Sullins Connector</field>
+        <field name="MP">SFH11-PBPC-D07-ST-BK</field>
+        <field name="PARTREV">J</field>
+        <field name="Package">None</field>
+        <field name="Price">None</field>
+        <field name="Purchase-URL">https://www.snapeda.com/api/url_track_click_mouser/?unipart_id=851415&amp;manufacturer=Sullins Connector&amp;part_name=SFH11-PBPC-D07-ST-BK&amp;search_term=sullins sfh11-pbpc-d07-st-bk</field>
+        <field name="STANDARD">Manufacturer Recommendations</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/SFH11-PBPC-D07-ST-BK/Sullins+Connector+Solutions/view-part/?ref=snap</field>
+      </fields>
+      <libsource lib="B13B-board-symbols" part="SFH11-PBPC-D07-ST-BK" description=""/>
+      <property name="MF" value="Sullins Connector"/>
+      <property name="MAXIMUM_PACKAGE_HEIGHT" value="8.5 mm"/>
+      <property name="Package" value="None"/>
+      <property name="Price" value="None"/>
+      <property name="Check_prices" value="https://www.snapeda.com/parts/SFH11-PBPC-D07-ST-BK/Sullins+Connector+Solutions/view-part/?ref=eda"/>
+      <property name="STANDARD" value="Manufacturer Recommendations"/>
+      <property name="PARTREV" value="J"/>
+      <property name="SnapEDA_Link" value="https://www.snapeda.com/parts/SFH11-PBPC-D07-ST-BK/Sullins+Connector+Solutions/view-part/?ref=snap"/>
+      <property name="MP" value="SFH11-PBPC-D07-ST-BK"/>
+      <property name="Purchase-URL" value="https://www.snapeda.com/api/url_track_click_mouser/?unipart_id=851415&amp;manufacturer=Sullins Connector&amp;part_name=SFH11-PBPC-D07-ST-BK&amp;search_term=sullins sfh11-pbpc-d07-st-bk"/>
+      <property name="Description" value="&#xA;14 Position Header Connector 0.100 (2.54mm) Through Hole Gold&#xA;"/>
+      <property name="Availability" value="In Stock"/>
+      <property name="MANUFACTURER" value="Sullins Connector"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="nixie-3-board.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6f84265e-6911-4024-a781-fe57377b028b</tstamps>
+    </comp>
+    <comp ref="Q1">
+      <value>MPSA42</value>
+      <footprint>Package_TO_SOT_THT:TO-92_HandSolder</footprint>
+      <datasheet>http://www.onsemi.com/pub_link/Collateral/MPSA42-D.PDF</datasheet>
+      <libsource lib="nixie-tube-clock-2.1" part="MPSA42" description="0.5A Ic, 300V Vce, NPN High Voltage Transistor, TO-92"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="nixie-3-board.kicad_sch"/>
+      <property name="ki_description" value="0.5A Ic, 300V Vce, NPN High Voltage Transistor, TO-92"/>
+      <property name="ki_keywords" value="NPN High Voltage Transistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>32c7507f-904e-4fcd-8280-5134ea3f61fe</tstamps>
+    </comp>
+    <comp ref="Q2">
+      <value>MPSA92</value>
+      <footprint>Package_TO_SOT_THT:TO-92_HandSolder</footprint>
+      <datasheet>http://www.onsemi.com/pub_link/Collateral/MPSA92-D.PDF</datasheet>
+      <libsource lib="nixie-tube-clock-2.1" part="MPSA92" description="0.5A Ic, 300V Vce, PNP High Voltage Transistor, TO-92"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="nixie-3-board.kicad_sch"/>
+      <property name="ki_description" value="0.5A Ic, 300V Vce, PNP High Voltage Transistor, TO-92"/>
+      <property name="ki_keywords" value="PNP High Voltage Transistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>62463b69-beb5-42a8-980c-3c0bf7c328cc</tstamps>
+    </comp>
+    <comp ref="R1">
+      <value>10K</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="nixie-3-board.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>4100d392-6a91-4c63-ab92-b59f964ce0ee</tstamps>
+    </comp>
+    <comp ref="R2">
+      <value>10K</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="nixie-3-board.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ebdc8050-80e5-4e6a-a07b-80348ec0bf79</tstamps>
+    </comp>
+    <comp ref="R3">
+      <value>1M</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="nixie-3-board.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>381381ad-0c4e-402b-b124-953ce7218fce</tstamps>
+    </comp>
+    <comp ref="R4">
+      <value>7.5K</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="nixie-3-board.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>7d03f3ad-1ada-4532-9a8c-18a9d5dc5313</tstamps>
+    </comp>
+    <comp ref="R5">
+      <value>220K</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="nixie-3-board.kicad_sch"/>
+      <property name="ki_description" value="Resistor"/>
+      <property name="ki_keywords" value="R res resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a45c7716-8ea3-46f8-a665-c43bc413fc81</tstamps>
+    </comp>
+    <comp ref="U1">
+      <value>74HC595</value>
+      <footprint>Package_DIP:DIP-16_W7.62mm_Socket</footprint>
+      <datasheet>http://www.ti.com/lit/ds/symlink/sn74hc595.pdf</datasheet>
+      <libsource lib="nixie-3-symbols" part="74HC595" description="8-bit serial in/out Shift Register 3-State Outputs"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="nixie-3-board.kicad_sch"/>
+      <property name="ki_description" value="8-bit serial in/out Shift Register 3-State Outputs"/>
+      <property name="ki_keywords" value="HCMOS SR 3State"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>05df918a-52d7-48cb-bf32-1b2f67a8990c</tstamps>
+    </comp>
+    <comp ref="U2">
+      <value>74141</value>
+      <footprint>Package_DIP:DIP-16_W7.62mm_Socket</footprint>
+      <libsource lib="nixie-3-symbols" part="74141" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="nixie-3-board.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6ee070e8-5099-4d68-a912-09d5a4348809</tstamps>
+    </comp>
+    <comp ref="U3">
+      <value>74141</value>
+      <footprint>Package_DIP:DIP-16_W7.62mm_Socket</footprint>
+      <libsource lib="nixie-3-symbols" part="74141" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="nixie-3-board.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>21740e1f-1053-41ca-8dc1-eee10e5182f6</tstamps>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="B13B-board-symbols" part="SFH11-PBPC-D07-ST-BK">
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">SFH11-PBPC-D07-ST-BK</field>
+        <field name="Footprint">SFH11-PBPC-D07-ST-BK:SULLINS_SFH11-PBPC-D07-ST-BK</field>
+        <field name="MF">Sullins Connector</field>
+        <field name="MAXIMUM_PACKAGE_HEIGHT">8.5 mm</field>
+        <field name="Package">None</field>
+        <field name="Price">None</field>
+        <field name="Check_prices">https://www.snapeda.com/parts/SFH11-PBPC-D07-ST-BK/Sullins+Connector+Solutions/view-part/?ref=eda</field>
+        <field name="STANDARD">Manufacturer Recommendations</field>
+        <field name="PARTREV">J</field>
+        <field name="SnapEDA_Link">https://www.snapeda.com/parts/SFH11-PBPC-D07-ST-BK/Sullins+Connector+Solutions/view-part/?ref=snap</field>
+        <field name="MP">SFH11-PBPC-D07-ST-BK</field>
+        <field name="Purchase-URL">https://www.snapeda.com/api/url_track_click_mouser/?unipart_id=851415&amp;manufacturer=Sullins Connector&amp;part_name=SFH11-PBPC-D07-ST-BK&amp;search_term=sullins sfh11-pbpc-d07-st-bk</field>
+        <field name="Description">
+14 Position Header Connector 0.100 (2.54mm) Through Hole Gold
+</field>
+        <field name="Availability">In Stock</field>
+        <field name="MANUFACTURER">Sullins Connector</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+        <pin num="3" name="3" type="passive"/>
+        <pin num="4" name="4" type="passive"/>
+        <pin num="5" name="5" type="passive"/>
+        <pin num="6" name="6" type="passive"/>
+        <pin num="7" name="7" type="passive"/>
+        <pin num="8" name="8" type="passive"/>
+        <pin num="9" name="9" type="passive"/>
+        <pin num="10" name="10" type="passive"/>
+        <pin num="11" name="11" type="passive"/>
+        <pin num="12" name="12" type="passive"/>
+        <pin num="13" name="13" type="passive"/>
+        <pin num="14" name="14" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="Conn_01x07_Pin">
+      <description>Generic connector, single row, 01x07, script generated</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x07_Pin</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+        <pin num="7" name="Pin_7" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="Conn_01x07_Socket">
+      <description>Generic connector, single row, 01x07, script generated</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x07_Socket</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+        <pin num="7" name="Pin_7" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R">
+      <description>Resistor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Mechanical" part="MountingHole">
+      <description>Mounting Hole without connection</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>MountingHole*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">H</field>
+        <field name="Value">MountingHole</field>
+        <field name="Datasheet">~</field>
+      </fields>
+    </libpart>
+    <libpart lib="nixie-3-symbols" part="74141">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">74141</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~{Q8}" type="open_collector"/>
+        <pin num="2" name="~{Q9}" type="open_collector"/>
+        <pin num="3" name="A" type="input"/>
+        <pin num="4" name="D" type="input"/>
+        <pin num="5" name="VCC" type="power_in"/>
+        <pin num="6" name="B" type="input"/>
+        <pin num="7" name="C" type="input"/>
+        <pin num="8" name="~{Q2}" type="open_collector"/>
+        <pin num="9" name="~{Q3}" type="open_collector"/>
+        <pin num="10" name="~{Q7}" type="open_collector"/>
+        <pin num="11" name="~{Q6}" type="open_collector"/>
+        <pin num="12" name="GND" type="power_in"/>
+        <pin num="13" name="~{Q4}" type="open_collector"/>
+        <pin num="14" name="~{Q5}" type="open_collector"/>
+        <pin num="15" name="~{Q1}" type="open_collector"/>
+        <pin num="16" name="~{Q0}" type="open_collector"/>
+      </pins>
+    </libpart>
+    <libpart lib="nixie-3-symbols" part="74HC595">
+      <description>8-bit serial in/out Shift Register 3-State Outputs</description>
+      <docs>http://www.ti.com/lit/ds/symlink/sn74hc595.pdf</docs>
+      <footprints>
+        <fp>DIP*W7.62mm*</fp>
+        <fp>SOIC*3.9x9.9mm*P1.27mm*</fp>
+        <fp>TSSOP*4.4x5mm*P0.65mm*</fp>
+        <fp>SOIC*5.3x10.2mm*P1.27mm*</fp>
+        <fp>SOIC*7.5x10.3mm*P1.27mm*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">74HC595</field>
+        <field name="Datasheet">http://www.ti.com/lit/ds/symlink/sn74hc595.pdf</field>
+      </fields>
+      <pins>
+        <pin num="1" name="QB" type="tri_state"/>
+        <pin num="2" name="QC" type="tri_state"/>
+        <pin num="3" name="QD" type="tri_state"/>
+        <pin num="4" name="QE" type="tri_state"/>
+        <pin num="5" name="QF" type="tri_state"/>
+        <pin num="6" name="QG" type="tri_state"/>
+        <pin num="7" name="QH" type="tri_state"/>
+        <pin num="8" name="GND" type="power_in"/>
+        <pin num="9" name="QH'" type="output"/>
+        <pin num="10" name="~{SRCLR}" type="input"/>
+        <pin num="11" name="SRCLK" type="input"/>
+        <pin num="12" name="RCLK" type="input"/>
+        <pin num="13" name="~{OE}" type="input"/>
+        <pin num="14" name="SER" type="input"/>
+        <pin num="15" name="QA" type="tri_state"/>
+        <pin num="16" name="VCC" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="nixie-tube-clock-2.1" part="MPSA42">
+      <description>0.5A Ic, 300V Vce, NPN High Voltage Transistor, TO-92</description>
+      <docs>http://www.onsemi.com/pub_link/Collateral/MPSA42-D.PDF</docs>
+      <footprints>
+        <fp>TO?92*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">MPSA42</field>
+        <field name="Footprint">Package_TO_SOT_THT:TO-92_HandSolder</field>
+        <field name="Datasheet">http://www.onsemi.com/pub_link/Collateral/MPSA42-D.PDF</field>
+      </fields>
+      <pins>
+        <pin num="1" name="E" type="passive"/>
+        <pin num="2" name="B" type="input"/>
+        <pin num="3" name="C" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="nixie-tube-clock-2.1" part="MPSA92">
+      <description>0.5A Ic, 300V Vce, PNP High Voltage Transistor, TO-92</description>
+      <docs>http://www.onsemi.com/pub_link/Collateral/MPSA92-D.PDF</docs>
+      <footprints>
+        <fp>TO?92*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">MPSA92</field>
+        <field name="Footprint">Package_TO_SOT_THT:TO-92_HandSolder</field>
+        <field name="Datasheet">http://www.onsemi.com/pub_link/Collateral/MPSA92-D.PDF</field>
+      </fields>
+      <pins>
+        <pin num="1" name="E" type="passive"/>
+        <pin num="2" name="B" type="input"/>
+        <pin num="3" name="C" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="B13B-board-symbols">
+      <uri>/Users/jimg/src/B13B-1020-board/B13B-symbols.kicad_sym</uri>
+    </library>
+    <library logical="Connector">
+      <uri>/Applications/KiCad 7/KiCad.app/Contents/SharedSupport/symbols//Connector.kicad_sym</uri>
+    </library>
+    <library logical="Device">
+      <uri>/Applications/KiCad 7/KiCad.app/Contents/SharedSupport/symbols//Device.kicad_sym</uri>
+    </library>
+    <library logical="Mechanical">
+      <uri>/Applications/KiCad 7/KiCad.app/Contents/SharedSupport/symbols//Mechanical.kicad_sym</uri>
+    </library>
+    <library logical="nixie-3-symbols">
+      <uri>/Users/jimg/src/nixie-3/PCB/nixie-3-board/nixie-3-symbols.kicad_sym</uri>
+    </library>
+    <library logical="nixie-tube-clock-2.1">
+      <uri>/Users/jimg/src/nixie-2/PCB/nixie-tube-clock-2.1.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="/D1-0">
+      <node ref="J3" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="U2" pin="16" pinfunction="~{Q0}" pintype="open_collector"/>
+    </net>
+    <net code="2" name="/D1-1">
+      <node ref="J3" pin="3" pinfunction="3" pintype="passive"/>
+      <node ref="U2" pin="15" pinfunction="~{Q1}" pintype="open_collector"/>
+    </net>
+    <net code="3" name="/D1-2">
+      <node ref="J3" pin="4" pinfunction="4" pintype="passive"/>
+      <node ref="U2" pin="8" pinfunction="~{Q2}" pintype="open_collector"/>
+    </net>
+    <net code="4" name="/D1-3">
+      <node ref="J3" pin="5" pinfunction="5" pintype="passive"/>
+      <node ref="U2" pin="9" pinfunction="~{Q3}" pintype="open_collector"/>
+    </net>
+    <net code="5" name="/D1-4">
+      <node ref="J3" pin="6" pinfunction="6" pintype="passive"/>
+      <node ref="U2" pin="13" pinfunction="~{Q4}" pintype="open_collector"/>
+    </net>
+    <net code="6" name="/D1-5">
+      <node ref="J3" pin="7" pinfunction="7" pintype="passive"/>
+      <node ref="U2" pin="14" pinfunction="~{Q5}" pintype="open_collector"/>
+    </net>
+    <net code="7" name="/D1-6">
+      <node ref="J3" pin="8" pinfunction="8" pintype="passive"/>
+      <node ref="U2" pin="11" pinfunction="~{Q6}" pintype="open_collector"/>
+    </net>
+    <net code="8" name="/D1-7">
+      <node ref="J3" pin="9" pinfunction="9" pintype="passive"/>
+      <node ref="U2" pin="10" pinfunction="~{Q7}" pintype="open_collector"/>
+    </net>
+    <net code="9" name="/D1-8">
+      <node ref="J3" pin="10" pinfunction="10" pintype="passive"/>
+      <node ref="U2" pin="1" pinfunction="~{Q8}" pintype="open_collector"/>
+    </net>
+    <net code="10" name="/D1-9">
+      <node ref="J3" pin="11" pinfunction="11" pintype="passive"/>
+      <node ref="U2" pin="2" pinfunction="~{Q9}" pintype="open_collector"/>
+    </net>
+    <net code="11" name="/D2-0">
+      <node ref="J4" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="U3" pin="16" pinfunction="~{Q0}" pintype="open_collector"/>
+    </net>
+    <net code="12" name="/D2-1">
+      <node ref="J4" pin="3" pinfunction="3" pintype="passive"/>
+      <node ref="U3" pin="15" pinfunction="~{Q1}" pintype="open_collector"/>
+    </net>
+    <net code="13" name="/D2-2">
+      <node ref="J4" pin="4" pinfunction="4" pintype="passive"/>
+      <node ref="U3" pin="8" pinfunction="~{Q2}" pintype="open_collector"/>
+    </net>
+    <net code="14" name="/D2-3">
+      <node ref="J4" pin="5" pinfunction="5" pintype="passive"/>
+      <node ref="U3" pin="9" pinfunction="~{Q3}" pintype="open_collector"/>
+    </net>
+    <net code="15" name="/D2-4">
+      <node ref="J4" pin="6" pinfunction="6" pintype="passive"/>
+      <node ref="U3" pin="13" pinfunction="~{Q4}" pintype="open_collector"/>
+    </net>
+    <net code="16" name="/D2-5">
+      <node ref="J4" pin="7" pinfunction="7" pintype="passive"/>
+      <node ref="U3" pin="14" pinfunction="~{Q5}" pintype="open_collector"/>
+    </net>
+    <net code="17" name="/D2-6">
+      <node ref="J4" pin="8" pinfunction="8" pintype="passive"/>
+      <node ref="U3" pin="11" pinfunction="~{Q6}" pintype="open_collector"/>
+    </net>
+    <net code="18" name="/D2-7">
+      <node ref="J4" pin="9" pinfunction="9" pintype="passive"/>
+      <node ref="U3" pin="10" pinfunction="~{Q7}" pintype="open_collector"/>
+    </net>
+    <net code="19" name="/D2-8">
+      <node ref="J4" pin="10" pinfunction="10" pintype="passive"/>
+      <node ref="U3" pin="1" pinfunction="~{Q8}" pintype="open_collector"/>
+    </net>
+    <net code="20" name="/D2-9">
+      <node ref="J4" pin="11" pinfunction="11" pintype="passive"/>
+      <node ref="U3" pin="2" pinfunction="~{Q9}" pintype="open_collector"/>
+    </net>
+    <net code="21" name="/LSD A">
+      <node ref="U1" pin="15" pinfunction="QA" pintype="tri_state"/>
+      <node ref="U2" pin="3" pinfunction="A" pintype="input"/>
+    </net>
+    <net code="22" name="/LSD B">
+      <node ref="U1" pin="1" pinfunction="QB" pintype="tri_state"/>
+      <node ref="U2" pin="6" pinfunction="B" pintype="input"/>
+    </net>
+    <net code="23" name="/LSD C">
+      <node ref="U1" pin="2" pinfunction="QC" pintype="tri_state"/>
+      <node ref="U2" pin="7" pinfunction="C" pintype="input"/>
+    </net>
+    <net code="24" name="/LSD D">
+      <node ref="U1" pin="3" pinfunction="QD" pintype="tri_state"/>
+      <node ref="U2" pin="4" pinfunction="D" pintype="input"/>
+    </net>
+    <net code="25" name="/MSD A">
+      <node ref="U1" pin="4" pinfunction="QE" pintype="tri_state"/>
+      <node ref="U3" pin="3" pinfunction="A" pintype="input"/>
+    </net>
+    <net code="26" name="/MSD B">
+      <node ref="U1" pin="5" pinfunction="QF" pintype="tri_state"/>
+      <node ref="U3" pin="6" pinfunction="B" pintype="input"/>
+    </net>
+    <net code="27" name="/MSD C">
+      <node ref="U1" pin="6" pinfunction="QG" pintype="tri_state"/>
+      <node ref="U3" pin="7" pinfunction="C" pintype="input"/>
+    </net>
+    <net code="28" name="/MSD D">
+      <node ref="U1" pin="7" pinfunction="QH" pintype="tri_state"/>
+      <node ref="U3" pin="4" pinfunction="D" pintype="input"/>
+    </net>
+    <net code="29" name="/T">
+      <node ref="J3" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="J4" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="R4" pin="2" pintype="passive"/>
+      <node ref="R5" pin="1" pintype="passive"/>
+    </net>
+    <net code="30" name="GND">
+      <node ref="J1" pin="6" pinfunction="Pin_6" pintype="passive"/>
+      <node ref="J2" pin="6" pinfunction="Pin_6" pintype="passive"/>
+      <node ref="Q1" pin="1" pinfunction="E" pintype="passive"/>
+      <node ref="R5" pin="2" pintype="passive"/>
+      <node ref="U1" pin="13" pinfunction="~{OE}" pintype="input"/>
+      <node ref="U1" pin="8" pinfunction="GND" pintype="power_in"/>
+      <node ref="U2" pin="12" pinfunction="GND" pintype="power_in"/>
+      <node ref="U3" pin="12" pinfunction="GND" pintype="power_in"/>
+    </net>
+    <net code="31" name="HV">
+      <node ref="J1" pin="7" pinfunction="Pin_7" pintype="passive"/>
+      <node ref="J2" pin="7" pinfunction="Pin_7" pintype="passive"/>
+      <node ref="Q2" pin="1" pinfunction="E" pintype="passive"/>
+      <node ref="R2" pin="1" pintype="passive"/>
+    </net>
+    <net code="32" name="HV_CNTRL">
+      <node ref="J1" pin="4" pinfunction="Pin_4" pintype="passive"/>
+      <node ref="J2" pin="4" pinfunction="Pin_4" pintype="passive"/>
+      <node ref="R1" pin="1" pintype="passive"/>
+    </net>
+    <net code="33" name="Net-(Q1-B)">
+      <node ref="Q1" pin="2" pinfunction="B" pintype="input"/>
+      <node ref="R1" pin="2" pintype="passive"/>
+    </net>
+    <net code="34" name="Net-(Q1-C)">
+      <node ref="Q1" pin="3" pinfunction="C" pintype="passive"/>
+      <node ref="R3" pin="2" pintype="passive"/>
+    </net>
+    <net code="35" name="Net-(Q2-B)">
+      <node ref="Q2" pin="2" pinfunction="B" pintype="input"/>
+      <node ref="R2" pin="2" pintype="passive"/>
+      <node ref="R3" pin="1" pintype="passive"/>
+    </net>
+    <net code="36" name="Net-(Q2-C)">
+      <node ref="Q2" pin="3" pinfunction="C" pintype="passive"/>
+      <node ref="R4" pin="1" pintype="passive"/>
+    </net>
+    <net code="37" name="RCLK">
+      <node ref="J1" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="J2" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="U1" pin="12" pinfunction="RCLK" pintype="input"/>
+    </net>
+    <net code="38" name="SER">
+      <node ref="J1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="U1" pin="14" pinfunction="SER" pintype="input"/>
+    </net>
+    <net code="39" name="SER_OUT">
+      <node ref="J2" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="U1" pin="9" pinfunction="QH'" pintype="output"/>
+    </net>
+    <net code="40" name="SRCLK">
+      <node ref="J1" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="J2" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="U1" pin="11" pinfunction="SRCLK" pintype="input"/>
+    </net>
+    <net code="41" name="VCC">
+      <node ref="J1" pin="5" pinfunction="Pin_5" pintype="passive"/>
+      <node ref="J2" pin="5" pinfunction="Pin_5" pintype="passive"/>
+      <node ref="U1" pin="10" pinfunction="~{SRCLR}" pintype="input"/>
+      <node ref="U1" pin="16" pinfunction="VCC" pintype="power_in"/>
+      <node ref="U2" pin="5" pinfunction="VCC" pintype="power_in"/>
+      <node ref="U3" pin="5" pinfunction="VCC" pintype="power_in"/>
+    </net>
+    <net code="42" name="unconnected-(J3-Pad12)">
+      <node ref="J3" pin="12" pinfunction="12" pintype="passive+no_connect"/>
+    </net>
+    <net code="43" name="unconnected-(J3-Pad13)">
+      <node ref="J3" pin="13" pinfunction="13" pintype="passive+no_connect"/>
+    </net>
+    <net code="44" name="unconnected-(J3-Pad14)">
+      <node ref="J3" pin="14" pinfunction="14" pintype="passive+no_connect"/>
+    </net>
+    <net code="45" name="unconnected-(J4-Pad12)">
+      <node ref="J4" pin="12" pinfunction="12" pintype="passive+no_connect"/>
+    </net>
+    <net code="46" name="unconnected-(J4-Pad13)">
+      <node ref="J4" pin="13" pinfunction="13" pintype="passive+no_connect"/>
+    </net>
+    <net code="47" name="unconnected-(J4-Pad14)">
+      <node ref="J4" pin="14" pinfunction="14" pintype="passive+no_connect"/>
+    </net>
+  </nets>
+</export>
