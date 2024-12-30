@@ -1,6 +1,6 @@
 
 #define INPUT_SWITCH 3            // D3
-#define INPUT_SWITCH_PORT PORTD3  // i.e., PD3, Used for faster reads
+//#define INPUT_SWITCH_PORT PORTD3  // i.e., PD3, Used for faster reads
 
 void set_date_time_mode_handler();
 

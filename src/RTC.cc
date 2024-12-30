@@ -167,11 +167,13 @@ void toggle_separator() {
     if (tick_tok) {
         // turn on separator
         // faster than digitalWrite()
-        PORTB &= ~_BV(SEPARATOR - 8);  // i.e., digitalWrite(SEPARATOR, LOW);
+        //PORTB &= ~_BV(SEPARATOR - 8);  // i.e., digitalWrite(SEPARATOR, LOW);
+        digitalWrite(SEPARATOR, HIGH);
         tick_tok = false;
     } else {
         // turn off separator
-        PORTB |= _BV(SEPARATOR - 8);  // digitalWrite(SEPARATOR, HIGH);
+        //PORTB |= _BV(SEPARATOR - 8);  // digitalWrite(SEPARATOR, HIGH);
+        digitalWrite(SEPARATOR, LOW);
         tick_tok = true;
     }
 }
