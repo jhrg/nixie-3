@@ -1,0 +1,8 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "nixie-2.1-extras")(type "KiCad")(uri "${HVPS_555}/2023-06-25_01-12-48.kicad_sym")(options "")(descr ""))
+  (lib (name "breakout-boards")(type "KiCad")(uri "${HVPS_555}/breakout_boards.kicad_sym")(options "")(descr ""))
+  (lib (name "nixie-2.1")(type "KiCad")(uri "${HVPS_555}/nixie-tube-clock-2.1.kicad_sym")(options "")(descr ""))
+  (lib (name "HV-PS")(type "KiCad")(uri "${HVPS_555}/Z573-power-Library.kicad_sym")(options "")(descr ""))
+  (lib (name "inductor")(type "KiCad")(uri "${HVPS_555}/2024-10-26_18-05-32.kicad_sym")(options "")(descr ""))
+)
