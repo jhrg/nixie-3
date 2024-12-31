@@ -20,8 +20,6 @@ volatile int brightness = 0;
 // 100 provides about 1mA average to each tube
 const int brightness_count[] = {255, 128, 76, 24, 0};
 
-// extern int HV_Control;  // defined in main.cpp
-
 #if 0
 /**
  * Return true if the input switch was pressed and released.

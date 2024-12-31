@@ -10,13 +10,6 @@
 #include "print.h"
 #include "pins.h"
 
-#if 0
-#define CLOCK_1HZ 2
-
-// SEPARATOR can be any pin between 8 and 13 inclusive (PORT B)
-#define SEPARATOR 9
-#endif
-
 #if USE_DS3231
 RTC_DS3231 rtc;
 #elif USE_DS1307

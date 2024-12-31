@@ -9,17 +9,6 @@
 
 #define BAUD_RATE 115200
 
-// Choose pins that cannot be used for hardware PWM
-//const int serialDataPin = SERIAL_DATA;  // DS aka SER (serial data) input
-//const int clockPin = SERIAL_CLK;         // SHCP aka SRCLK (shift register clock) input
-//const int latchPin = REGISTER_CLK;        // STCP aka RCLK (register clock/latch) input
-
-// OE (Output Enable) and SRCLR (Shift Register Clear)
-// OE is pulled low all the time for this code.
-// SRCLR is pulled high all the time for this code.
-
-// int HV_Control = HV_PWM_CONTROL;  // PWM brightness 980Hz on pins 5 and 6, otherwise 480Hz
-
 // BCD for 0, ..., 9 for the LSD, MSD.
 uint8_t LSD[10] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09};
 uint8_t MSD[10] = {0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80, 0x90};
