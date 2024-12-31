@@ -5,30 +5,31 @@
 #include "RTC.h"
 #include "mode_switch.h"
 #include "print.h"
+#include "pins.h"
 
 #define BAUD_RATE 115200
 
 // Choose pins that cannot be used for hardware PWM
-int serialDataPin = 8; // DS aka SER (serial data) input
-int clockPin = 4;      // SHCP aka SRCLK (shift register clock) input
-int latchPin = 7;      // STCP aka RCLK (register clock/latch) input
+//const int serialDataPin = SERIAL_DATA;  // DS aka SER (serial data) input
+//const int clockPin = SERIAL_CLK;         // SHCP aka SRCLK (shift register clock) input
+//const int latchPin = REGISTER_CLK;        // STCP aka RCLK (register clock/latch) input
 
 // OE (Output Enable) and SRCLR (Shift Register Clear)
 // OE is pulled low all the time for this code.
 // SRCLR is pulled high all the time for this code.
 
-int HV_Control = 5; // PWM brightness 980Hz on pins 5 and 6, otherwise 480Hz
+// int HV_Control = HV_PWM_CONTROL;  // PWM brightness 980Hz on pins 5 and 6, otherwise 480Hz
 
 // BCD for 0, ..., 9 for the LSD, MSD.
 uint8_t LSD[10] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09};
 uint8_t MSD[10] = {0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80, 0x90};
 
 /*
- * updateShiftRegister() - This function sets the latchPin to low,
+ * updateShiftRegister() - This function sets the REGISTER_CLK pin to low,
  * then calls the Arduino function 'shiftOut' to shift out contents
- * of variable 'data' in the shift register before putting the 'latchPin' high again.
+ * of variable 'data' in the shift register before putting 'REGISTER_CLK' high again.
  *
- * On a scope, it appears that the serialDataPin is left high or low depending
+ * On a scope, it appears that the SERIAL_DATA pin is left high or low depending
  * on the last bit value written. I set it LOW so that every call has the
  * same initial condition, although I'm not sure that difference matters to
  * the 595 chips.
@@ -41,10 +42,10 @@ uint8_t MSD[10] = {0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80, 0x90};
  * the PID controller could be dumped.
  */
 void updateShiftRegister(uint8_t data) {
-    digitalWrite(latchPin, LOW);
-    shiftOut(serialDataPin, clockPin, MSBFIRST, data);
-    digitalWrite(latchPin, HIGH);
-    digitalWrite(serialDataPin, LOW);
+    digitalWrite(REGISTER_CLK, LOW);
+    shiftOut(SERIAL_DATA, SERIAL_CLK, MSBFIRST, data);
+    digitalWrite(REGISTER_CLK, HIGH);
+    digitalWrite(SERIAL_DATA, LOW);
 }
 
 void setup() {
@@ -54,18 +55,18 @@ void setup() {
 
     RTC_setup();
 
-    pinMode(latchPin, OUTPUT);
-    pinMode(clockPin, OUTPUT);
-    pinMode(serialDataPin, OUTPUT);
+    pinMode(REGISTER_CLK, OUTPUT);
+    pinMode(SERIAL_CLK, OUTPUT);
+    pinMode(SERIAL_DATA, OUTPUT);
 
     pinMode(LED_BUILTIN, OUTPUT);
-    pinMode(HV_Control, OUTPUT);
+    pinMode(HV_PWM_CONTROL, OUTPUT);
     pinMode(INPUT_SWITCH, INPUT);
 
     attachInterrupt(digitalPinToInterrupt(INPUT_SWITCH), input_switch_push, RISING);
 
     digitalWrite(LED_BUILTIN, HIGH);
-    digitalWrite(HV_Control, HIGH); // Start out bright
+    digitalWrite(HV_PWM_CONTROL, HIGH);  // Start out bright
 
     // Flash random digits at start up.
     int digit_time_ms = 50;

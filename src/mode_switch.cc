@@ -4,6 +4,7 @@
 #include <Arduino.h>
 
 #include "print.h"
+#include "pins.h"
 
 #define SWITCH_INTERVAL 150     // ms
 #define SWITCH_PRESS_2S 2000    // 2 Seconds
@@ -19,7 +20,7 @@ volatile int brightness = 0;
 // 100 provides about 1mA average to each tube
 const int brightness_count[] = {255, 128, 76, 24, 0};
 
-extern int HV_Control;  // defined in main.cpp
+// extern int HV_Control;  // defined in main.cpp
 
 #if 0
 /**
@@ -61,7 +62,7 @@ void reset_input_button() {
 void input_switch_quick_press() {
     brightness = (brightness == sizeof(brightness_count)/sizeof(brightness_count[0]) - 1) ? 0 : brightness + 1;
     DPRINTV("brightness: %d\n", brightness);
-    analogWrite(HV_Control, brightness_count[brightness]);
+    analogWrite(HV_PWM_CONTROL, brightness_count[brightness]);
 }
 
 /**
