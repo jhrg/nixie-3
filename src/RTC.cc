@@ -94,9 +94,11 @@ void timer_2HZ_tick_ISR() {
     static volatile bool tick_tok = true;
 
     if (tick_tok) {
+        attachInterrupt(digitalPinToInterrupt(CLOCK_1HZ), timer_2HZ_tick_ISR, FALLING);
         tick_tok = false;
         update_display = true;
     } else {
+        attachInterrupt(digitalPinToInterrupt(CLOCK_1HZ), timer_2HZ_tick_ISR, RISING);
         tick_tok = true;
     }
 }
@@ -153,7 +155,7 @@ void RTC_setup() {
     pinMode(CLOCK_1HZ, INPUT_PULLUP);
 
     // time_2Hz_tick_ISR() sets a flag that is tested in loop()
-    attachInterrupt(digitalPinToInterrupt(CLOCK_1HZ), timer_2HZ_tick_ISR, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(CLOCK_1HZ), timer_2HZ_tick_ISR, RISING);
 
     sei(); // start interrupts
 }

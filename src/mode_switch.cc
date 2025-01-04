@@ -16,6 +16,7 @@ volatile enum switch_press_duration input_switch_press = none;
 
 // Set using an interrupt; see mode_switch.cc/h
 volatile int brightness = 0;
+volatile enum display_mode the_display_mode = mm_ss;
 
 // 100 provides about 1mA average to each tube
 const int brightness_count[] = {255, 128, 76, 24, 0};
@@ -63,6 +64,19 @@ void input_switch_quick_press() {
     analogWrite(HV_PWM_CONTROL, brightness_count[brightness]);
 }
 
+void input_switch_medium_press() {
+    switch (the_display_mode) {
+        case mm_ss:
+            the_display_mode = hh_mm;
+            break;
+
+        case hh_mm:
+            the_display_mode = mm_ss;
+            break;
+    };
+    DPRINTV("display mode: %s\n", the_display_mode == mm_ss ? "MM:SS" : "HH:MM");
+}
+
 /**
  * Assume that poll_input_switch() returns true.
  *
@@ -74,7 +88,9 @@ void process_input_switch_press() {
         case none:
             return;
         case long_5s:
+            break;
         case medium_2s:
+            input_switch_medium_press();
             break;
         case quick:
             input_switch_quick_press();

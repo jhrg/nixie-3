@@ -10,6 +10,11 @@ enum switch_press_duration {
     long_5s     // 5s
 };
 
+enum display_mode {
+    mm_ss,
+    hh_mm
+};
+
 void input_switch_push();
 void input_switch_release();
 

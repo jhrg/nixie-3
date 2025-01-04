@@ -13,3 +13,4 @@ extern volatile int digit_5;
 
 void RTC_setup();
 bool time_update_handler();
+void toggle_separator();

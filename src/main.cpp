@@ -9,6 +9,10 @@
 
 #define BAUD_RATE 115200
 
+// int digit_mode = 1;   // 1 = MM:SS, 2 = HH:MM
+extern volatile enum display_mode the_display_mode; // initialized to mm_ss
+
+
 // BCD for 0, ..., 9 for the LSD, MSD.
 uint8_t LSD[10] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09};
 uint8_t MSD[10] = {0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80, 0x90};
@@ -83,9 +87,19 @@ void loop() {
     // hv_ps_adjust();
 
     if (time_update_handler()) {
-        bits[0] = MSD[digit_3] | LSD[digit_2];
-        bits[1] = MSD[digit_1] | LSD[digit_0];
-        // I don't know for sure that these calls are needed. They seem to
+        switch (the_display_mode) {
+            case mm_ss:
+                bits[0] = MSD[digit_3] | LSD[digit_2];
+                bits[1] = MSD[digit_1] | LSD[digit_0];
+                break;
+
+            case hh_mm:
+                bits[0] = MSD[digit_5] | LSD[digit_4];
+                bits[1] = MSD[digit_3] | LSD[digit_2];
+                break;
+        };
+
+         // I don't know for sure that these calls are needed. They seem to
         // do no harm.
         cli();
         updateShiftRegister(bits[1]);
