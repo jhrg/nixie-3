@@ -3,15 +3,15 @@
 #include <PinChangeInterrupt.h>
 
 #include "RTC.h"
-#include "mode_switch.h"
-#include "print.h"
+#include "mode_switch2.h"
 #include "pins.h"
+#include "print.h"
 
 #define BAUD_RATE 115200
 
-// int digit_mode = 1;   // 1 = MM:SS, 2 = HH:MM
-extern volatile enum display_mode the_display_mode; // initialized to mm_ss
+volatile int brightness = 0;
 
+const int brightness_count[] = {255, 128, 76, 24, 0};
 
 // BCD for 0, ..., 9 for the LSD, MSD.
 uint8_t LSD[10] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09};
@@ -47,19 +47,23 @@ void setup() {
     flush();
 
     RTC_setup();
+    mode_switch_setup();
 
+    cli();
     pinMode(REGISTER_CLK, OUTPUT);
     pinMode(SERIAL_CLK, OUTPUT);
     pinMode(SERIAL_DATA, OUTPUT);
 
     pinMode(LED_BUILTIN, OUTPUT);
     pinMode(HV_PWM_CONTROL, OUTPUT);
-    pinMode(INPUT_SWITCH, INPUT);
+#if 0
+    pinMode(INPUT_SWITCH, INPUT_PULLUP);
 
     attachInterrupt(digitalPinToInterrupt(INPUT_SWITCH), input_switch_push, RISING);
-
+#endif
     digitalWrite(LED_BUILTIN, HIGH);
     digitalWrite(HV_PWM_CONTROL, HIGH);  // Start out bright
+    sei();
 
     // Flash random digits at start up.
     int digit_time_ms = 50;
@@ -81,10 +85,41 @@ void setup() {
     digitalWrite(LED_BUILTIN, LOW);
 }
 
+void input_switch_quick_press() {
+    brightness = (brightness == sizeof(brightness_count) / sizeof(brightness_count[0]) - 1) ? 0 : brightness + 1;
+    DPRINTV("brightness: %d\n", brightness);
+    analogWrite(HV_PWM_CONTROL, brightness_count[brightness]);
+}
+
+void input_switch_medium_press(enum display_mode &the_display_mode) {
+    switch (the_display_mode) {
+        case mm_ss:
+            the_display_mode = hh_mm;
+            break;
+
+        case hh_mm:
+            the_display_mode = mm_ss;
+            break;
+    };
+    DPRINTV("display mode: %s\n", the_display_mode == mm_ss ? "MM:SS" : "HH:MM");
+}
+
 void loop() {
     uint8_t bits[2]; // 1 is the LSD pair, 0 the MSD pair
+    enum display_mode the_display_mode;  // initialized to mm_ss
 
     // hv_ps_adjust();
+
+    switch (read_button()) {
+        case quick:
+            input_switch_quick_press();
+            break;
+        case medium_2s:
+            input_switch_medium_press(the_display_mode);
+            break;
+        default:
+            break;
+    }
 
     if (time_update_handler()) {
         switch (the_display_mode) {
