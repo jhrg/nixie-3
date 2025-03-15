@@ -1,4 +1,7 @@
 
+#ifndef mode_switch_h_
+#define mode_switch_h_
+
 enum switch_press_duration {
     none,
     quick,      // momentary
@@ -13,3 +16,5 @@ enum display_mode {
 
 enum switch_press_duration read_button();
 void mode_switch_setup();
+
+#endif

@@ -5,6 +5,9 @@
  * James Gallagher <jhrg@mac.com>
  */
 
+#ifndef print_h_
+#define print_h_
+
 void print(const char *fmt, ...);
 void print(const __FlashStringHelper *fmt, ...);
 
@@ -25,4 +28,6 @@ void flush();
 #define DPRINT(fmt)
 
 #define DPRINTF(fmt, f)
+#endif
+
 #endif

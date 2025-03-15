@@ -3,24 +3,24 @@
 //  This example and code is in the public domain and may  be used without restriction and
 //  without warranty.
 //
-// Exmple sketch  - Button Switch Using An External Interrupt
+// Example sketch  - Button Switch Using An External Interrupt
 // '''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 //  This sketch demonstrates the use of a simple button switch which is processed by
 //  an external interrupt process.  It presents a very different and alternative approach
 //  for associating a button switch to an interrupt.
 //
-// The sketch is designed  such that button status is only flagged as 'switched' AFTER
-// 1. button is pressed  AND then released, AND
+// The sketch is designed such that button status is only flagged as 'switched' AFTER
+// 1. button is pressed AND then released, AND
 // 2. elapse of the debounce period AFTER release
 //
 //  Note that the associated button interrupt handler function and the button_read()
 //  function work together - the interrupt handler starts the on/off process and the
-//  button_read() function completes/concludes it.  The interrupt handler can only restart  AFTER
-// button reading and debounce is complete.  This ensures that only one  interrupt trigger is
-// processed at a time.
+//  button_read() function completes/concludes it.  The interrupt handler can only restart AFTER
+//  button reading and debounce is complete.  This ensures that only one interrupt trigger is
+//  processed at a time.
 //
-// The button switch is  wired in a standard configuration with a 10K ohm pull down resister which
-//  ensures the digital interrupt pin is kept LOW until the button switch is pressed  and
+// The button switch is wired in a standard configuration with a 10K ohm pull down resister which
+// ensures the digital interrupt pin is kept LOW until the button switch is pressed  and
 // raises it to HIGH (+5v).
 //
 // Operation of the button is demonstrated  by toggling the in built LED on and off.
@@ -30,7 +30,7 @@
 
 #include <Arduino.h>
 
-#include "mode_switch.h"
+#include "mode_switch2.h"
 #include "pins.h"
 #include "print.h"
 
@@ -128,7 +128,7 @@ void mode_switch_setup() {
 
 #if 0
 void loop() {
-    // test buton switch and process  if pressed
+    // test button switch and process  if pressed
     if (read_button() == switched) {
         // button on/off cycle now  complete, so flip LED between HIGH and LOW
         led_status = HIGH - led_status;  // toggle state

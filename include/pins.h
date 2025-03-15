@@ -2,6 +2,9 @@
  * @brief The pins used by the project, in one place.
  */
 
+#ifndef pins_h_
+#define pins_h_
+
 // The DS3231 clock chip 1Hz square wave input. Triggers an interrupt
 // on both the rising and falling edge for a 2Hz event.
 #define CLOCK_1HZ 2
@@ -29,3 +32,5 @@
 // The flashing colon, flashes once per second. SEPARATOR can be
 // any pin between 8 and 13 inclusive (PORT B)
 #define SEPARATOR 9
+
+#endif
