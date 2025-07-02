@@ -5,7 +5,8 @@ Here’s how you size the series resistor (and check its power) step-by-step:
 
 1. List your parameters
 
-Supply voltage: $VV_\text{in}=180\text{ V}$
+Supply voltage: 
+$VV_\text{in}=180\text{ V}$
 
 Zener voltage: $VV_Z=91\text{ V}$ (measured at its test current $I_{Zt}=4\text{ mA}$)
 
