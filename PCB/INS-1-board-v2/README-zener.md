@@ -6,15 +6,11 @@ Here’s how you size the series resistor (and check its power) step-by-step:
 1. List your parameters
 Supply voltage: $Vin=180$ $VV_\text{in}=180\text{ V}$
 
+Zener voltage: $VV_Z=91\text{ V}$ (measured at its test current $I_{Zt}=4\text{ mA}$)
 
-Zener voltage: $VZ=91$ $VV_Z=91\text{ V}$ (measured at its test current $IZt=4mA$ $I_{Zt}=4\text{ mA}$)
+Tube load current: two tubes × 0.5 mA each ⇒ $I_L=1\text{ mA}$
 
-Tube load current: two tubes × 0.5 mA each ⇒ IL=1 mAI_L=1\text{ mA}
-
-
-Desired Zener bias: use the datasheet test current, IZ,bias=IZt=4 mAI_{Z,\text{bias}}=I_{Zt}=4\text{ mA}
-
-
+Desired Zener bias: use the datasheet test current, $I_{Z,\text{bias}}=I_{Zt}=4\text{ mA}$
 
 2. Compute resistor value
 You need to supply both load and Zener bias current through RR.
