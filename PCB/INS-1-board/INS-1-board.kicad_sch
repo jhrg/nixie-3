@@ -10,7 +10,7 @@
 		(rev "0.9")
 		(company "James Gallagher")
 		(comment 1 "Flash two INS-1 Nixie tubes")
-		(comment 2 "74v Zener lowers the strike voltage. Each tube draw 0.5mA")
+		(comment 2 "74v Zener lowers the strike voltage. Each tube draws 0.5mA")
 	)
 	(lib_symbols
 		(symbol "Device:R"
