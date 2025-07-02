@@ -4,7 +4,7 @@ Asking ChatGPT about a Power supply for INS-1 Nixie tubes using a zener diode.
 Here’s how you size the series resistor (and check its power) step-by-step:
 
 1. List your parameters
-Supply voltage: Vin=180 VV_\text{in}=180\text{ V}
+Supply voltage: $Vin=180 VV_\text{in}=180\text{ V}$
 
 
 Zener voltage: VZ=91 VV_Z=91\text{ V} (measured at its test current IZt=4 mAI_{Zt}=4\text{ mA})
