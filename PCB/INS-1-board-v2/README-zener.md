@@ -97,7 +97,7 @@ Adding an emitter–follower (i.e. a high-voltage NPN or N-channel device acting
 5. **Voltage-drop considerations**
 
    * The emitter sits one
-     $V\_BE* (\~0.6–0.8 V) below the Zener.  So if you clamp the base at 91 V, your tubes see \~90.2 V.  Make sure that still exceeds their strike voltage (91 V) or bump the Zener up a notch (e.g. 92 V).
+     $V\_BE$ (\~0.6–0.8 V) below the Zener.  So if you clamp the base at 91 V, your tubes see \~90.2 V.  Make sure that still exceeds their strike voltage (91 V) or bump the Zener up a notch (e.g. 92 V).
 
 ---
 
