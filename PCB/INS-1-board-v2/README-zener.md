@@ -13,7 +13,8 @@ $VV_Z=91\text{ V}$ (measured at its test current $I_{Zt}=4\text{ mA}$)
 
 Tube load current: two tubes × 0.5 mA each ⇒ $I_L=1\text{ mA}$
 
-Desired Zener bias: use the datasheet test current, $I_{Z,\text{bias}}=I_{Zt}=4\text{ mA}$
+Desired Zener bias: use the datasheet test current, 
+$I_{Z,\text{bias}}=I_{Zt}=4\text{ mA}$
 
 2. Compute resistor value
 You need to supply both load and Zener bias current through RR.
@@ -22,8 +23,8 @@ Use the nearest standard: 18 kΩ.
 
 3. Check currents (at any Vin variation)
 At nominal 180 V:
- $IR=180−9118 kΩ≈4.94 mA⟹IZ=IR−IL≈4.94−1=3.94 mA I_R = \frac{180-91}{18\,\text{kΩ}}\approx4.94\text{ mA} \quad\Longrightarrow\quad I_Z = I_R - I_L \approx 4.94 - 1 = 3.94\text{ mA}$
- That’s essentially your 4 mA bias—right at the knee.
+$IR=180−9118 kΩ≈4.94 mA⟹IZ=IR−IL≈4.94−1=3.94 mA I_R = \frac{180-91}{18\,\text{kΩ}}\approx4.94\text{ mA} \quad\Longrightarrow\quad I_Z = I_R - I_L \approx 4.94 - 1 = 3.94\text{ mA}$
+That’s essentially your 4 mA bias—right at the knee.
 
 
 If your supply dipped to, say, 175 V:
@@ -52,12 +53,9 @@ Zener:
 5. Final parts choice
 Series resistor: 18 kΩ, 1 W
 
-
 Zener diode: 91 V, ≥ 0.5 W (1 W preferred)
 
-
 Optional: a small (0.1 µF–1 µF) bypass cap across the Zener if you ever see switching noise—though you said your supply is very clean, so it’s not strictly needed.
-
 
 With that in place, your two Nixies (1 mA total) will see a rock-steady 91 V clamp, fed from your 180 V rail via the 18 kΩ/1 W resistor.
 Asking about using the common emitter-follower + zener configuration
@@ -69,9 +67,7 @@ Adding an emitter–follower (i.e. a high-voltage NPN or N-channel device acting
    * In our straight Zener clamp, the series resistor had to supply $I_L + I_{Z}$, e.g. 1 mA for the tubes plus 4 mA for the Zener → 5 mA total.
    * With an emitter-follower, the Zener only needs to supply the transistor’s base current:
 
-     $$
-       I_B \approx \frac{I_E}{\beta}
-     $$
+     $I_B \approx \frac{I_E}{\beta}$
 
      If your transistor has a DC current gain ($\beta$) of, say, 100, then for 1 mA emitter current you only need \~10 µA of base current.  You’d typically pick a few tens of µA of Zener bias (say 50 µA) to keep it in regulation—two orders of magnitude less than before.
 
@@ -79,16 +75,12 @@ Adding an emitter–follower (i.e. a high-voltage NPN or N-channel device acting
 
    * Old design:
 
-     $$
-       P_R = (180 - 91)\,\text{V} \times 5\,\text{mA} \approx 0.445\,\text{W}
-     $$
+     $P_R = (180 - 91)\,\text{V} \times 5\,\text{mA} \approx 0.445\,\text{W}$
 
      ⇒ needed a ≥1 W resistor.
    * Emitter-follower design: if you set $I_{Z}+I_B\approx50\,\mu\text{A}$,
 
-     $$
-       P_R = 89\,\text{V} \times 50\,\mu\text{A} \approx 4.5\,\text{mW}
-     $$
+     $P_R = 89\,\text{V} \times 50\,\mu\text{A} \approx 4.5\,\text{mW}$
 
      ⇒ a tiny 1/10 W (or even 1/20 W) part is plenty.
 
@@ -99,11 +91,13 @@ Adding an emitter–follower (i.e. a high-voltage NPN or N-channel device acting
 
 4. **Where the power goes**
 
-   * The transistor now drops roughly the same 89 V at 1 mA, so $P_{\!Q}\approx89\,\text{mW}$.  That’s still small—any small HV-rated transistor (or MOSFET source follower) can handle it without a heat-sink.
+   * The transistor now drops roughly the same 89 V at 1 mA, so
+     $P_{\!Q}\approx89\,\text{mW}$.  That’s still small—any small HV-rated transistor (or MOSFET source follower) can handle it without a heat-sink.
 
 5. **Voltage-drop considerations**
 
-   * The emitter sits one V\_BE (\~0.6–0.8 V) below the Zener.  So if you clamp the base at 91 V, your tubes see \~90.2 V.  Make sure that still exceeds their strike voltage (91 V) or bump the Zener up a notch (e.g. 92 V).
+   * The emitter sits one
+     $V\_BE* (\~0.6–0.8 V) below the Zener.  So if you clamp the base at 91 V, your tubes see \~90.2 V.  Make sure that still exceeds their strike voltage (91 V) or bump the Zener up a notch (e.g. 92 V).
 
 ---
 
