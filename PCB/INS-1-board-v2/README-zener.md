@@ -1,34 +1,36 @@
-Zener diode power sources for INS-1 Nixie Tubes
-July 1, 2025
+## Zener diode power sources for INS-1 Nixie Tubes
+### July 1, 2025
 Asking ChatGPT about a Power supply for INS-1 Nixie tubes using a zener diode.
 Here’s how you size the series resistor (and check its power) step-by-step:
 
 1. List your parameters
 
 Supply voltage: 
-$VV_\text{in}=180\text{ V}$
+$VV_\text{in}=180\text{V}$
 
 Zener voltage: 
-$VV_Z=91\text{ V}$ (measured at its test current $I_{Zt}=4\text{ mA}$)
+$VV_Z=91\text{V}$ (measured at its test current $I_{Zt}=4\text{mA}$)
 
-Tube load current: two tubes × 0.5 mA each ⇒ $I_L=1\text{ mA}$
+Tube load current: two tubes × 0.5mA each ⇒ $I_L=1\text{mA}$
 
-Desired Zener bias: use the datasheet test current, 
-$I_{Z,\text{bias}}=I_{Zt}=4\text{ mA}$
+Desired Zener bias: use the data sheet test current, 
+$I_{Z,\text{bias}}=I_{Zt}=4\text{mA}$
 
 2. Compute resistor value
 You need to supply both load and Zener bias current through RR.
-$R  =  Vin−VZIL+IZ,bias=180−911 mA+4 mA=89 V5 mA=17.8 kΩR \;=\;\frac{V_\text{in}-V_Z}{I_L + I_{Z,\text{bias}}} =\frac{180-91}{1\,\text{mA}+4\,\text{mA}} =\frac{89\text{ V}}{5\text{ mA}} =17.8\text{ kΩ}$
+$RR = \frac{V_\text{in}-V_Z}{I_L + I_{Z,\text{bias}}} =\frac{180-91}{1\,\text{mA}+4\,\text{mA}} =\frac{89\text{V}}{5\text{mA}} =17.8\text{kΩ}$
 Use the nearest standard: 18 kΩ.
 
-3. Check currents (at any Vin variation)
+1. Check currents (at any Vin variation)
 At nominal 180 V:
-$IR=180−9118 kΩ≈4.94 mA⟹IZ=IR−IL≈4.94−1=3.94 mA I_R = \frac{180-91}{18\,\text{kΩ}}\approx4.94\text{ mA} \quad\Longrightarrow\quad I_Z = I_R - I_L \approx 4.94 - 1 = 3.94\text{ mA}$
-That’s essentially your 4 mA bias—right at the knee.
+IR=180−9118 kΩ≈4.94 mA⟹IZ=IR−IL≈4.94−1=3.94 mA 
+$I_R = \frac{180-91}{18\,\text{kΩ}}\approx4.94\text{ mA} \quad\Longrightarrow\quad I_Z = I_R - I_L \approx 4.94 - 1 = 3.94\text{ mA}$
+That’s essentially the 4 mA bias—right at the knee.
 
 
-If your supply dipped to, say, 175 V:
- $IR=175−9118 kΩ≈4.67 mA⟹IZ≈3.67 mA I_R = \frac{175-91}{18\,\text{kΩ}}\approx4.67\text{ mA} \quad\Longrightarrow\quad I_Z\approx3.67\text{ mA}$
+If the supply dipped to, say, 175 V:
+ $IR=175−9118 kΩ≈4.67 mA⟹IZ≈3.67 mA 
+ $I_R = \frac{175-91}{18\,\text{kΩ}}\approx4.67\text{ mA} \quad\Longrightarrow\quad I_Z\approx3.67\text{ mA}$
  Still above the knee current, so regulation holds.
 
 
