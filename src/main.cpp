@@ -109,8 +109,6 @@ void loop() {
     uint8_t bits[2]; // 1 is the LSD pair, 0 the MSD pair
     enum display_mode the_display_mode;  // initialized to mm_ss
 
-    // hv_ps_adjust();
-
     switch (read_button()) {
         case quick:
             input_switch_quick_press();
@@ -135,7 +133,7 @@ void loop() {
                 break;
         };
 
-         // I don't know for sure that these calls are needed. They seem to
+        // I don't know for sure that these calls are needed. They seem to
         // do no harm.
         cli();
         updateShiftRegister(bits[1]);

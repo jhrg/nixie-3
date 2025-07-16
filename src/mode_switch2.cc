@@ -54,13 +54,13 @@ volatile bool interrupt_process_status = {
     !triggered  // start with no switch press pending,  i.e., false (!triggered)
 };
 
-bool initialisation_complete = false;  // inhibit any interrupts until initialisation is complete
+bool initialization_complete = false;  // inhibit any interrupts until initialization is complete
 
 //
 // ISR for  handling interrupt triggers arising from associated button switch
 //
 void button_interrupt_handler() {
-    if (initialisation_complete == true) {  //  all variables are initialised so we are okay to continue to process this interrupt
+    if (initialization_complete == true) {  //  all variables are initialised so we are okay to continue to process this interrupt
         if (interrupt_process_status == !triggered) {
             // new interrupt so okay  start a new button read process -
             // now need to wait for button release  plus debounce period to elapse
@@ -116,15 +116,16 @@ enum switch_press_duration read_button() {
 }  // end of read_button function
 
 void mode_switch_setup() {
-#if 0
-    pinMode(LED, OUTPUT);
-#endif
+    cli();  // stop interrupts
+
     pinMode(INPUT_SWITCH, INPUT);
     attachInterrupt(digitalPinToInterrupt(INPUT_SWITCH),
                     button_interrupt_handler,
                     interrupt_trigger_type);
-    initialisation_complete = true;  // open interrupt processing for business
-}  // end of setup function
+    initialization_complete = true;  // open interrupt processing for business
+
+    sei();  // start interrupts
+} 
 
 #if 0
 void loop() {
