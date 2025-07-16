@@ -6,61 +6,54 @@ Here’s how you size the series resistor (and check its power) step-by-step:
 1. List your parameters
 
 Supply voltage: 
-$VV_\text{in}=180\text{V}$
+$VV_\text{in}=180\text{ V}$
 
 Zener voltage: 
-$VV_Z=91\text{V}$ (measured at its test current $I_{Zt}=4\text{mA}$)
+$VV_Z=91\text{V}$ (measured at its test current $I_{Zt}=4\text{ mA}$)
 
-Tube load current: two tubes × 0.5mA each ⇒ $I_L=1\text{mA}$
+Tube load current: two tubes × 0.5 mA each ⇒ $I_L=1\text{ mA}$
 
 Desired Zener bias: use the data sheet test current, 
-$I_{Z,\text{bias}}=I_{Zt}=4\text{mA}$
+$I_{Z,\text{bias}}=I_{Zt}=4\text{ mA}$
 
 2. Compute resistor value
 You need to supply both load and Zener bias current through RR.
-$RR = \frac{V_\text{in}-V_Z}{I_L + I_{Z,\text{bias}}} =\frac{180-91}{1\,\text{mA}+4\,\text{mA}} =\frac{89\text{V}}{5\text{mA}} =17.8\text{kΩ}$
+$RR = \frac{V_\text{in}-V_Z}{I_L + I_{Z,\text{bias}}} =\frac{180-91}{1\,\text{ mA}+4\,\text{ mA}} =\frac{89\text{ V}}{5\text{ mA}} =17.8\text{ kΩ}$
 Use the nearest standard: 18 kΩ.
 
-1. Check currents (at any Vin variation)
+3. Check currents (at any Vin variation)
 At nominal 180 V:
-IR=180−9118 kΩ≈4.94 mA⟹IZ=IR−IL≈4.94−1=3.94 mA 
 $I_R = \frac{180-91}{18\,\text{kΩ}}\approx4.94\text{ mA} \quad\Longrightarrow\quad I_Z = I_R - I_L \approx 4.94 - 1 = 3.94\text{ mA}$
 That’s essentially the 4 mA bias—right at the knee.
 
 
 If the supply dipped to, say, 175 V:
- $IR=175−9118 kΩ≈4.67 mA⟹IZ≈3.67 mA 
  $I_R = \frac{175-91}{18\,\text{kΩ}}\approx4.67\text{ mA} \quad\Longrightarrow\quad I_Z\approx3.67\text{ mA}$
  Still above the knee current, so regulation holds.
 
 
 If it rose to 185 V:
- $IR=185−9118 kΩ≈5.22 mA⟹IZ≈4.22 mA I_R = \frac{185-91}{18\,\text{kΩ}}\approx5.22\text{ mA} \quad\Longrightarrow\quad I_Z\approx4.22\text{ mA}$
+ $I_R = \frac{185-91}{18\,\text{kΩ}}\approx5.22\text{ mA} \quad\Longrightarrow\quad I_Z\approx4.22\text{ mA}$
  Well below any damaging level.
 
-
-
 4. Check power dissipation
-Resistor:
+   1. Resistor:
  $PR=(Vin−VZ)×IR≈89 V×0.005 A=0.445 W P_R = (V_\text{in}-V_Z)\times I_R \approx 89\text{ V}\times0.005\text{ A} =0.445\text{ W}$
  ⇒ use at least a 1 W resistor (or a ½ W with good ventilation, but 1 W is safer).
-
-
-Zener:
+   1. Zener:
  $PZ=VZ×IZ,bias=91 V×0.004 A=0.364 W P_Z = V_Z \times I_{Z,\text{bias}} =91\text{ V}\times0.004\text{ A} =0.364\text{ W}$
  ⇒ choose a Zener rated ≥ ½ W (or 1 W for head-room).
-
-
 
 5. Final parts choice
 Series resistor: 18 kΩ, 1 W
 
 Zener diode: 91 V, ≥ 0.5 W (1 W preferred)
 
-Optional: a small (0.1 µF–1 µF) bypass cap across the Zener if you ever see switching noise—though you said your supply is very clean, so it’s not strictly needed.
+Optional: a small (0.1 µF–1 µF) bypass cap across the Zener if you ever see switching noise—though if your supply is very clean, it’s not strictly needed.
 
 With that in place, your two Nixies (1 mA total) will see a rock-steady 91 V clamp, fed from your 180 V rail via the 18 kΩ/1 W resistor.
-Asking about using the common emitter-follower + zener configuration
+
+About using the common emitter-follower + zener configuration
 
 Adding an emitter–follower (i.e. a high-voltage NPN or N-channel device acting as a buffer) behind your Zener lets the Zener only source the transistor’s base (or gate) current instead of the entire tube load.  In practice that means:
 
