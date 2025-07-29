@@ -177,9 +177,8 @@ enum switch_press_duration read_button_2() {
 }  // end of read_2_button function
 
 void mode_switch_setup() {
-#if 0
-    pinMode(LED, OUTPUT);
-#endif
+    cli();  // stop interrupts
+
     pinMode(INPUT_SWITCH, INPUT);
     attachInterrupt(digitalPinToInterrupt(INPUT_SWITCH),
                     button_1_interrupt_handler,
@@ -191,6 +190,7 @@ void mode_switch_setup() {
                 button_2_interrupt_handler,
                 interrupt_trigger_type);
  
+
     initialization_complete = true;  // open interrupt processing for business
 
     sei();  // start interrupts

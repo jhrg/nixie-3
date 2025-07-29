@@ -16,6 +16,10 @@ RTC_DS3231 rtc;
 RTC_DS1307 rtc;
 #endif
 
+extern volatile int brightness;  // defined in main.cpp
+
+extern const int brightness_count[];  // See main.cpp for the definition of this. 7/15/25 jhrg
+
 // The global value of time - enables advancing time without I2C use. This
 // is global so the value set in setup() will be available initially in the loop().
 //
@@ -165,12 +169,13 @@ void toggle_separator() {
     if (tick_tok) {
         // turn on separator
         // faster than digitalWrite()
-        //PORTB &= ~_BV(SEPARATOR - 8);  // i.e., digitalWrite(SEPARATOR, LOW);
-        digitalWrite(SEPARATOR, HIGH);
+        // PORTB &= ~_BV(SEPARATOR - 8);  // i.e., digitalWrite(SEPARATOR, LOW);
+        analogWrite(SEPARATOR, brightness_count[brightness]);
+        // digitalWrite(SEPARATOR, HIGH); 7/15//25 jhrg
         tick_tok = false;
     } else {
         // turn off separator
-        //PORTB |= _BV(SEPARATOR - 8);  // digitalWrite(SEPARATOR, HIGH);
+        // PORTB |= _BV(SEPARATOR - 8);  // digitalWrite(SEPARATOR, HIGH);
         digitalWrite(SEPARATOR, LOW);
         tick_tok = true;
     }

@@ -10,8 +10,9 @@
 #define BAUD_RATE 115200
 
 volatile int brightness = 0;
-
-const int brightness_count[] = {255, 128, 76, 24, 0};
+// Because this is C++, the definition must use 'extern' for this to be visible
+// in another source file (i.e., translation unit). See RTC.cc. 7/15/25 jhrg
+extern const int brightness_count[] = {255, 128, 76, 24, 0};
 
 // BCD for 0, ..., 9 for the LSD, MSD.
 uint8_t LSD[10] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09};
@@ -132,7 +133,7 @@ void loop() {
                 break;
         };
 
-         // I don't know for sure that these calls are needed. They seem to
+        // I don't know for sure that these calls are needed. They seem to
         // do no harm.
         cli();
         updateShiftRegister(bits[1]);
