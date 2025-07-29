@@ -108,13 +108,7 @@ void loop() {
     uint8_t bits[2]; // 1 is the LSD pair, 0 the MSD pair
     enum display_mode the_display_mode;  // initialized to mm_ss
 
-<<<<<<< Updated upstream
-    // hv_ps_adjust();
-
-    switch (read_button()) {
-=======
     switch (read_button_1()) {
->>>>>>> Stashed changes
         case quick:
             input_switch_quick_press();
             break;

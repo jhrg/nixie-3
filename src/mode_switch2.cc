@@ -59,20 +59,14 @@ volatile bool interrupt_process_2_status = {
     !triggered  // start with no switch press pending,  i.e., false (!triggered)
 };
 
-bool initialisation_complete = false;  // inhibit any interrupts until initialisation is complete
+bool initialization_complete = false;  // inhibit any interrupts until initialisation is complete
 
 //
 // ISR for  handling interrupt triggers arising from associated button switch
 //
-<<<<<<< Updated upstream
-void button_interrupt_handler() {
-    if (initialisation_complete == true) {  //  all variables are initialised so we are okay to continue to process this interrupt
-        if (interrupt_process_status == !triggered) {
-=======
 void button_1_interrupt_handler() {
     if (initialization_complete == true) {  //  all variables are initialised so we are okay to continue to process this interrupt
         if (interrupt_process_1_status == !triggered) {
->>>>>>> Stashed changes
             // new interrupt so okay  start a new button read process -
             // now need to wait for button release  plus debounce period to elapse
             // this will be done in the button_read  function
@@ -190,10 +184,6 @@ void mode_switch_setup() {
     attachInterrupt(digitalPinToInterrupt(INPUT_SWITCH),
                     button_1_interrupt_handler,
                     interrupt_trigger_type);
-<<<<<<< Updated upstream
-    initialisation_complete = true;  // open interrupt processing for business
-}  // end of setup function
-=======
 
     pinMode(MODE_SWITCH, INPUT);
     // Attach the new PinChangeInterrupt and enable event function below
@@ -205,7 +195,6 @@ void mode_switch_setup() {
 
     sei();  // start interrupts
 } 
->>>>>>> Stashed changes
 
 #if 0
 void loop() {
