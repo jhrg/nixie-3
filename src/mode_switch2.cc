@@ -1,5 +1,4 @@
-//
-//
+
 //  This example and code is in the public domain and may  be used without restriction and
 //  without warranty.
 //
@@ -28,9 +27,11 @@
 // Based on a tutorial by ronbentley1 at
 // From https://projecthub.arduino.cc/ronbentley1/button-switch-using-an-external-interrupt-16d57f
 
+#include "mode_switch2.h"
+
 #include <Arduino.h>
 
-#include "mode_switch2.h"
+#include "PinChangeInterrupt.h"
 #include "pins.h"
 #include "print.h"
 
@@ -48,9 +49,13 @@ bool led_status = LOW;   // start with LED off, for testing of switch code  only
 #define SWITCH_PRESS_5S 5000    // 5 S
 #define SWITCH_PRESS_10S 10000  // 10 S
 
-volatile enum display_mode the_display_mode = mm_ss;    // FIXME: not changed yet
+volatile enum display_mode the_display_mode = mm_ss;
 
-volatile bool interrupt_process_status = {
+volatile bool interrupt_process_1_status = {
+    !triggered  // start with no switch press pending,  i.e., false (!triggered)
+};
+
+volatile bool interrupt_process_2_status = {
     !triggered  // start with no switch press pending,  i.e., false (!triggered)
 };
 
@@ -59,9 +64,15 @@ bool initialisation_complete = false;  // inhibit any interrupts until initialis
 //
 // ISR for  handling interrupt triggers arising from associated button switch
 //
+<<<<<<< Updated upstream
 void button_interrupt_handler() {
     if (initialisation_complete == true) {  //  all variables are initialised so we are okay to continue to process this interrupt
         if (interrupt_process_status == !triggered) {
+=======
+void button_1_interrupt_handler() {
+    if (initialization_complete == true) {  //  all variables are initialised so we are okay to continue to process this interrupt
+        if (interrupt_process_1_status == !triggered) {
+>>>>>>> Stashed changes
             // new interrupt so okay  start a new button read process -
             // now need to wait for button release  plus debounce period to elapse
             // this will be done in the button_read  function
@@ -69,19 +80,35 @@ void button_interrupt_handler() {
                 // button  pressed, so we can start the read on/off + debounce cycle which will
                 //  be completed by the button_read() function.
                 digitalWrite(LED, HIGH);
-                interrupt_process_status = triggered;  // keep this ISR 'quiet' until button read fully completed
+                interrupt_process_1_status = triggered;  // keep this ISR 'quiet' until button read fully completed
             }
         }
     }
-}  // end of button_interrupt_handler
+}  // end of button_1_interrupt_handler
 
-enum switch_press_duration read_button() {
+void button_2_interrupt_handler() {
+    if (initialization_complete == true) {  //  all variables are initialised so we are okay to continue to process this interrupt
+        if (interrupt_process_2_status == !triggered) {
+            // new interrupt so okay  start a new button read process -
+            // now need to wait for button release  plus debounce period to elapse
+            // this will be done in the button_read  function
+            if (digitalRead(INPUT_SWITCH) == HIGH) {
+                // button  pressed, so we can start the read on/off + debounce cycle which will
+                //  be completed by the button_read() function.
+                digitalWrite(LED, HIGH);
+                interrupt_process_2_status = triggered;  // keep this ISR 'quiet' until button read fully completed
+            }
+        }
+    }
+}  // end of button_2_interrupt_handler
+
+enum switch_press_duration read_button_1() {
     int button_reading;
     // static variables because we need to retain old values  between function calls
     static bool switching_pending = false;
     static long elapse_timer;
     static long initial_time = 0;
-    if (interrupt_process_status == triggered) {
+    if (interrupt_process_1_status == triggered) {
         //  interrupt has been raised on this button so now need to complete
         // the button  read process, ie wait until it has been released
         // and debounce time elapsed
@@ -98,9 +125,9 @@ enum switch_press_duration read_button() {
             if (millis() - elapse_timer > debounce) {
                 // debounce time elapsed, so switch press cycle complete
                 digitalWrite(LED, LOW);
-                switching_pending = false;              // reset for next button press interrupt cycle
-                interrupt_process_status = !triggered;  // reopen ISR for business now button on/off/debounce cycle complete
-                long elapsed = millis() - initial_time; // measure time from the initial button press
+                switching_pending = false;                // reset for next button press interrupt cycle
+                interrupt_process_1_status = !triggered;  // reopen ISR for business now button on/off/debounce cycle complete
+                long elapsed = millis() - initial_time;   // measure time from the initial button press
                 initial_time = 0;
                 DPRINTV("elapsed: %ld\n", elapsed);
                 if (elapsed > SWITCH_PRESS_5S)
@@ -113,7 +140,47 @@ enum switch_press_duration read_button() {
         }
     }
     return none;  // either no press request or debounce  period not elapsed
-}  // end of read_button function
+}  // end of read_button_1 function
+
+enum switch_press_duration read_button_2() {
+    int button_reading;
+    // static variables because we need to retain old values  between function calls
+    static bool switching_pending = false;
+    static long elapse_timer;
+    static long initial_time = 0;
+    if (interrupt_process_2_status == triggered) {
+        //  interrupt has been raised on this button so now need to complete
+        // the button  read process, ie wait until it has been released
+        // and debounce time elapsed
+        button_reading = digitalRead(INPUT_SWITCH);
+        if (button_reading == HIGH) {
+            // switch is pressed, so start/restart wait for button relealse, plus  end of debounce process
+            switching_pending = true;
+            elapse_timer = millis();  // start elapse timing for debounce checking
+            if (initial_time == 0)
+                initial_time = elapse_timer;
+        }
+        if (switching_pending && button_reading == LOW) {
+            // switch was pressed, now released, so check  if debounce time elapsed
+            if (millis() - elapse_timer > debounce) {
+                // debounce time elapsed, so switch press cycle complete
+                digitalWrite(LED, LOW);
+                switching_pending = false;                // reset for next button press interrupt cycle
+                interrupt_process_2_status = !triggered;  // reopen ISR for business now button on/off/debounce cycle complete
+                long elapsed = millis() - initial_time;   // measure time from the initial button press
+                initial_time = 0;
+                DPRINTV("elapsed: %ld\n", elapsed);
+                if (elapsed > SWITCH_PRESS_5S)
+                    return long_5s;
+                else if (elapsed > SWITCH_PRESS_2S)
+                    return medium_2s;
+                else
+                    return quick;
+            }
+        }
+    }
+    return none;  // either no press request or debounce  period not elapsed
+}  // end of read_2_button function
 
 void mode_switch_setup() {
 #if 0
@@ -121,15 +188,29 @@ void mode_switch_setup() {
 #endif
     pinMode(INPUT_SWITCH, INPUT);
     attachInterrupt(digitalPinToInterrupt(INPUT_SWITCH),
-                    button_interrupt_handler,
+                    button_1_interrupt_handler,
                     interrupt_trigger_type);
+<<<<<<< Updated upstream
     initialisation_complete = true;  // open interrupt processing for business
 }  // end of setup function
+=======
+
+    pinMode(MODE_SWITCH, INPUT);
+    // Attach the new PinChangeInterrupt and enable event function below
+    attachPCINT(digitalPinToPCINT(MODE_SWITCH), 
+                button_2_interrupt_handler,
+                interrupt_trigger_type);
+ 
+    initialization_complete = true;  // open interrupt processing for business
+
+    sei();  // start interrupts
+} 
+>>>>>>> Stashed changes
 
 #if 0
 void loop() {
     // test button switch and process  if pressed
-    if (read_button() == switched) {
+    if (read_button_1() == switched) {
         // button on/off cycle now  complete, so flip LED between HIGH and LOW
         led_status = HIGH - led_status;  // toggle state
         digitalWrite(LED, led_status);

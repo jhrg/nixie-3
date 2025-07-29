@@ -14,7 +14,8 @@ enum display_mode {
     hh_mm
 };
 
-enum switch_press_duration read_button();
+enum switch_press_duration read_button_1();
+enum switch_press_duration read_button_2();
 void mode_switch_setup();
 
 #endif

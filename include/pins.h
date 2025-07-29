@@ -14,6 +14,9 @@
 #define INPUT_SWITCH 3  // (PORT D)
 // #define INPUT_SWITCH_PORT PORTD3  // i.e., PD3, Used for faster reads
 
+#define MODE_SWITCH 6  // (PORT D)
+// #define INPUT_SWITCH_PORT PORTD6  // i.e., PD6, Used for faster reads
+
 // Choose pins that cannot be used for hardware PWM for all except the
 // PWM brightness control.
 
