@@ -49,7 +49,9 @@ bool led_status = LOW;   // start with LED off, for testing of switch code  only
 #define SWITCH_PRESS_5S 5000    // 5 S
 #define SWITCH_PRESS_10S 10000  // 10 S
 
+#if 0
 volatile enum display_mode the_display_mode = mm_ss;
+#endif
 
 volatile bool interrupt_process_1_status = {
     !triggered  // start with no switch press pending,  i.e., false (!triggered)
@@ -86,7 +88,7 @@ void button_2_interrupt_handler() {
             // new interrupt so okay  start a new button read process -
             // now need to wait for button release  plus debounce period to elapse
             // this will be done in the button_read  function
-            if (digitalRead(INPUT_SWITCH) == HIGH) {
+            if (digitalRead(MODE_SWITCH) == HIGH) {
                 // button  pressed, so we can start the read on/off + debounce cycle which will
                 //  be completed by the button_read() function.
                 digitalWrite(LED, HIGH);
@@ -123,7 +125,7 @@ enum switch_press_duration read_button_1() {
                 interrupt_process_1_status = !triggered;  // reopen ISR for business now button on/off/debounce cycle complete
                 long elapsed = millis() - initial_time;   // measure time from the initial button press
                 initial_time = 0;
-                DPRINTV("elapsed: %ld\n", elapsed);
+                DPRINTV("button 1 elapsed: %ld\n", elapsed);
                 if (elapsed > SWITCH_PRESS_5S)
                     return long_5s;
                 else if (elapsed > SWITCH_PRESS_2S)
@@ -146,9 +148,9 @@ enum switch_press_duration read_button_2() {
         //  interrupt has been raised on this button so now need to complete
         // the button  read process, ie wait until it has been released
         // and debounce time elapsed
-        button_reading = digitalRead(INPUT_SWITCH);
+        button_reading = digitalRead(MODE_SWITCH);
         if (button_reading == HIGH) {
-            // switch is pressed, so start/restart wait for button relealse, plus  end of debounce process
+            // switch is pressed, so start/restart wait for button release, plus  end of debounce process
             switching_pending = true;
             elapse_timer = millis();  // start elapse timing for debounce checking
             if (initial_time == 0)
@@ -163,7 +165,7 @@ enum switch_press_duration read_button_2() {
                 interrupt_process_2_status = !triggered;  // reopen ISR for business now button on/off/debounce cycle complete
                 long elapsed = millis() - initial_time;   // measure time from the initial button press
                 initial_time = 0;
-                DPRINTV("elapsed: %ld\n", elapsed);
+                DPRINTV("button 2 elapsed: %ld\n", elapsed);
                 if (elapsed > SWITCH_PRESS_5S)
                     return long_5s;
                 else if (elapsed > SWITCH_PRESS_2S)

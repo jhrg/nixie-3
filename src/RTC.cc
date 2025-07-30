@@ -113,7 +113,7 @@ void RTC_setup() {
     digitalWrite(SEPARATOR, LOW);
 
     if (rtc.begin()) {
-        DPRINT("DS3131/DS1307 RTC Start\n");
+        DPRINT("DS3231/DS1307 RTC Start\n");
     } else {
         DPRINT("Couldn't find RTC\n");
     }

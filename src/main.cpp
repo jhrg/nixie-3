@@ -92,29 +92,43 @@ void input_switch_quick_press() {
     analogWrite(HV_PWM_CONTROL, brightness_count[brightness]);
 }
 
-void input_switch_medium_press(enum display_mode &the_display_mode) {
-    switch (the_display_mode) {
+enum display_mode input_switch_medium_press(enum display_mode display_mode) {
+    switch (display_mode) {
         case mm_ss:
-            the_display_mode = hh_mm;
+            display_mode = hh_mm;
             break;
 
         case hh_mm:
-            the_display_mode = mm_ss;
+            display_mode = mm_ss;
             break;
+
     };
-    DPRINTV("display mode: %s\n", the_display_mode == mm_ss ? "MM:SS" : "HH:MM");
+    DPRINTV("display mode: %s\n", display_mode == mm_ss ? "MM:SS" : "HH:MM");
+
+    return display_mode;
 }
 
 void loop() {
     uint8_t bits[2]; // 1 is the LSD pair, 0 the MSD pair
-    enum display_mode the_display_mode;  // initialized to mm_ss
+    static enum display_mode the_display_mode = mm_ss;  // initialized to mm_ss
 
     switch (read_button_1()) {
         case quick:
             input_switch_quick_press();
             break;
         case medium_2s:
-            input_switch_medium_press(the_display_mode);
+            the_display_mode = input_switch_medium_press(the_display_mode);
+            break;
+        default:
+            break;
+    }
+
+    // Replace this with ...
+    switch (read_button_2()) {
+        case quick:
+            input_switch_quick_press();
+            break;
+        case medium_2s:
             break;
         default:
             break;
