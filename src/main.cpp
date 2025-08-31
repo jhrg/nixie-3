@@ -147,8 +147,7 @@ void loop() {
                 break;
         };
 
-        // I don't know for sure that these calls are needed. They seem to
-        // do no harm.
+        // I don't know for sure that these cli/sei calls are needed. They seem to do no harm.
         cli();
         updateShiftRegister(bits[1]);
         updateShiftRegister(bits[0]);

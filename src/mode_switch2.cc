@@ -110,7 +110,7 @@ enum switch_press_duration read_button_1() {
         // and debounce time elapsed
         button_reading = digitalRead(INPUT_SWITCH);
         if (button_reading == HIGH) {
-            // switch is pressed, so start/restart wait for button relealse, plus  end of debounce process
+            // switch is pressed, so start/restart wait for button release, plus end of debounce process
             switching_pending = true;
             elapse_timer = millis();  // start elapse timing for debounce checking
             if (initial_time == 0)
@@ -135,7 +135,7 @@ enum switch_press_duration read_button_1() {
             }
         }
     }
-    return none;  // either no press request or debounce  period not elapsed
+    return none;  // either no press request or debounce period not elapsed
 }  // end of read_button_1 function
 
 enum switch_press_duration read_button_2() {
@@ -150,14 +150,14 @@ enum switch_press_duration read_button_2() {
         // and debounce time elapsed
         button_reading = digitalRead(MODE_SWITCH);
         if (button_reading == HIGH) {
-            // switch is pressed, so start/restart wait for button release, plus  end of debounce process
+            // switch is pressed, so start/restart wait for button release, plus end of debounce process
             switching_pending = true;
             elapse_timer = millis();  // start elapse timing for debounce checking
             if (initial_time == 0)
                 initial_time = elapse_timer;
         }
         if (switching_pending && button_reading == LOW) {
-            // switch was pressed, now released, so check  if debounce time elapsed
+            // switch was pressed, now released, so check if debounce time elapsed
             if (millis() - elapse_timer > debounce) {
                 // debounce time elapsed, so switch press cycle complete
                 digitalWrite(LED, LOW);
@@ -175,7 +175,7 @@ enum switch_press_duration read_button_2() {
             }
         }
     }
-    return none;  // either no press request or debounce  period not elapsed
+    return none;  // either no press request or debounce period not elapsed
 }  // end of read_2_button function
 
 void mode_switch_setup() {
