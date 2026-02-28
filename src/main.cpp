@@ -32,7 +32,7 @@ uint8_t MSD[10] = {0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80, 0x90};
  * getting an odd error where sometimes the values ouput were corrupted. The
  * problem might have been noise on the breadboard or it might have been an
  * issue with interrupts. NB: It was noise; the HV PS that used the PID controller
- * was noisy and that was fixed by using a better HV PS. That also meant tha
+ * was noisy and that was fixed by using a better HV PS. That also meant that
  * the PID controller could be dumped.
  */
 void updateShiftRegister(uint8_t data) {
