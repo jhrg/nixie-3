@@ -1,7 +1,7 @@
 # Task Plan: Add native PlatformIO test environment, extracting button press-duration classification as a first unit-testable module
 
 **Task:** TASK-001
-**Status:** Draft
+**Status:** In Progress
 **Created:** 2026-10-07
 
 ## Summary

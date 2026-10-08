@@ -32,6 +32,7 @@
 #include <Arduino.h>
 
 #include "PinChangeInterrupt.h"
+#include "button_timing.h"
 #include "pins.h"
 #include "print.h"
 
@@ -44,10 +45,6 @@ bool led_status = LOW;   // start with LED off, for testing of switch code  only
 #define triggered true                 // controls  interrupt handler
 #define interrupt_trigger_type RISING  // interrupt  triggered on a RISING input
 #define debounce 100                    // time to wait in milli secs
-
-#define SWITCH_PRESS_2S 2000    // 2 Seconds
-#define SWITCH_PRESS_5S 5000    // 5 S
-#define SWITCH_PRESS_10S 10000  // 10 S
 
 #if 0
 volatile enum display_mode the_display_mode = mm_ss;
@@ -126,12 +123,7 @@ enum switch_press_duration read_button_1() {
                 long elapsed = millis() - initial_time;   // measure time from the initial button press
                 initial_time = 0;
                 DPRINTV("button 1 elapsed: %ld\n", elapsed);
-                if (elapsed > SWITCH_PRESS_5S)
-                    return long_5s;
-                else if (elapsed > SWITCH_PRESS_2S)
-                    return medium_2s;
-                else
-                    return quick;
+                return classify_press_duration(elapsed);
             }
         }
     }
@@ -166,12 +158,7 @@ enum switch_press_duration read_button_2() {
                 long elapsed = millis() - initial_time;   // measure time from the initial button press
                 initial_time = 0;
                 DPRINTV("button 2 elapsed: %ld\n", elapsed);
-                if (elapsed > SWITCH_PRESS_5S)
-                    return long_5s;
-                else if (elapsed > SWITCH_PRESS_2S)
-                    return medium_2s;
-                else
-                    return quick;
+                return classify_press_duration(elapsed);
             }
         }
     }

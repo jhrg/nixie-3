@@ -19,7 +19,7 @@ needed).
 ## TASK-001 — Add native PlatformIO test environment, extracting button press-duration classification as a first unit-testable module
 
 **Category:** Build/Tooling
-**Status:** Plan Ready
+**Status:** In Progress
 **Created:** 2026-10-07
 **Related requirements/constraints:** None found — stems from CLAUDE.md's testing
 convention, not a tracked FR/NFR/IC. Underpins button behavior in FR-001, FR-003,
