@@ -1,0 +1,9 @@
+# ignore these directories
+PCB/
+hv-ps-docs/
+hv_ps_test/
+retired/
+.pio/
+.vscode/
+# Mac stuff
+.DS_Store
