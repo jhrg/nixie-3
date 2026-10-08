@@ -11,7 +11,10 @@ Availability, Scalability, Usability, Maintainability, Compliance, Observability
 
 | ID | Category | Requirement | Measurable Target | Priority | Status |
 |---|---|---|---|---|---|
-| _EXAMPLE_ | Performance | Read-endpoint latency stays low under normal load | p95 < 300 ms at 100 req/s | Must | _delete this row_ |
+
+_(none yet — no hard NFR targets have been confirmed as of the initial planning
+interview; add rows via `/new-requirement` as targets are decided — e.g. time drift/
+accuracy, HV supply limits, brightness PWM frequency, power-on recovery time.)_
 
 <!-- If you genuinely can't state a measurable target yet, write TBD in that column
      rather than a vague phrase — TBD is honest and searchable; "reasonably fast"

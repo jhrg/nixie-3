@@ -4,7 +4,8 @@
 
 # CLAUDE.md — `nixie-3`
 
-**What this project is:** Software for an Arduino that reuns a Nixie-tube based four-digit clock.
+**What this project is:** Firmware for an ATmega328P-based four-digit Nixie clock,
+displaying HH:MM or MM:SS from a DS3231/DS1307 RTC.
 
 This repo plans work from written requirements, not from conversation memory or
 assumption. Requirements, use cases, and constraints live in `docs/`. Plans that

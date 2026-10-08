@@ -11,7 +11,10 @@ Budget/Timeline (add categories as needed).
 
 | ID | Category | Constraint | Rationale | Impact on design |
 |---|---|---|---|---|
-| _EXAMPLE_ | Regulatory/Compliance | User PII must not leave the EU region | GDPR data-residency obligation | Rules out non-EU managed services for anything touching PII; affects hosting and any third-party analytics | 
+
+_(none yet beyond the Arduino/C++ conventions already in `CLAUDE.md` — confirmed during
+the initial planning interview. Add rows via `/new-requirement` if a hard boundary
+beyond those conventions is identified.)_
 
 <!-- A constraint is not the same as a non-functional requirement: an NFR describes
      a quality the system should have (and can trade off); a constraint is a boundary

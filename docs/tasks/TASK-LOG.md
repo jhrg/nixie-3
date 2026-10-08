@@ -16,23 +16,30 @@ needed).
 
 ---
 
-## TASK-EXAMPLE — Add unit tests for the legacy `parser/` module
+## TASK-001 — Add native PlatformIO test environment, extracting button press-duration classification as a first unit-testable module
 
-*(delete this section once you've seen the shape)*
-
-**Category:** Test Coverage
+**Category:** Build/Tooling
 **Status:** Plan Ready
-**Created:** YYYY-MM-DD
-**Related requirements/constraints:** None found — `parser/` predates FR/NFR/UC
-tracking in this repo
-**Plan:** `plans/task-parser-test-coverage-plan.md`
+**Created:** 2026-10-07
+**Related requirements/constraints:** None found — stems from CLAUDE.md's testing
+convention, not a tracked FR/NFR/IC. Underpins button behavior in FR-001, FR-003,
+UC-001, UC-002 without changing it.
+**Plan:** `plans/task-native-test-env-plan.md`
 
-**Scope:** Every public function in `parser/`, tested against the fixtures already
-in `parser/testdata/`. Does not include refactoring the module itself, even where
-the tests reveal awkward internal structure — that's a separate task if pursued.
+**Scope:** Add `[env:native]` to `platformio.ini`, standalone (not inheriting
+`[env]`'s Arduino-only `lib_deps`/`build_flags`). Extract the press-duration
+classification currently duplicated in `read_button_1()`/`read_button_2()`
+(`src/mode_switch2.cc`) into `include/button_timing.h` + `src/button_timing.cc`,
+with no `Arduino.h` dependency, and add a Unity test under
+`test/test_button_timing/`. Does not extract any other logic (brightness
+wraparound, digit-from-time computation, debounce timing itself), change button
+behavior/thresholds, assign `read_button_2()`'s unused `medium_2s` case, or
+introduce a `lib/` subfolder layout — each is out of scope for this task.
 
-**Motivation:** `parser/` has zero test coverage and has caused two regressions in
-the last quarter that tests would have caught before merge.
+**Motivation:** No way currently exists to run any unit test without a board
+attached; CLAUDE.md's testing convention calls for `env:native` but it was never
+added. Flagged as a known gap during the `/init-planning` session rather than
+invented independently.
 
 ---
 

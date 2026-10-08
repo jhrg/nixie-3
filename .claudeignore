@@ -7,3 +7,5 @@ retired/
 .vscode/
 # Mac stuff
 .DS_Store
+# Framework
+README-swe.md
