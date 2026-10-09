@@ -43,6 +43,34 @@ invented independently.
 
 ---
 
+## TASK-002 — Reassign button functions: button 1 = brightness, button 2 = display mode
+
+**Category:** Code Cleanup
+**Status:** In Progress
+**Created:** 2026-10-08
+**Related requirements/constraints:** FR-001 (mode switching via button press — wording
+is button-agnostic, no change needed), FR-003 (brightness cycling via push-button —
+wording is button-agnostic, no change needed). UC-001 and UC-002 explicitly document
+the *current* button-to-function mapping and will be updated as part of this task to
+match the new mapping.
+**Plan:** `plans/task-button-function-reassignment-plan.md`
+
+**Scope:** Rewire the button dispatch in `src/main.cpp`'s `loop()` so button 1's quick
+press still drives brightness (unchanged) and button 2's quick press drives the
+display-mode toggle (moved off button 1's medium ~2s press). Button 1's and button
+2's medium (~2s) and long (~5s) presses become explicit no-ops. Update UC-001 and
+UC-002 in `docs/requirements/use-cases.md` to describe the new mapping. Does not
+touch `button_timing.cc/h`, press-duration thresholds, debounce timing, the ISR
+handlers, `read_button_1()`/`read_button_2()`, or assign any behavior to the 2s/5s
+presses themselves (reserved for a future task/feature) — each is out of scope.
+
+**Motivation:** Today both buttons' quick presses do the same thing (brightness), and
+mode-switching is buried behind a 2-second hold on button 1 — a less discoverable,
+less evenly-distributed mapping. Reassigning gives each button a distinct quick-press
+role and frees up both buttons' medium/long presses for future use, per user request.
+
+---
+
 <!-- Add new tasks via /plan-task, or by hand — keep the section format: metadata
      lines, then Scope / Motivation. Unlike a bug, a task doesn't need a symptom or
      reproduction — it needs a clear boundary of what's included and what isn't,

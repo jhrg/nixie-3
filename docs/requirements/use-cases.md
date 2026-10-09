@@ -13,19 +13,19 @@ Convention: `UC-###`. Each use case follows the template below. Link related `FR
 
 **Actor(s):** Day-to-day user of the clock
 
-**Trigger:** Quick (momentary) press of button 1 or button 2
+**Trigger:** Quick (momentary) press of button 1
 
 **Preconditions:** Clock is powered on and running (any display mode)
 
 **Main flow:**
-1. User gives a quick press on either push button
+1. User gives a quick press on button 1
 2. System advances to the next brightness level in the preset sequence
    (`brightness_count`), wrapping back to the brightest level after the dimmest
 3. System applies the new PWM level to the HV brightness control pin immediately
 
 **Alternate / exception flows:**
-- None currently handled — every quick press advances brightness regardless of
-  current display mode
+- None currently handled — every quick press of button 1 advances brightness
+  regardless of current display mode
 
 **Postconditions:** Display brightness is at the newly selected preset level until
 the next quick press
@@ -38,22 +38,22 @@ the next quick press
 
 **Actor(s):** Day-to-day user of the clock
 
-**Trigger:** Medium press (~2s) of button 1
+**Trigger:** Quick (momentary) press of button 2
 
 **Preconditions:** Clock is powered on and running
 
 **Main flow:**
-1. User holds button 1 for a medium press duration (~2 seconds)
+1. User gives a quick press on button 2
 2. System toggles the display mode between `mm_ss` and `hh_mm`
 3. System renders the four Nixie tubes using the digits for the newly selected mode
    on the next time-update tick
 
 **Alternate / exception flows:**
-- None currently handled — button 2's medium press is read but has no assigned
-  behavior yet
+- None currently handled — medium (~2s) and long (~5s) presses of either button are
+  currently no-ops, reserved for a future task/feature
 
 **Postconditions:** Clock continues displaying time in the newly selected mode until
-the next medium press of button 1
+the next quick press of button 2
 
 **Related requirements:** FR-001
 

@@ -92,7 +92,7 @@ void input_switch_quick_press() {
     analogWrite(HV_PWM_CONTROL, brightness_count[brightness]);
 }
 
-enum display_mode input_switch_medium_press(enum display_mode display_mode) {
+enum display_mode toggle_display_mode(enum display_mode display_mode) {
     switch (display_mode) {
         case mm_ss:
             display_mode = hh_mm;
@@ -117,19 +117,21 @@ void loop() {
             input_switch_quick_press();
             break;
         case medium_2s:
-            the_display_mode = input_switch_medium_press(the_display_mode);
-            break;
+            break;  // no-op; reserved for future task/feature
+        case long_5s:
+            break;  // no-op; reserved for future task/feature
         default:
             break;
     }
 
-    // Replace this with ...
     switch (read_button_2()) {
         case quick:
-            input_switch_quick_press();
+            the_display_mode = toggle_display_mode(the_display_mode);
             break;
         case medium_2s:
-            break;
+            break;  // no-op; reserved for future task/feature
+        case long_5s:
+            break;  // no-op; reserved for future task/feature
         default:
             break;
     }
