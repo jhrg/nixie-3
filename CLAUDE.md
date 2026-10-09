@@ -15,6 +15,19 @@ plan cites FR/NFR/UC/IC IDs, a bugfix plan cites a `BUG-###`, a task plan cites 
 request has no requirement backing it, that's a signal to add one — not to infer one
 silently.
 
+## Ignore these files and directories
+
+- .DS_Store
+- README-swe.md
+
+- PCB/
+- hv-ps-docs/
+- hv_ps_test/
+- retired/
+- .pio/
+- .vscode/
+
+
 ## Read before planning anything
 
 | File / folder | Holds |
