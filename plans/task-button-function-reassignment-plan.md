@@ -1,7 +1,7 @@
 # Task Plan: Reassign button functions: button 1 = brightness, button 2 = display mode
 
 **Task:** TASK-002
-**Status:** In Progress
+**Status:** Done
 **Created:** 2026-10-08
 
 ## Summary
