@@ -18,4 +18,9 @@ enum switch_press_duration read_button_1();
 enum switch_press_duration read_button_2();
 void mode_switch_setup();
 
+/**
+ * @brief Toggle between the two display modes (MM:SS <-> HH:MM).
+ */
+enum display_mode toggle_display_mode(enum display_mode display_mode);
+
 #endif

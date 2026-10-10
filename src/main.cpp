@@ -3,6 +3,7 @@
 #include <PinChangeInterrupt.h>
 
 #include "RTC.h"
+#include "brightness.h"
 #include "mode_switch2.h"
 #include "pins.h"
 #include "print.h"
@@ -87,25 +88,9 @@ void setup() {
 }
 
 void input_switch_quick_press() {
-    brightness = (brightness == sizeof(brightness_count) / sizeof(brightness_count[0]) - 1) ? 0 : brightness + 1;
+    brightness = next_brightness_index(brightness, sizeof(brightness_count) / sizeof(brightness_count[0]));
     DPRINTV("brightness: %d\n", brightness);
     analogWrite(HV_PWM_CONTROL, brightness_count[brightness]);
-}
-
-enum display_mode toggle_display_mode(enum display_mode display_mode) {
-    switch (display_mode) {
-        case mm_ss:
-            display_mode = hh_mm;
-            break;
-
-        case hh_mm:
-            display_mode = mm_ss;
-            break;
-
-    };
-    DPRINTV("display mode: %s\n", display_mode == mm_ss ? "MM:SS" : "HH:MM");
-
-    return display_mode;
 }
 
 void loop() {
@@ -127,6 +112,7 @@ void loop() {
     switch (read_button_2()) {
         case quick:
             the_display_mode = toggle_display_mode(the_display_mode);
+            DPRINTV("display mode: %s\n", the_display_mode == mm_ss ? "MM:SS" : "HH:MM");
             break;
         case medium_2s:
             break;  // no-op; reserved for future task/feature

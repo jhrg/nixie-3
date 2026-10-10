@@ -7,6 +7,7 @@
 #include <Arduino.h>
 #include <RTClib.h> // https://github.com/adafruit/RTClib
 
+#include "display_digits.h"
 #include "print.h"
 #include "pins.h"
 
@@ -35,26 +36,26 @@ volatile int digit_4;
 volatile int digit_5;
 
 void update_display_with_time() {
-    digit_0 = dt.second() % 10;
-    digit_1 = dt.second() / 10;
+    struct display_digits digits = digits_from_time(dt.hour(), dt.minute(), dt.second());
 
-    digit_2 = dt.minute() % 10;
-    digit_3 = dt.minute() / 10;
-
-    digit_4 = dt.hour() % 10;
-    digit_5 = dt.hour() / 10;
+    digit_0 = digits.d0;
+    digit_1 = digits.d1;
+    digit_2 = digits.d2;
+    digit_3 = digits.d3;
+    digit_4 = digits.d4;
+    digit_5 = digits.d5;
 }
 
 // mm/dd/yy
 void update_display_with_date() {
-    digit_0 = dt.year() % 10;
-    digit_1 = (dt.year() - 2000) / 10;
+    struct display_digits digits = digits_from_date(dt.year(), dt.month(), dt.day());
 
-    digit_2 = dt.day() % 10;
-    digit_3 = dt.day() / 10;
-
-    digit_4 = dt.month() % 10;
-    digit_5 = dt.month() / 10;
+    digit_0 = digits.d0;
+    digit_1 = digits.d1;
+    digit_2 = digits.d2;
+    digit_3 = digits.d3;
+    digit_4 = digits.d4;
+    digit_5 = digits.d5;
 }
 
 /**
