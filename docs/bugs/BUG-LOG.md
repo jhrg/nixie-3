@@ -39,6 +39,45 @@ actually found in the code, not guessed from symptoms.)*
 
 ---
 
+## BUG-001 — `pio check`/`pio run`/`pio test` warn about unknown `lib_deps_builtin`/`lib_deps_external` options
+
+**Severity:** Low
+**Status:** Fix Planned
+**Reported:** 2026-10-09
+**Related requirements:** None found. This is a build-tool configuration correctness
+issue, not a user-facing functional behavior deviation — it violates the implicit
+assumption that running the project's standard PlatformIO commands produces no
+unexplained warnings, not any documented FR/NFR/UC.
+**Fix plan:** `plans/bugfix-platformio-ini-unknown-options-plan.md`
+
+**Reproduction steps:**
+1. Run `pio check` (also reproducible with `pio run` and `pio test`) from the
+   project root.
+2. Observe the warnings printed before the rest of the command's output:
+   ```
+   Warning! Ignore unknown configuration option `lib_deps_builtin` in section [env]
+   Warning! Ignore unknown configuration option `lib_deps_external` in section [env]
+   ```
+
+**Expected behavior:** These commands run without emitting warnings about
+unrecognized configuration keys.
+
+**Actual behavior:** Both warnings print on every invocation of `pio check`,
+`pio run`, and `pio test`.
+
+**Root cause:** `platformio.ini`'s `[env]` section (`platformio.ini:28-38`) defines
+`lib_deps_builtin` and `lib_deps_external` as custom keys purely so `[env:uno]` and
+`[env:pro16MHzatmega328]` can interpolate them into their own `lib_deps` via
+`${env.lib_deps_builtin}` / `${env.lib_deps_external}` (`platformio.ini:48-50,
+61-63`) — a DRY mechanism to share the library list across both board environments.
+PlatformIO validates `[env]`/`[env:*]` sections against a known schema of option
+names; `lib_deps_builtin` and `lib_deps_external` aren't recognized options for that
+section type, so PlatformIO logs a warning and ignores them as configuration (while
+still permitting `${env.*}` variable interpolation to read their literal text, which
+is why the build itself isn't broken — only the warning is spurious).
+
+---
+
 <!-- Add new bugs via /fix-bug, or by hand — keep the section format: metadata lines,
      then Reproduction / Expected / Actual / Root Cause. A bug with no reproduction
      steps yet is a symptom report, not a bug entry — get concrete steps before
