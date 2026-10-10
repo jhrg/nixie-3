@@ -1,7 +1,7 @@
 # Bugfix Plan: `pio check`/`pio run`/`pio test` warn about unknown `lib_deps_builtin`/`lib_deps_external` options
 
 **Bug:** BUG-001
-**Status:** In Progress
+**Status:** Fixed
 **Created:** 2026-10-09
 
 ## Summary

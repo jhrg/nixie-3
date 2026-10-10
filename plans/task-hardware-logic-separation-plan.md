@@ -1,7 +1,7 @@
 # Task Plan: Separate hardware-touching code from logic-only code for three more functions
 
 **Task:** TASK-003
-**Status:** Draft
+**Status:** Done
 **Created:** 2026-10-09
 
 ## Summary
