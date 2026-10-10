@@ -71,6 +71,34 @@ role and frees up both buttons' medium/long presses for future use, per user req
 
 ---
 
+## TASK-003 — Separate hardware-touching code from logic-only code for three more functions, extending TASK-001's pattern
+
+**Category:** Code Cleanup
+**Status:** Plan Ready
+**Created:** 2026-10-09
+**Related requirements/constraints:** None found — stems from CLAUDE.md's hardware-
+adapter-layer convention, not a tracked FR/NFR/IC. The logic being extracted
+underpins FR-001 (display mode), FR-003 (brightness), and FR-002/UC-002 (time
+display) without changing any of their behavior.
+**Plan:** `plans/task-hardware-logic-separation-plan.md`
+
+**Scope:** Extract three more pieces of logic that TASK-001 explicitly deferred,
+decoupling each from `Arduino.h` and (for the time-digit case) from RTClib's
+`DateTime` type, and add a native Unity test for each: (1) the brightness-index
+wraparound in `main.cpp`'s `input_switch_quick_press()`, (2) `main.cpp`'s already-pure
+`toggle_display_mode()`, relocated into its own translation unit, and (3) the
+digit-from-time/date decomposition in `RTC.cc`'s `update_display_with_time()` /
+`update_display_with_date()`, rewritten to take plain integers instead of `DateTime`.
+Does not touch debounce timing, the ISR handlers, `read_button_1()`/`read_button_2()`,
+or remove `update_display_with_date()` despite it currently being unused — each is
+out of scope.
+
+**Motivation:** Sets the stage for more complete unit-test coverage by continuing the
+hardware/logic separation TASK-001 started and explicitly deferred for these three
+pieces, per user request.
+
+---
+
 <!-- Add new tasks via /plan-task, or by hand — keep the section format: metadata
      lines, then Scope / Motivation. Unlike a bug, a task doesn't need a symptom or
      reproduction — it needs a clear boundary of what's included and what isn't,
