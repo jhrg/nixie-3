@@ -14,6 +14,8 @@ Priority: `Must` / `Should` / `Could` (MoSCoW). Status: `Proposed` / `Approved` 
 | FR-002 | Maintain accurate time using an external RTC (DS3231 or DS1307) that survives power cycles | Must | — | Implemented |
 | FR-003 | Allow brightness adjustment via a push-button that cycles through preset PWM brightness levels | Must | UC-001 | Implemented |
 | FR-004 | Flash the colon/separator once per second as a visible seconds indicator | Must | — | Implemented |
+| FR-005 | Allow the user to set the clock's time of day (hour and minute) via button presses, without reprogramming or a host computer connection | Must | UC-003 | Proposed |
+| FR-006 | Allow the user to set the clock's calendar date (month, day, and year) via button presses, without reprogramming or a host computer connection | Must | UC-004 | Proposed |
 
 <!-- Add new rows via /new-requirement, or by hand — keep the table format. Each
      requirement should be a single testable statement, not a paragraph. If it needs
