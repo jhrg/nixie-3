@@ -42,7 +42,7 @@ actually found in the code, not guessed from symptoms.)*
 ## BUG-001 — `pio check`/`pio run`/`pio test` warn about unknown `lib_deps_builtin`/`lib_deps_external` options
 
 **Severity:** Low
-**Status:** Fix Planned
+**Status:** Fixed
 **Reported:** 2026-10-09
 **Related requirements:** None found. This is a build-tool configuration correctness
 issue, not a user-facing functional behavior deviation — it violates the implicit
