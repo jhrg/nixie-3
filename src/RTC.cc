@@ -86,6 +86,11 @@ volatile bool toggle = false;
 // currently selected for editing in Set Time/Set Date mode (NFR-001).
 volatile bool blink_phase = true;
 
+// Set once per second (every other ISR tick); tells time_update_handler() it's
+// time to re-read the RTC and recompute digit_0..5, as opposed to just
+// re-rendering the existing digits with the current blink phase.
+volatile bool refetch_time = false;
+
 /**
  * @brief Record that 1/2 second has elapsed
  *
@@ -94,18 +99,23 @@ volatile bool blink_phase = true;
  * colon that is the clock digit separator so that it fashes on and off
  * once per second.
  *
- * This ISR is also used to trigger the digit update once per second.
+ * This ISR also sets update_display on every tick (2Hz) so the display is
+ * physically rewritten on both halves of the blink cycle in Set Time/Set
+ * Date mode (NFR-001); refetch_time is set only once per second (1Hz) to
+ * gate the actual RTC read and digit recompute, which only need to happen
+ * that often.
  *
  * The volatile bools toggle and update_display are used to signal other
  * parts of the code that the colons or digits should be updated.
  */
 void timer_2HZ_tick_ISR() {
     toggle = true;
+    update_display = true;
 
     if (blink_phase) {
         attachInterrupt(digitalPinToInterrupt(CLOCK_1HZ), timer_2HZ_tick_ISR, FALLING);
         blink_phase = false;
-        update_display = true;
+        refetch_time = true;
     } else {
         attachInterrupt(digitalPinToInterrupt(CLOCK_1HZ), timer_2HZ_tick_ISR, RISING);
         blink_phase = true;
@@ -232,17 +242,21 @@ bool time_update_handler(enum operating_mode mode) {
         toggle_separator();
     }
 
-    // every second
+    // every half second: re-render so the blink phase (NFR-001) takes effect;
+    // only re-read the RTC and recompute digits once a second (refetch_time)
     if (update_display) {
         update_display = false;
-        dt = rtc.now();  // This call takes about 1ms
+        if (refetch_time) {
+            refetch_time = false;
+            dt = rtc.now();  // This call takes about 1ms
 #if DEBUG
-        print_time(dt, true);
+            print_time(dt, true);
 #endif
-        if (mode == set_date)
-            update_display_with_date();
-        else
-            update_display_with_time();
+            if (mode == set_date)
+                update_display_with_date();
+            else
+                update_display_with_time();
+        }
         return true;
     } else {
         return false;
