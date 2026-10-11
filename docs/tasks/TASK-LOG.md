@@ -99,6 +99,44 @@ pieces, per user request.
 
 ---
 
+## TASK-004 — Display the full four-digit year while editing the year field in Set Date mode
+
+**Category:** Other (display/rendering refinement to an existing feature; doesn't fit
+Dependency Update / Code Cleanup / Test Coverage / Build-Tooling / Documentation)
+**Status:** Plan Ready
+**Created:** 2026-10-10
+**Related requirements/constraints:** FR-006 (set the date via button presses —
+wording is display-mechanics-agnostic, no change needed), NFR-001 (selected field
+must be visually distinguishable via ~1 Hz blink — status `Proposed`, not yet
+confirmed, called out here rather than treated as settled), UC-004 (step 6 currently
+documents the *old* behavior this task replaces and will be updated as part of this
+task's scope — the same pattern TASK-002 used for UC-001/UC-002).
+
+**Plan:** `plans/task-set-date-year-four-digit-display-plan.md`
+
+**Scope:** Change Set Date mode's rendering, in `src/main.cpp`'s `loop()`, so that
+while the year field is selected, both digit pairs show the full four-digit year —
+a fixed "20" century pair where the month pair normally sits, and the actual
+two-digit year where the day pair normally sits — both pairs blinking together at
+~1 Hz, instead of today's behavior (year in the month pair's slot, blinking; day
+pair left showing the day, lit continuously, e.g. "26 10"). Add two small named
+`constexpr` digit constants for the fixed century ("20") to `include/clock_mode.h`
+rather than using bare literals in `main.cpp`. Update UC-004 step 6 in
+`docs/requirements/use-cases.md` to describe the new rendering. Does not touch
+`field_month` or `field_day` rendering (unchanged), the underlying year
+storage/range (`adjust_year_value()` still wraps a two-digit 0–99 offset from a
+fixed 2000, `digits_from_date()` unchanged), the blink mechanism itself
+(`blank_if_selected()`/`blink_off_phase()`), or `next_date_field()`'s cycling
+order — each is out of scope.
+
+**Motivation:** User-requested: the current "year in month's slot, day pair left
+showing the day" combination (e.g. "26 10") reads as two unrelated two-digit values
+rather than one four-digit year being edited. Showing "20 26" across both pairs
+while the year field is selected makes it visually unambiguous that the whole
+four-digit value is the field being edited.
+
+---
+
 <!-- Add new tasks via /plan-task, or by hand — keep the section format: metadata
      lines, then Scope / Motivation. Unlike a bug, a task doesn't need a symptom or
      reproduction — it needs a clear boundary of what's included and what isn't,
