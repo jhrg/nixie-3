@@ -27,7 +27,7 @@ UC-004.
 
 **Alternate / exception flows:**
 - Every quick press of button 1 advances brightness regardless of current display
-  mode (MM:SS/HH:MM), as long as the clock is in Running mode
+  mode (HH:MM/MM:SS/Date), as long as the clock is in Running mode
 - While the clock is in Set Time or Set Date mode (UC-003/UC-004), a quick press of
   button 1 increments the field being edited instead of advancing brightness
 
@@ -38,7 +38,7 @@ the next quick press
 
 ---
 
-## UC-002 — Switch between MM:SS and HH:MM display mode
+## UC-002 — Cycle the display mode (HH:MM, MM:SS, date)
 
 **Actor(s):** Day-to-day user of the clock
 
@@ -48,25 +48,29 @@ the next quick press
 
 **Main flow:**
 1. User gives a quick press on button 2
-2. System toggles the display mode between `mm_ss` and `hh_mm`
-3. System renders the four Nixie tubes using the digits for the newly selected mode
-   on the next time-update tick
+2. System advances the display mode one step through the cycle
+   `hh_mm` → `mm_ss` → date → `hh_mm`
+3. System renders the four Nixie tubes for the newly selected mode on the next
+   update tick. In date mode the system repeatedly shows the month and day as
+   MM:DD (leading zeros, colon solid) for 2 s, then the year as 20YY (colon off) (FR-004)
+   for 1 s, starting with MM:DD each time date mode is entered (FR-007)
 
 **Alternate / exception flows:**
+- On power-up the clock starts in `hh_mm` mode
 - Long (~5s) presses of either button are currently no-ops, reserved for a future
   task/feature
 - Button 1's medium (~2s) press is currently a no-op in Running mode, reserved for a
   future task/feature
-- Button 2's medium (~2s) press enters Set Time mode instead of toggling display
-  format — see UC-003
+- Button 2's medium (~2s) press enters Set Time mode instead of advancing the
+  display mode, from any of the three display modes — see UC-003
 - A quick press of button 2 while the clock is in Set Time or Set Date mode does not
-  toggle display format; instead it decrements the field currently selected for
+  advance the display mode; instead it decrements the field currently selected for
   editing — see UC-003 / UC-004
 
-**Postconditions:** Clock continues displaying time in the newly selected mode until
+**Postconditions:** Clock continues displaying in the newly selected mode until
 the next quick press of button 2
 
-**Related requirements:** FR-001
+**Related requirements:** FR-001, FR-007
 
 ---
 
@@ -76,7 +80,7 @@ the next quick press of button 2
 
 **Trigger:** 2-second press of button 2 while the clock is in Running mode
 
-**Preconditions:** Clock is powered on and in Running mode (either display mode)
+**Preconditions:** Clock is powered on and in Running mode (any display mode)
 
 **Main flow:**
 1. User gives a 2-second press on button 2.
@@ -141,7 +145,7 @@ via UC-003)
    month:day.
 7. User repeats steps 4–6 as needed to set all three fields.
 8. User gives a 2-second press on button 2 to leave Set Date mode and return to
-   Running mode, resuming whichever display mode (MM:SS or HH:MM) was active before
+   Running mode, resuming whichever display mode was active before
    Set Time mode was entered.
 
 **Alternate / exception flows:**

@@ -188,6 +188,60 @@ work doesn't double in frequency — only the cheap re-render does.
 
 ---
 
+## BUG-004 — Stale digits shown for up to ~0.5 s on Set Time → Set Date and Set Date → Running transitions
+
+**Severity:** Medium
+**Status:** Fix Planned
+**Reported:** 2026-10-11
+**Related requirements:** UC-004 step 3 (Set Date mode displays the month and day
+digit pairs) and step 8 (leaving Set Date resumes the previously active display
+mode). Found by code reading while planning `plans/date-display-mode-plan.md`; not
+yet observed on hardware.
+**Fix plan:** `plans/bugfix-stale-digits-on-mode-change-plan.md` (implemented as part of
+`plans/date-display-mode-plan.md` Phase 2)
+
+**Reproduction steps:** (derived from the code; intermittent — about a 50% chance
+per transition, depending on which half-second tick follows the button release)
+1. In Running mode, at a time whose HH:MM differs visibly from today's MM:DD (e.g.
+   14:35 on 10/11), give button 2 a 2-second press to enter Set Time.
+2. Give button 2 another 2-second press to enter Set Date.
+3. Watch the tubes for the first half-second after the release.
+4. Give button 2 a 2-second press to leave Set Date and return to Running (HH:MM
+   display mode); watch the first half-second again.
+5. Repeat steps 1–4 several times.
+
+**Expected behavior:** On entering Set Date the tubes show month:day (`10 11`, month
+blinking) from the first redraw. On returning to Running they show the current
+HH:MM from the first redraw.
+
+**Actual behavior (predicted):** On some transitions the first redraw shows the
+previous mode's digits in the new layout for ~0.5 s: entering Set Date shows the
+time's hour:minute (`14 35`) as month:day, and returning to Running shows the date's
+month:day (`10 11`) as HH:MM.
+
+**Root cause:** `src/RTC.cc`'s `time_update_handler()` returns `true` (meaning
+"render now") on every 2 Hz `update_display` tick, but only re-reads the RTC and
+recomputes `digit_0..5` when `refetch_time` is also set. The ISR sets
+`refetch_time` on every other tick (`RTC.cc:115-122`). Which kind of digits gets
+computed (date or time) depends on the `mode` argument at the moment of that refetch
+(`RTC.cc:255-258`). `digit_0..5` hold no record of which kind they are.
+
+A Button-2 medium press changes `the_operating_mode` in `loop()` (`main.cpp:137-143`)
+straight away. If the next tick is a non-refetch tick, `time_update_handler()`
+returns `true` with the old mode's digits unchanged. `main.cpp`'s render `switch`
+(`main.cpp:150-180`) then lays them out for the new mode:
+- the `set_date` case reads hour/minute from `digit_5..2` as month/day;
+- the `running` case reads month/day (or day/year, in `mm_ss`) as time.
+
+The wrong digits last until the next refetch tick, at most ~0.5 s later.
+Running ↔ Set Time is unaffected because both modes compute time digits.
+
+This came in with the BUG-003 fix. Per that entry's Fix note, `refetch_time` was
+added so the RTC read stays at 1 Hz while redraws went to 2 Hz. Before that, every
+redraw also refetched, so the digits were always the right kind for the mode.
+
+---
+
 <!-- Add new bugs via /fix-bug, or by hand — keep the section format: metadata lines,
      then Reproduction / Expected / Actual / Root Cause. A bug with no reproduction
      steps yet is a symptom report, not a bug entry — get concrete steps before
