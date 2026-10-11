@@ -201,6 +201,13 @@ void toggle_separator() {
     }
 }
 
+void set_separator(bool on) {
+    if (on)
+        analogWrite(SEPARATOR, brightness_count[brightness]);
+    else
+        digitalWrite(SEPARATOR, LOW);
+}
+
 void commit_hour_or_minute(enum time_field field, enum field_adjust_direction direction) {
     uint8_t hour = dt.hour();
     uint8_t minute = dt.minute();
@@ -240,7 +247,9 @@ bool time_update_handler(enum operating_mode mode, enum display_mode display) {
     // every 1/2 second
     if (toggle) {
         toggle = false;
-        toggle_separator();
+        // The colon is solid/off under main.cpp's control in date display mode (FR-007)
+        if (!(mode == running && display == date_display))
+            toggle_separator();
     }
 
     // every half second: re-render so the blink phase (NFR-001) takes effect;

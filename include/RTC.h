@@ -30,6 +30,12 @@ bool time_update_handler(enum operating_mode mode, enum display_mode display);
 void toggle_separator();
 
 /**
+ * @brief Drive the colon separator solid (at the current brightness) or off.
+ * Call after RTC_setup().
+ */
+void set_separator(bool on);
+
+/**
  * @brief Apply one increment/decrement to the hour or minute field and write
  * the result to the RTC immediately, resetting seconds to :00.
  */
