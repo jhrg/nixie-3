@@ -11,7 +11,7 @@ Availability, Scalability, Usability, Maintainability, Compliance, Observability
 
 | ID | Category | Requirement | Measurable Target | Priority | Status |
 |---|---|---|---|---|---|
-| NFR-001 | Usability | While the clock is in Set Time or Set Date mode, the digit pair currently selected for editing must be visually distinguishable from the digit pair(s) not selected | Selected digit pair blinks at approximately 1 Hz (on/off every ~0.5s); unselected pair(s) remain continuously lit | Must | Proposed |
+| NFR-001 | Usability | While the clock is in Set Time or Set Date mode, the digit pair currently selected for editing must be visually distinguishable from the digit pair(s) not selected | Selected digit pair blinks at approximately 1 Hz (on/off every ~0.5s); unselected pair(s) remain continuously lit | Must | Implemented |
 
 _(no other hard NFR targets have been confirmed as of the initial planning
 interview; add rows via `/new-requirement` as targets are decided — e.g. time drift/

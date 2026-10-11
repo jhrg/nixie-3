@@ -23,10 +23,8 @@ the display ("20") is always a fixed literal, not a stored/edited value.
 - FR-006 — "set the clock's calendar date ... via button presses." Wording doesn't
   specify display mechanics; unaffected.
 - NFR-001 — "the digit pair currently selected for editing must be visually
-  distinguishable ... blinks at ~1 Hz." Status is `Proposed`, not yet confirmed —
-  called out rather than treated as settled. This task keeps the ~1 Hz blink
-  mechanism itself untouched; it only changes which raw digit pairs get blinked
-  while the year field is selected (both pairs, together, instead of one).
+  distinguishable ... blinks at ~1 Hz." Status is `Implemented`. This task keeps the 
+  ~1 Hz blink mechanism itself untouched; it only changes which raw digit pairs get blinked while the year field is selected (both pairs, together, instead of one).
 - UC-004 — step 6 currently documents the exact behavior being replaced: "the
   system temporarily displays the year digit pair in place of the month digit pair
   (year blinking, day lit continuously)." Updating this step's wording is in scope
