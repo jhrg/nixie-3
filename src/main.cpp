@@ -122,7 +122,7 @@ void loop() {
             break;
     }
 
-    if (time_update_handler()) {
+    if (time_update_handler(running)) {
         switch (the_display_mode) {
             case mm_ss:
                 bits[0] = MSD[digit_3] | LSD[digit_2];
