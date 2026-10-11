@@ -26,7 +26,6 @@ void flush();
 #else
 #define DPRINTV(fmt, ...)
 #define DPRINT(fmt)
-
 #define DPRINTF(fmt, f)
 #endif
 
