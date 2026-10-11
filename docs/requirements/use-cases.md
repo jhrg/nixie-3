@@ -59,9 +59,9 @@ the next quick press
   future task/feature
 - Button 2's medium (~2s) press enters Set Time mode instead of toggling display
   format — see UC-003
-- A quick press of button 2 while the clock is in Set Time or Set Date mode is a
-  no-op, reserved for a future task/feature — it does not toggle display format
-  mid-edit
+- A quick press of button 2 while the clock is in Set Time or Set Date mode does not
+  toggle display format; instead it decrements the field currently selected for
+  editing — see UC-003 / UC-004
 
 **Postconditions:** Clock continues displaying time in the newly selected mode until
 the next quick press of button 2
@@ -86,8 +86,9 @@ the next quick press of button 2
    The currently selected field's digit pair blinks at ~1 Hz; the other pair stays
    lit continuously (NFR-001).
 4. User gives a quick press on button 1 to increment the selected field's value by
-   one, wrapping (hour: 0–23, minute: 0–59). System writes the updated hour/minute to
-   the RTC immediately, resetting seconds to `:00`.
+   one, or a quick press on button 2 to decrement it by one, wrapping either way
+   (hour: 0–23, minute: 0–59). System writes the updated hour/minute to the RTC
+   immediately after either press, resetting seconds to `:00`.
 5. User gives a 2-second press on button 1 to move the selected field to the other
    field (hour ↔ minute).
 6. User repeats steps 4–5 as needed to set both fields.
@@ -95,14 +96,16 @@ the next quick press of button 2
    mode (UC-004).
 
 **Alternate / exception flows:**
-- A quick press of button 2 while in Set Time mode is a no-op, reserved for a future
-  task/feature — it does not toggle display format mid-edit.
+- Decrementing below a field's minimum wraps to its maximum, mirroring the
+  increment wraparound direction (hour: 0 → 23, minute: 0 → 59).
 - A 2-second press of button 1 only changes which field is selected; it does not
   change the field's value.
 - Long (~5s) presses of either button remain no-ops in Set Time mode, reserved for a
   future task/feature.
 - Brightness cannot be adjusted while in Set Time mode — button 1's quick press is
   repurposed to increment the selected field (see UC-001's updated preconditions).
+- Display mode cannot be toggled while in Set Time mode — button 2's quick press is
+  repurposed to decrement the selected field (see UC-002's updated alternate flows).
 
 **Postconditions:** The RTC reflects the newly set hour/minute with seconds at
 `:00`. The clock is now in Set Date mode (UC-004), displaying the date for editing.
@@ -127,8 +130,9 @@ via UC-003)
    selected field's digit pair blinks at ~1 Hz; the other pair stays lit
    continuously (NFR-001).
 4. User gives a quick press on button 1 to increment the selected field's value by
-   one, wrapping (month: 1–12, day: 1–31, year: last two digits, 00–99). System
-   writes the updated month/day/year to the RTC immediately.
+   one, or a quick press on button 2 to decrement it by one, wrapping either way
+   (month: 1–12, day: 1–31, year: last two digits, 00–99). System writes the updated
+   month/day/year to the RTC immediately after either press.
 5. User gives a 2-second press on button 1 to advance the selected field (month →
    day → year → month).
 6. When the year field is selected, the system temporarily displays the year digit
@@ -141,14 +145,16 @@ via UC-003)
    Set Time mode was entered.
 
 **Alternate / exception flows:**
-- A quick press of button 2 while in Set Date mode is a no-op, reserved for a future
-  task/feature.
+- Decrementing below a field's minimum wraps to its maximum, mirroring the
+  increment wraparound direction (month: 1 → 12, day: 1 → 31, year: 00 → 99).
 - A 2-second press of button 1 only changes which field is selected; it does not
   change the field's value.
 - Long (~5s) presses of either button remain no-ops in Set Date mode, reserved for a
   future task/feature.
 - Brightness cannot be adjusted while in Set Date mode — button 1's quick press is
   repurposed to increment the selected field (see UC-001's updated preconditions).
+- Display mode cannot be toggled while in Set Date mode — button 2's quick press is
+  repurposed to decrement the selected field (see UC-002's updated alternate flows).
 - No calendar validation is performed (e.g. day 30 is accepted for February),
   consistent with the existing digit-decomposition logic, which has never validated
   calendar correctness either.
