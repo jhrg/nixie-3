@@ -7,6 +7,7 @@
 #include <Arduino.h>
 #include <RTClib.h> // https://github.com/adafruit/RTClib
 
+#include "clock_mode.h"
 #include "display_digits.h"
 #include "print.h"
 #include "pins.h"
@@ -80,6 +81,16 @@ volatile bool update_display = false;
 
 volatile bool toggle = false;
 
+// Toggles at the 2Hz ISR rate (i.e. every ~0.5s); used both to decide which
+// edge to arm next below and, via blink_off_phase(), to blink the field
+// currently selected for editing in Set Time/Set Date mode (NFR-001).
+volatile bool blink_phase = true;
+
+// Set once per second (every other ISR tick); tells time_update_handler() it's
+// time to re-read the RTC and recompute digit_0..5, as opposed to just
+// re-rendering the existing digits with the current blink phase.
+volatile bool refetch_time = false;
+
 /**
  * @brief Record that 1/2 second has elapsed
  *
@@ -88,24 +99,31 @@ volatile bool toggle = false;
  * colon that is the clock digit separator so that it fashes on and off
  * once per second.
  *
- * This ISR is also used to trigger the digit update once per second.
+ * This ISR also sets update_display on every tick (2Hz) so the display is
+ * physically rewritten on both halves of the blink cycle in Set Time/Set
+ * Date mode (NFR-001); refetch_time is set only once per second (1Hz) to
+ * gate the actual RTC read and digit recompute, which only need to happen
+ * that often.
  *
  * The volatile bools toggle and update_display are used to signal other
  * parts of the code that the colons or digits should be updated.
  */
 void timer_2HZ_tick_ISR() {
     toggle = true;
+    update_display = true;
 
-    static volatile bool tick_tok = true;
-
-    if (tick_tok) {
+    if (blink_phase) {
         attachInterrupt(digitalPinToInterrupt(CLOCK_1HZ), timer_2HZ_tick_ISR, FALLING);
-        tick_tok = false;
-        update_display = true;
+        blink_phase = false;
+        refetch_time = true;
     } else {
         attachInterrupt(digitalPinToInterrupt(CLOCK_1HZ), timer_2HZ_tick_ISR, RISING);
-        tick_tok = true;
+        blink_phase = true;
     }
+}
+
+bool blink_off_phase() {
+    return !blink_phase;
 }
 
 void RTC_setup() {
@@ -182,22 +200,63 @@ void toggle_separator() {
     }
 }
 
+void commit_hour_or_minute(enum time_field field, enum field_adjust_direction direction) {
+    uint8_t hour = dt.hour();
+    uint8_t minute = dt.minute();
+
+    if (field == field_hour)
+        hour = adjust_hour_value(hour, direction);
+    else
+        minute = adjust_minute_value(minute, direction);
+
+    dt = DateTime(dt.year(), dt.month(), dt.day(), hour, minute, 0);
+    rtc.adjust(dt);
+}
+
+void commit_month_day_or_year(enum date_field field, enum field_adjust_direction direction) {
+    uint8_t month = dt.month();
+    uint8_t day = dt.day();
+    uint8_t year_last_two_digits = (uint8_t)(dt.year() - 2000);
+
+    switch (field) {
+        case field_month:
+            month = adjust_month_value(month, direction);
+            break;
+        case field_day:
+            day = adjust_day_value(day, direction);
+            break;
+        case field_year:
+            year_last_two_digits = adjust_year_value(year_last_two_digits, direction);
+            break;
+    }
+
+    dt = DateTime(2000 + year_last_two_digits, month, day, dt.hour(), dt.minute(), dt.second());
+    rtc.adjust(dt);
+}
+
 // Call at least twice a second
-bool time_update_handler() {
+bool time_update_handler(enum operating_mode mode) {
     // every 1/2 second
     if (toggle) {
         toggle = false;
         toggle_separator();
     }
 
-    // every second
+    // every half second: re-render so the blink phase (NFR-001) takes effect;
+    // only re-read the RTC and recompute digits once a second (refetch_time)
     if (update_display) {
         update_display = false;
-        dt = rtc.now();  // This call takes about 1ms
+        if (refetch_time) {
+            refetch_time = false;
+            dt = rtc.now();  // This call takes about 1ms
 #if DEBUG
-        print_time(dt, true);
+            print_time(dt, true);
 #endif
-        update_display_with_time();
+            if (mode == set_date)
+                update_display_with_date();
+            else
+                update_display_with_time();
+        }
         return true;
     } else {
         return false;
