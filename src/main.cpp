@@ -4,6 +4,7 @@
 
 #include "RTC.h"
 #include "brightness.h"
+#include "clock_mode.h"
 #include "mode_switch2.h"
 #include "pins.h"
 #include "print.h"
@@ -96,13 +97,26 @@ void input_switch_quick_press() {
 void loop() {
     uint8_t bits[2]; // 1 is the LSD pair, 0 the MSD pair
     static enum display_mode the_display_mode = mm_ss;  // initialized to mm_ss
+    static enum operating_mode the_operating_mode = running;
+    static enum time_field the_time_field = field_hour;
+    static enum date_field the_date_field = field_month;
 
     switch (read_button_1()) {
         case quick:
-            input_switch_quick_press();
+            if (the_operating_mode == running) {
+                input_switch_quick_press();
+            } else if (the_operating_mode == set_time) {
+                commit_hour_or_minute(the_time_field, field_increment);
+            } else {
+                commit_month_day_or_year(the_date_field, field_increment);
+            }
             break;
         case medium_2s:
-            break;  // no-op; reserved for future task/feature
+            if (the_operating_mode == set_time)
+                the_time_field = next_time_field(the_time_field);
+            else if (the_operating_mode == set_date)
+                the_date_field = next_date_field(the_date_field);
+            break;  // no-op in Running mode; reserved for future task/feature there
         case long_5s:
             break;  // no-op; reserved for future task/feature
         default:
@@ -111,29 +125,59 @@ void loop() {
 
     switch (read_button_2()) {
         case quick:
-            the_display_mode = toggle_display_mode(the_display_mode);
-            DPRINTV("display mode: %s\n", the_display_mode == mm_ss ? "MM:SS" : "HH:MM");
+            if (the_operating_mode == running) {
+                the_display_mode = toggle_display_mode(the_display_mode);
+                DPRINTV("display mode: %s\n", the_display_mode == mm_ss ? "MM:SS" : "HH:MM");
+            } else if (the_operating_mode == set_time) {
+                commit_hour_or_minute(the_time_field, field_decrement);
+            } else {
+                commit_month_day_or_year(the_date_field, field_decrement);
+            }
             break;
         case medium_2s:
-            break;  // no-op; reserved for future task/feature
+            the_operating_mode = next_operating_mode(the_operating_mode);
+            if (the_operating_mode == set_time)
+                the_time_field = field_hour;
+            else if (the_operating_mode == set_date)
+                the_date_field = field_month;
+            break;
         case long_5s:
             break;  // no-op; reserved for future task/feature
         default:
             break;
     }
 
-    if (time_update_handler(running)) {
-        switch (the_display_mode) {
-            case mm_ss:
-                bits[0] = MSD[digit_3] | LSD[digit_2];
-                bits[1] = MSD[digit_1] | LSD[digit_0];
+    if (time_update_handler(the_operating_mode)) {
+        switch (the_operating_mode) {
+            case running:
+                switch (the_display_mode) {
+                    case mm_ss:
+                        bits[0] = MSD[digit_3] | LSD[digit_2];
+                        bits[1] = MSD[digit_1] | LSD[digit_0];
+                        break;
+
+                    case hh_mm:
+                        bits[0] = MSD[digit_5] | LSD[digit_4];
+                        bits[1] = MSD[digit_3] | LSD[digit_2];
+                        break;
+                }
                 break;
 
-            case hh_mm:
-                bits[0] = MSD[digit_5] | LSD[digit_4];
-                bits[1] = MSD[digit_3] | LSD[digit_2];
+            case set_time:
+                bits[0] = blank_if_selected(MSD[digit_5] | LSD[digit_4], the_time_field == field_hour, blink_off_phase());
+                bits[1] = blank_if_selected(MSD[digit_3] | LSD[digit_2], the_time_field == field_minute, blink_off_phase());
                 break;
-        };
+
+            case set_date: {
+                uint8_t month_or_year_bits = (the_date_field == field_year) ? (MSD[digit_1] | LSD[digit_0])
+                                                                             : (MSD[digit_5] | LSD[digit_4]);
+                bits[0] = blank_if_selected(month_or_year_bits,
+                                             the_date_field == field_month || the_date_field == field_year,
+                                             blink_off_phase());
+                bits[1] = blank_if_selected(MSD[digit_3] | LSD[digit_2], the_date_field == field_day, blink_off_phase());
+                break;
+            }
+        }
 
         // I don't know for sure that these cli/sei calls are needed. They seem to do no harm.
         cli();
