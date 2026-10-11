@@ -126,8 +126,8 @@ void loop() {
     switch (read_button_2()) {
         case quick:
             if (the_operating_mode == running) {
-                the_display_mode = toggle_display_mode(the_display_mode);
-                DPRINTV("display mode: %s\n", the_display_mode == mm_ss ? "MM:SS" : "HH:MM");
+                the_display_mode = next_display_mode(the_display_mode);
+                DPRINTV("display mode: %s\n", the_display_mode == mm_ss ? "MM:SS" : (the_display_mode == hh_mm ? "HH:MM" : "DATE"));
             } else if (the_operating_mode == set_time) {
                 commit_hour_or_minute(the_time_field, field_decrement);
             } else {
@@ -157,6 +157,11 @@ void loop() {
                         break;
 
                     case hh_mm:
+                        bits[0] = MSD[digit_5] | LSD[digit_4];
+                        bits[1] = MSD[digit_3] | LSD[digit_2];
+                        break;
+
+                    case date_display:  // rendered in Phase 3
                         bits[0] = MSD[digit_5] | LSD[digit_4];
                         bits[1] = MSD[digit_3] | LSD[digit_2];
                         break;
