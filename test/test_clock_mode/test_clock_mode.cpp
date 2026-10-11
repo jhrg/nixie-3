@@ -5,6 +5,22 @@
 void setUp(void) {}
 void tearDown(void) {}
 
+void test_needs_refetch_when_digit_kind_changes_between_ticks(void) {
+    TEST_ASSERT_TRUE(needs_refetch(false, true, false));
+    TEST_ASSERT_TRUE(needs_refetch(false, false, true));
+}
+
+void test_no_refetch_when_kind_unchanged_and_no_tick(void) {
+    TEST_ASSERT_FALSE(needs_refetch(false, false, false));
+    TEST_ASSERT_FALSE(needs_refetch(false, true, true));
+}
+
+void test_refetch_always_on_refetch_tick(void) {
+    TEST_ASSERT_TRUE(needs_refetch(true, false, false));
+    TEST_ASSERT_TRUE(needs_refetch(true, true, true));
+    TEST_ASSERT_TRUE(needs_refetch(true, true, false));
+}
+
 void test_operating_mode_cycles_through_all_three(void) {
     enum operating_mode mode = running;
     mode = next_operating_mode(mode);
@@ -87,6 +103,9 @@ void test_blank_if_selected_lit_when_not_selected(void) {
 
 int main(int argc, char **argv) {
     UNITY_BEGIN();
+    RUN_TEST(test_needs_refetch_when_digit_kind_changes_between_ticks);
+    RUN_TEST(test_no_refetch_when_kind_unchanged_and_no_tick);
+    RUN_TEST(test_refetch_always_on_refetch_tick);
     RUN_TEST(test_operating_mode_cycles_through_all_three);
     RUN_TEST(test_time_field_toggles_hour_and_minute);
     RUN_TEST(test_date_field_cycles_through_all_three);

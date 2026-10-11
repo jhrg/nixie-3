@@ -246,16 +246,21 @@ bool time_update_handler(enum operating_mode mode) {
     // only re-read the RTC and recompute digits once a second (refetch_time)
     if (update_display) {
         update_display = false;
-        if (refetch_time) {
+        // Re-read on the 1 Hz tick, or at once if the digit kind (date vs. time)
+        // changed since digit_0..5 were last computed (BUG-004).
+        static bool have_date = false;
+        const bool want_date = (mode == set_date);
+        if (needs_refetch(refetch_time, want_date, have_date)) {
             refetch_time = false;
             dt = rtc.now();  // This call takes about 1ms
 #if DEBUG
             print_time(dt, true);
 #endif
-            if (mode == set_date)
+            if (want_date)
                 update_display_with_date();
             else
                 update_display_with_time();
+            have_date = want_date;
         }
         return true;
     } else {

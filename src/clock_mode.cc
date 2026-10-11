@@ -60,3 +60,7 @@ uint8_t adjust_year_value(uint8_t year_last_two_digits, enum field_adjust_direct
 uint8_t blank_if_selected(uint8_t digit_pair_bits, bool is_selected, bool blink_off) {
     return (is_selected && blink_off) ? DIGIT_PAIR_BLANK : digit_pair_bits;
 }
+
+bool needs_refetch(bool refetch_tick, bool want_date, bool have_date) {
+    return refetch_tick || (want_date != have_date);
+}

@@ -69,4 +69,11 @@ constexpr uint8_t DIGIT_PAIR_BLANK = 0xFF;
  */
 uint8_t blank_if_selected(uint8_t digit_pair_bits, bool is_selected, bool blink_off);
 
+/**
+ * @brief Decide whether the display digits must be re-read from the RTC now: on the
+ * 1 Hz refetch tick, or whenever the requested digit kind (date vs. time) differs
+ * from the kind last computed (BUG-004).
+ */
+bool needs_refetch(bool refetch_tick, bool want_date, bool have_date);
+
 #endif
