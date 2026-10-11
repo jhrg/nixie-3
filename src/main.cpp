@@ -147,7 +147,7 @@ void loop() {
             break;
     }
 
-    if (time_update_handler(the_operating_mode)) {
+    if (time_update_handler(the_operating_mode, the_display_mode)) {
         switch (the_operating_mode) {
             case running:
                 switch (the_display_mode) {
