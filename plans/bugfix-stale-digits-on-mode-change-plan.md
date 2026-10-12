@@ -1,7 +1,7 @@
 # Bugfix Plan: Stale digits shown for up to ~0.5 s on Set Time → Set Date and Set Date → Running transitions
 
 **Bug:** BUG-004
-**Status:** Approved
+**Status:** Done
 **Created:** 2026-10-11
 
 ## Summary
