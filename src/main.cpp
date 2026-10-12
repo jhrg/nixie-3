@@ -186,15 +186,19 @@ void loop() {
                 bits[1] = blank_if_selected(MSD[digit_3] | LSD[digit_2], the_time_field == field_minute, blink_off_phase());
                 break;
 
-            case set_date: {
-                uint8_t month_or_year_bits = (the_date_field == field_year) ? (MSD[digit_1] | LSD[digit_0])
-                                                                             : (MSD[digit_5] | LSD[digit_4]);
-                bits[0] = blank_if_selected(month_or_year_bits,
-                                             the_date_field == field_month || the_date_field == field_year,
-                                             blink_off_phase());
-                bits[1] = blank_if_selected(MSD[digit_3] | LSD[digit_2], the_date_field == field_day, blink_off_phase());
+            case set_date:
+                if (the_date_field == field_year) {
+                    // Show the full four-digit year 20YY, both pairs blinking together.
+                    bits[0] = blank_if_selected(MSD[YEAR_CENTURY_TENS_DIGIT] | LSD[YEAR_CENTURY_ONES_DIGIT], true,
+                                                 blink_off_phase());
+                    bits[1] = blank_if_selected(MSD[digit_1] | LSD[digit_0], true, blink_off_phase());
+                } else {
+                    bits[0] = blank_if_selected(MSD[digit_5] | LSD[digit_4], the_date_field == field_month,
+                                                 blink_off_phase());
+                    bits[1] = blank_if_selected(MSD[digit_3] | LSD[digit_2], the_date_field == field_day,
+                                                 blink_off_phase());
+                }
                 break;
-            }
         }
 
         // I don't know for sure that these cli/sei calls are needed. They seem to do no harm.

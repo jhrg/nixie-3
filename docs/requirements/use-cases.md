@@ -139,9 +139,10 @@ via UC-003)
    month/day/year to the RTC immediately after either press.
 5. User gives a 2-second press on button 1 to advance the selected field (month →
    day → year → month).
-6. When the year field is selected, the system temporarily displays the year digit
-   pair in place of the month digit pair (year blinking, day lit continuously);
-   when selection moves off the year field, the display returns to showing
+6. When the year field is selected, the system temporarily displays the full
+   four-digit year — a fixed "20" century in the pair normally used for month, and
+   the editable two-digit year in the pair normally used for day — both pairs
+   blinking together at ~1 Hz; when selection moves off the year field, the display returns to showing
    month:day.
 7. User repeats steps 4–6 as needed to set all three fields.
 8. User gives a 2-second press on button 2 to leave Set Date mode and return to

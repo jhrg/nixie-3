@@ -103,12 +103,11 @@ pieces, per user request.
 
 **Category:** Other (display/rendering refinement to an existing feature; doesn't fit
 Dependency Update / Code Cleanup / Test Coverage / Build-Tooling / Documentation)
-**Status:** Plan Ready
+**Status:** In Progress
 **Created:** 2026-10-10
 **Related requirements/constraints:** FR-006 (set the date via button presses —
 wording is display-mechanics-agnostic, no change needed), NFR-001 (selected field
-must be visually distinguishable via ~1 Hz blink — status `Proposed`, not yet
-confirmed, called out here rather than treated as settled), UC-004 (step 6 currently
+must be visually distinguishable via ~1 Hz blink — `Implemented`), UC-004 (step 6 currently
 documents the *old* behavior this task replaces and will be updated as part of this
 task's scope — the same pattern TASK-002 used for UC-001/UC-002).
 
@@ -119,9 +118,10 @@ while the year field is selected, both digit pairs show the full four-digit year
 a fixed "20" century pair where the month pair normally sits, and the actual
 two-digit year where the day pair normally sits — both pairs blinking together at
 ~1 Hz, instead of today's behavior (year in the month pair's slot, blinking; day
-pair left showing the day, lit continuously, e.g. "26 10"). Add two small named
-`constexpr` digit constants for the fixed century ("20") to `include/clock_mode.h`
-rather than using bare literals in `main.cpp`. Update UC-004 step 6 in
+pair left showing the day, lit continuously, e.g. "26 10"). Reuse the existing
+`YEAR_CENTURY_TENS_DIGIT`/`YEAR_CENTURY_ONES_DIGIT` constants in
+`include/clock_mode.h` (added by FR-007's date-display work) rather than bare
+literals in `main.cpp`. Update UC-004 step 6 in
 `docs/requirements/use-cases.md` to describe the new rendering. Does not touch
 `field_month` or `field_day` rendering (unchanged), the underlying year
 storage/range (`adjust_year_value()` still wraps a two-digit 0–99 offset from a

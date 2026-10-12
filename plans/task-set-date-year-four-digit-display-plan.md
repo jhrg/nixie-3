@@ -34,10 +34,11 @@ the display ("20") is always a fixed literal, not a stored/edited value.
 ## Scope
 
 **In scope:**
-- `include/clock_mode.h`: add two `constexpr uint8_t` constants for the fixed
-  century digits (tens = 2, ones = 0), named e.g. `YEAR_CENTURY_TENS_DIGIT` /
-  `YEAR_CENTURY_ONES_DIGIT`, alongside the existing `DIGIT_PAIR_BLANK` constant —
-  so `main.cpp` doesn't reference bare `2`/`0` literals for this purpose.
+- ~~`include/clock_mode.h`: add century-digit constants~~ — **already done**
+  (2026-10-12 re-check): `YEAR_CENTURY_TENS_DIGIT` / `YEAR_CENTURY_ONES_DIGIT`
+  were added to `include/clock_mode.h` by the FR-007 date-display work (commit
+  2581e83) and are already used by the `date_display` rendering branch. This task
+  reuses them; no header change is needed.
 - `src/main.cpp`'s `loop()`, in the `set_date` case of the rendering `switch`:
   rewrite the `field_year` sub-case so:
   - `bits[0]` = `blank_if_selected(MSD[YEAR_CENTURY_TENS_DIGIT] |
@@ -67,10 +68,9 @@ the display ("20") is always a fixed literal, not a stored/edited value.
 ## Approach
 
 Steps:
-1. Add `YEAR_CENTURY_TENS_DIGIT` (`= 2`) and `YEAR_CENTURY_ONES_DIGIT` (`= 0`) as
-   `constexpr uint8_t` in `include/clock_mode.h`, next to `DIGIT_PAIR_BLANK`, with a
-   one-line doc comment noting they represent the fixed "20" century prefix for
-   years 2000–2099 (matching `adjust_year_value()`'s existing range assumption).
+1. (Already done by FR-007, commit 2581e83: `YEAR_CENTURY_TENS_DIGIT` /
+   `YEAR_CENTURY_ONES_DIGIT` exist in `include/clock_mode.h`. Confirm they're still
+   present; nothing to add.)
 2. In `src/main.cpp`'s `set_date` rendering branch, split the `field_year` case out
    from the existing shared `month_or_year_bits` expression (which today feeds
    `bits[0]` for both `field_month` and `field_year`) into its own branch that sets
@@ -97,7 +97,7 @@ and the new explicit branch is the only place `field_year` is rendered.
   bare constants, not functions — consistent with `DIGIT_PAIR_BLANK` not having a
   dedicated test of its own).
 - `pio run -e uno` and `pio run -e pro16MHzatmega328` — both build clean.
-- `pio check` and `clang-format` over `include/clock_mode.h` and `src/main.cpp`.
+- `pio check` and `clang-format` over `src/main.cpp`.
 - On-target check: enter Set Date mode, cycle to the year field, and visually
   confirm the display reads "20 26" (both pairs blinking together at ~1 Hz) rather
   than "26 10"; cycle to month and day and confirm their rendering is unchanged
@@ -105,12 +105,11 @@ and the new explicit branch is the only place `field_year` is rendered.
 
 ## Risks
 
-- Low — confined to one rendering branch in `main.cpp` plus two header constants
-  and one use-case paragraph; no change to field-cycling, value storage, RTC
+- Low — confined to one rendering branch in `main.cpp` and one use-case
+  paragraph; no change to field-cycling, value storage, RTC
   commit logic, or the blink primitives themselves.
 
 ## Open questions
 
-- None blocking. NFR-001 is still `Proposed` rather than `Approved` in
-  `docs/requirements/non-functional-requirements.md` — flagged above per CLAUDE.md,
-  not something this task needs to resolve.
+- None blocking. (An earlier note here flagged NFR-001 as `Proposed`; as of
+  2026-10-12 it is `Implemented`, so that note no longer applies.)
