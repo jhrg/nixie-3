@@ -96,7 +96,8 @@ void input_switch_quick_press() {
 
 void loop() {
     uint8_t bits[2]; // 1 is the LSD pair, 0 the MSD pair
-    static enum display_mode the_display_mode = mm_ss;  // initialized to mm_ss
+    static enum display_mode the_display_mode = hh_mm;
+    static uint8_t the_date_cycle_tick = 0;
     static enum operating_mode the_operating_mode = running;
     static enum time_field the_time_field = field_hour;
     static enum date_field the_date_field = field_month;
@@ -126,8 +127,10 @@ void loop() {
     switch (read_button_2()) {
         case quick:
             if (the_operating_mode == running) {
-                the_display_mode = toggle_display_mode(the_display_mode);
-                DPRINTV("display mode: %s\n", the_display_mode == mm_ss ? "MM:SS" : "HH:MM");
+                the_display_mode = next_display_mode(the_display_mode);
+                if (the_display_mode == date_display)
+                    the_date_cycle_tick = 0;
+                DPRINTV("display mode: %s\n", the_display_mode == mm_ss ? "MM:SS" : (the_display_mode == hh_mm ? "HH:MM" : "DATE"));
             } else if (the_operating_mode == set_time) {
                 commit_hour_or_minute(the_time_field, field_decrement);
             } else {
@@ -136,6 +139,8 @@ void loop() {
             break;
         case medium_2s:
             the_operating_mode = next_operating_mode(the_operating_mode);
+            if (the_operating_mode == running && the_display_mode == date_display)
+                the_date_cycle_tick = 0;  // restart date mode at MM:DD
             if (the_operating_mode == set_time)
                 the_time_field = field_hour;
             else if (the_operating_mode == set_date)
@@ -147,7 +152,7 @@ void loop() {
             break;
     }
 
-    if (time_update_handler(the_operating_mode)) {
+    if (time_update_handler(the_operating_mode, the_display_mode)) {
         switch (the_operating_mode) {
             case running:
                 switch (the_display_mode) {
@@ -159,6 +164,19 @@ void loop() {
                     case hh_mm:
                         bits[0] = MSD[digit_5] | LSD[digit_4];
                         bits[1] = MSD[digit_3] | LSD[digit_2];
+                        break;
+
+                    case date_display:
+                        if (!date_cycle_shows_year(the_date_cycle_tick)) {
+                            bits[0] = MSD[digit_5] | LSD[digit_4];
+                            bits[1] = MSD[digit_3] | LSD[digit_2];
+                            set_separator(true);
+                        } else {
+                            bits[0] = MSD[YEAR_CENTURY_TENS_DIGIT] | LSD[YEAR_CENTURY_ONES_DIGIT];
+                            bits[1] = MSD[digit_1] | LSD[digit_0];
+                            set_separator(false);
+                        }
+                        the_date_cycle_tick = next_date_cycle_tick(the_date_cycle_tick);
                         break;
                 }
                 break;

@@ -1,6 +1,6 @@
 # Plan: Date display mode (third Button-2 display mode)
 
-**Status:** Approved
+**Status:** Done
 **Created:** 2026-10-11
 
 ## Summary

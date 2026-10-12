@@ -7,6 +7,7 @@
 #include <Arduino.h>
 #include <RTClib.h> // https://github.com/adafruit/RTClib
 
+#include "RTC.h"
 #include "clock_mode.h"
 #include "display_digits.h"
 #include "print.h"
@@ -200,6 +201,13 @@ void toggle_separator() {
     }
 }
 
+void set_separator(bool on) {
+    if (on)
+        analogWrite(SEPARATOR, brightness_count[brightness]);
+    else
+        digitalWrite(SEPARATOR, LOW);
+}
+
 void commit_hour_or_minute(enum time_field field, enum field_adjust_direction direction) {
     uint8_t hour = dt.hour();
     uint8_t minute = dt.minute();
@@ -235,11 +243,13 @@ void commit_month_day_or_year(enum date_field field, enum field_adjust_direction
 }
 
 // Call at least twice a second
-bool time_update_handler(enum operating_mode mode) {
+bool time_update_handler(enum operating_mode mode, enum display_mode display) {
     // every 1/2 second
     if (toggle) {
         toggle = false;
-        toggle_separator();
+        // The colon is solid/off under main.cpp's control in date display mode (FR-007)
+        if (!(mode == running && display == date_display))
+            toggle_separator();
     }
 
     // every half second: re-render so the blink phase (NFR-001) takes effect;
@@ -249,7 +259,7 @@ bool time_update_handler(enum operating_mode mode) {
         // Re-read on the 1 Hz tick, or at once if the digit kind (date vs. time)
         // changed since digit_0..5 were last computed (BUG-004).
         static bool have_date = false;
-        const bool want_date = (mode == set_date);
+        const bool want_date = (mode == set_date) || (mode == running && display == date_display);
         if (needs_refetch(refetch_time, want_date, have_date)) {
             refetch_time = false;
             dt = rtc.now();  // This call takes about 1ms

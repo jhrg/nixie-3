@@ -59,6 +59,12 @@ uint8_t adjust_day_value(uint8_t day, enum field_adjust_direction direction);
 uint8_t adjust_year_value(uint8_t year_last_two_digits, enum field_adjust_direction direction);
 
 /**
+ * @brief Fixed century shown as "20" in the four-digit year 20YY (years 2000-2099).
+ */
+constexpr uint8_t YEAR_CENTURY_TENS_DIGIT = 2;
+constexpr uint8_t YEAR_CENTURY_ONES_DIGIT = 0;
+
+/**
  * @brief Hardware blanking value for a Nixie digit pair (both nibbles 0xF).
  */
 constexpr uint8_t DIGIT_PAIR_BLANK = 0xFF;

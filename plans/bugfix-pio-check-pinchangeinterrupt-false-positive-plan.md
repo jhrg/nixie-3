@@ -1,7 +1,7 @@
 # Bugfix Plan: `pio check` reports a false-positive `preprocessorErrorDirective` from PinChangeInterrupt.h
 
 **Bug:** BUG-002
-**Status:** Approved
+**Status:** Done
 **Created:** 2026-10-10
 
 ## Summary

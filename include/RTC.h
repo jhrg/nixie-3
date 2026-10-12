@@ -7,6 +7,7 @@
 #define rtc_h_
 
 #include "clock_mode.h"
+#include "mode_switch2.h"
 
 // The display digits
 extern volatile int digit_0;
@@ -20,12 +21,19 @@ void RTC_setup();
 
 /**
  * @brief Poll the RTC and refresh the display digits; call at least twice a
- * second. mode selects whether the time or the date is rendered into the
- * digits (set_date renders the date; running/set_time render the time).
+ * second. The date is rendered into the digits in set_date mode, and in
+ * running mode when display is date_display; otherwise the time is. The digits
+ * are re-read at once when that kind changes (BUG-004).
  */
-bool time_update_handler(enum operating_mode mode);
+bool time_update_handler(enum operating_mode mode, enum display_mode display);
 
 void toggle_separator();
+
+/**
+ * @brief Drive the colon separator solid (at the current brightness) or off.
+ * Call after RTC_setup().
+ */
+void set_separator(bool on);
 
 /**
  * @brief Apply one increment/decrement to the hour or minute field and write

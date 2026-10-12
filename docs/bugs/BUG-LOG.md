@@ -81,7 +81,7 @@ is why the build itself isn't broken — only the warning is spurious).
 ## BUG-002 — `pio check` reports a false-positive `preprocessorErrorDirective` from PinChangeInterrupt.h
 
 **Severity:** Low
-**Status:** Fix Planned
+**Status:** Fixed
 **Reported:** 2026-10-10
 **Related requirements:** None found. Like BUG-001, this is a build-tool
 configuration/correctness issue, not a user-facing functional behavior deviation —
@@ -191,7 +191,7 @@ work doesn't double in frequency — only the cheap re-render does.
 ## BUG-004 — Stale digits shown for up to ~0.5 s on Set Time → Set Date and Set Date → Running transitions
 
 **Severity:** Medium
-**Status:** Fix Planned
+**Status:** Fixed
 **Reported:** 2026-10-11
 **Related requirements:** UC-004 step 3 (Set Date mode displays the month and day
 digit pairs) and step 8 (leaving Set Date resumes the previously active display
