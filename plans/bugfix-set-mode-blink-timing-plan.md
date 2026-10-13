@@ -1,7 +1,7 @@
 # Bugfix Plan: Set Time/Set Date selected-field blink timing
 
 **Bug:** BUG-003
-**Status:** Fixed
+**Status:** Done
 **Created:** 2026-10-10
 
 ## Summary

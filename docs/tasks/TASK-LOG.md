@@ -3,7 +3,7 @@
      compile-time directives, retrofitting tests onto code that predates them,
      build/tooling changes. The common thread: the "right" outcome is usually
      mechanical and completeness matters (did every instance get handled?), not
-     open-ended design. Delete the TASK-EXAMPLE section once you've seen the shape. -->
+     open-ended design. -->
 
 # Task Log
 
