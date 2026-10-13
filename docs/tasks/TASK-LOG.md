@@ -19,7 +19,7 @@ needed).
 ## TASK-001 — Add native PlatformIO test environment, extracting button press-duration classification as a first unit-testable module
 
 **Category:** Build/Tooling
-**Status:** In Progress
+**Status:** Done
 **Created:** 2026-10-07
 **Related requirements/constraints:** None found — stems from CLAUDE.md's testing
 convention, not a tracked FR/NFR/IC. Underpins button behavior in FR-001, FR-003,
@@ -46,7 +46,7 @@ invented independently.
 ## TASK-002 — Reassign button functions: button 1 = brightness, button 2 = display mode
 
 **Category:** Code Cleanup
-**Status:** In Progress
+**Status:** Done
 **Created:** 2026-10-08
 **Related requirements/constraints:** FR-001 (mode switching via button press — wording
 is button-agnostic, no change needed), FR-003 (brightness cycling via push-button —
@@ -74,7 +74,7 @@ role and frees up both buttons' medium/long presses for future use, per user req
 ## TASK-003 — Separate hardware-touching code from logic-only code for three more functions, extending TASK-001's pattern
 
 **Category:** Code Cleanup
-**Status:** Plan Ready
+**Status:** Done
 **Created:** 2026-10-09
 **Related requirements/constraints:** None found — stems from CLAUDE.md's hardware-
 adapter-layer convention, not a tracked FR/NFR/IC. The logic being extracted
