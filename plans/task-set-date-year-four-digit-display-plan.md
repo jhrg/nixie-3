@@ -1,7 +1,7 @@
 # Task Plan: Display the full four-digit year while editing the year field in Set Date mode
 
 **Task:** TASK-004
-**Status:** Draft
+**Status:** Done
 **Created:** 2026-10-10
 
 ## Summary

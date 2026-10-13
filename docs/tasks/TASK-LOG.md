@@ -103,7 +103,7 @@ pieces, per user request.
 
 **Category:** Other (display/rendering refinement to an existing feature; doesn't fit
 Dependency Update / Code Cleanup / Test Coverage / Build-Tooling / Documentation)
-**Status:** In Progress
+**Status:** Done
 **Created:** 2026-10-10
 **Related requirements/constraints:** FR-006 (set the date via button presses —
 wording is display-mechanics-agnostic, no change needed), NFR-001 (selected field
